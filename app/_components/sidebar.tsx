@@ -1,39 +1,39 @@
-"use client";
-import * as React from "react";
+'use client'
+import * as React from 'react'
 import {
-  ArticleFragmentRecursive,
+  ArticleMetaFragmentRecursive,
   PageFragment,
-} from "@/basehub-helpers/fragments";
-import Link from "next/link";
-import { getActiveSidebarItem } from "@/basehub-helpers/sidebar";
-import { useParams } from "next/navigation";
-import { clsx } from "clsx";
+} from '@/basehub-helpers/fragments'
+import Link from 'next/link'
+import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
+import { useParams } from 'next/navigation'
+import { clsx } from 'clsx'
 
 /* -------------------------------------------------------------------------------------------------
  * Root
  * -----------------------------------------------------------------------------------------------*/
 
 export type SidebarProps = {
-  data: PageFragment["articles"];
-  level: number;
-  pathname: string;
-};
+  data: PageFragment['articles']
+  level: number
+  pathname: string
+}
 
 export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
-  const params = useParams();
+  const params = useParams()
 
   const activeSlugs: string[] = React.useMemo(() => {
-    const slugs = params.slug as string[] | undefined;
-    if (!slugs) return [];
-    return slugs.slice(1);
-  }, [params.slug]);
+    const slugs = params.slug as string[] | undefined
+    if (!slugs) return []
+    return slugs.slice(1)
+  }, [params.slug])
 
   const activeSidebarItem = React.useMemo(() => {
     return getActiveSidebarItem({
       sidebar: data,
       activeSlugs,
-    });
-  }, [activeSlugs, data]);
+    })
+  }, [activeSlugs, data])
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
@@ -46,12 +46,12 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
               level={level}
               pathname={`${pathname}/${item._slug}`}
             />
-          );
+          )
         })}
       </aside>
     </SidebarContext.Provider>
-  );
-};
+  )
+}
 
 /* -------------------------------------------------------------------------------------------------
  * Item (recursive)
@@ -60,83 +60,83 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
 /**
  * We'll use this map to preserve collapsed state through navigation.
  */
-const collapsedMap = new Map<string, boolean>();
+const collapsedMap = new Map<string, boolean>()
 
 const useCollapsedState = (key: string, initial: boolean) => {
   const [isCollapsed, setIsCollapsed_INTERNAL] = React.useState(() => {
-    if (initial === false) return false;
-    if (collapsedMap.has(key)) return collapsedMap.get(key)!;
-    return initial;
-  });
+    if (initial === false) return false
+    if (collapsedMap.has(key)) return collapsedMap.get(key)!
+    return initial
+  })
 
   const toggleCollapsed = React.useCallback(() => {
     setIsCollapsed_INTERNAL((p) => {
-      const newValue = !p;
-      collapsedMap.set(key, newValue);
-      return newValue;
-    });
-  }, [key]);
+      const newValue = !p
+      collapsedMap.set(key, newValue)
+      return newValue
+    })
+  }, [key])
 
-  return { isCollapsed, toggleCollapsed };
-};
+  return { isCollapsed, toggleCollapsed }
+}
 
 const SidebarItem = ({
   data,
   level,
   pathname,
 }: {
-  data: ArticleFragmentRecursive;
-  level: number;
-  pathname: string;
+  data: ArticleFragmentRecursive
+  level: number
+  pathname: string
 }) => {
-  const isRootLevel = level === 0;
-  const { activeSidebarItem, activeSlugs } = useSidebarContext();
-  const isActive = activeSidebarItem?._id === data._id;
-  const isActiveInPath = activeSlugs.includes(data._slug);
+  const isRootLevel = level === 0
+  const { activeSidebarItem, activeSlugs } = useSidebarContext()
+  const isActive = activeSidebarItem?._id === data._id
+  const isActiveInPath = activeSlugs.includes(data._slug)
 
   const { isCollapsed, toggleCollapsed } = useCollapsedState(
     `sidebar-item-collapsed-${data._id}`,
     isRootLevel || isActiveInPath ? false : true
-  );
+  )
 
   const href = React.useMemo(() => {
     function getHrefFromArticle(
       article: ArticleFragmentRecursive
     ): string | null {
       if (article.body?.__typename) {
-        return pathname;
+        return pathname
       } else if (isRootLevel) {
-        return null;
+        return null
       } else if (article.children.items[0]) {
-        return getHrefFromArticle(article.children.items[0]);
+        return getHrefFromArticle(article.children.items[0])
       } else {
-        return null;
+        return null
       }
     }
 
-    return getHrefFromArticle(data);
-  }, [data, pathname, isRootLevel]);
+    return getHrefFromArticle(data)
+  }, [data, pathname, isRootLevel])
 
   const titleNode = React.useMemo(() => {
-    const title = data.titleSidebarOverride ?? data._title;
+    const title = data.titleSidebarOverride ?? data._title
     const className =
-      "text-gray-500 font-medium text-sm items-center relative py-2 px-3 -mx-3 flex leading-4 transition-colors w-[calc(100%+12px)]";
+      'text-gray-500 font-medium text-sm items-center relative py-2 px-3 -mx-3 flex leading-4 transition-colors w-[calc(100%+12px)]'
 
     if (href)
       return (
         <Link
           href={href}
           className={clsx(
-            "hover:text-black rounded-lg",
+            'hover:text-black rounded-lg',
             className,
-            isActive && "!text-black bg-gray-100"
+            isActive && '!text-black bg-gray-100'
           )}
         >
           {title}
         </Link>
-      );
+      )
     if (data.children.items.length <= 0) {
-      return <p className={className}>{title}</p>;
+      return <p className={className}>{title}</p>
     }
     if (isRootLevel) {
       return (
@@ -144,19 +144,19 @@ const SidebarItem = ({
           <p
             className={clsx(
               className,
-              "!text-[11px] tracking-wider uppercase font-mono !text-black font-bold"
+              '!text-[11px] tracking-wider uppercase font-mono !text-black font-bold'
             )}
           >
             {data.titleSidebarOverride ?? data._title}
           </p>
         </div>
-      );
+      )
     }
     return (
       <button onClick={toggleCollapsed} className={className}>
         {title}
       </button>
-    );
+    )
   }, [
     data._title,
     data.children.items.length,
@@ -165,17 +165,17 @@ const SidebarItem = ({
     isRootLevel,
     toggleCollapsed,
     isActive,
-  ]);
+  ])
 
   return (
     <div>
-      <div className={clsx("relative", isActive && "text-brand")}>
+      <div className={clsx('relative', isActive && 'text-brand')}>
         {titleNode}
 
         <div
           className={clsx(
-            "w-px h-full bg-brand rounded-full absolute top-0 -left-5 transition",
-            isActive && level > 1 ? "" : "opacity-0 invisible"
+            'w-px h-full bg-brand rounded-full absolute top-0 -left-5 transition',
+            isActive && level > 1 ? '' : 'opacity-0 invisible'
           )}
         />
 
@@ -185,7 +185,7 @@ const SidebarItem = ({
             onClick={toggleCollapsed}
           >
             <span className="sr-only">
-              {isCollapsed ? "Expand" : "Collapse"}
+              {isCollapsed ? 'Expand' : 'Collapse'}
             </span>
             <svg
               width="15"
@@ -194,8 +194,8 @@ const SidebarItem = ({
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className={clsx(
-                "transition-transform",
-                isCollapsed === false && "rotate-90"
+                'transition-transform',
+                isCollapsed === false && 'rotate-90'
               )}
             >
               <path
@@ -211,11 +211,11 @@ const SidebarItem = ({
 
       <div
         className={clsx(
-          "pt-1 pb-2",
-          (isCollapsed || data.children.items.length < 1) && "hidden"
+          'pt-1 pb-2',
+          (isCollapsed || data.children.items.length < 1) && 'hidden'
         )}
       >
-        <div className={clsx("relative", !isRootLevel && "pl-5")}>
+        <div className={clsx('relative', !isRootLevel && 'pl-5')}>
           {!isRootLevel && (
             <div className="h-full absolute top-0 left-0 w-px bg-gray-200 rounded-full" />
           )}
@@ -227,13 +227,13 @@ const SidebarItem = ({
                 level={level + 1}
                 pathname={`${pathname}/${item._slug}`}
               />
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 /* -------------------------------------------------------------------------------------------------
  * Context
@@ -242,15 +242,15 @@ const SidebarItem = ({
 const SidebarContext = React.createContext<
   | undefined
   | {
-      activeSidebarItem: ArticleFragmentRecursive | null;
-      activeSlugs: string[];
+      activeSidebarItem: ArticleFragmentRecursive | null
+      activeSlugs: string[]
     }
->(undefined);
+>(undefined)
 
 const useSidebarContext = () => {
-  const context = React.useContext(SidebarContext);
+  const context = React.useContext(SidebarContext)
   if (!context) {
-    throw new Error("useSidebarContext must be used within SidebarContext");
+    throw new Error('useSidebarContext must be used within SidebarContext')
   }
-  return context;
-};
+  return context
+}

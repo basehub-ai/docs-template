@@ -6,6 +6,21 @@ import { HeadingWithIconFragment } from '@/app/_components/article/heading-with-
  * Article
  * -----------------------------------------------------------------------------------------------*/
 
+export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
+  _id: true,
+  _title: true,
+  _slug: true,
+  _sys: {
+    lastModifiedAt: true,
+  },
+  titleSidebarOverride: true,
+  body: {
+    __typename: true,
+  },
+})
+
+export type ArticleMetaFragment = fragmentOn.infer<typeof ArticleMetaFragment>
+
 export const ArticleBodyFragment = fragmentOn('BodyRichText', {
   content: true,
   blocks: {
@@ -16,15 +31,9 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
 })
 
 export const ArticleFragment = fragmentOn('ArticleComponent', {
-  _id: true,
-  _title: true,
-  _slug: true,
-  _sys: {
-    lastModifiedAt: true,
-  },
-  titleSidebarOverride: true,
+  ...ArticleMetaFragment,
   body: {
-    __typename: true,
+    ...ArticleMetaFragment.body,
     readingTime: true,
     json: ArticleBodyFragment,
   },
@@ -32,17 +41,17 @@ export const ArticleFragment = fragmentOn('ArticleComponent', {
 
 export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>
 
-export const ArticleFragmentRecursive = fragmentOnRecursiveCollection(
+export const ArticleMetaFragmentRecursive = fragmentOnRecursiveCollection(
   'ArticleComponent',
-  ArticleFragment,
+  ArticleMetaFragment,
   {
     levels: 5,
     recursiveKey: 'children',
   }
 )
 
-export type ArticleFragmentRecursive = fragmentOn.infer<
-  typeof ArticleFragmentRecursive
+export type ArticleMetaFragmentRecursive = fragmentOn.infer<
+  typeof ArticleMetaFragmentRecursive
 >
 
 /* -------------------------------------------------------------------------------------------------
@@ -51,7 +60,7 @@ export type ArticleFragmentRecursive = fragmentOn.infer<
 
 export const PageFragment = fragmentOn('PagesItem', {
   _slug: true,
-  articles: { items: ArticleFragmentRecursive },
+  articles: { items: ArticleMetaFragmentRecursive },
 })
 
 export type PageFragment = fragmentOn.infer<typeof PageFragment>
