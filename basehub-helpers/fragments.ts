@@ -1,3 +1,15 @@
+import { fragmentOn } from "@/.basehub";
+import { CalloutFragment } from "@/app/_components/article/callout";
+import { HeadingWithIconFragment } from "@/app/_components/article/heading-with-icon";
+
+/* -------------------------------------------------------------------------------------------------
+ * Helpers
+ * -----------------------------------------------------------------------------------------------*/
+
+type RecursiveCollection<T, Key extends string> = T & {
+  [key in Key]?: { items?: RecursiveCollection<T, Key> };
+};
+
 import { fragmentOn, fragmentOnRecursiveCollection } from "@/.basehub";
 
 /* -------------------------------------------------------------------------------------------------
@@ -8,8 +20,8 @@ export const ArticleBodyFragment = fragmentOn("BodyRichText", {
   content: true,
   blocks: {
     __typename: true,
-    on_CalloutComponent: { _id: true },
-    on_HeadingWithIconComponent: { _id: true },
+    on_CalloutComponent: CalloutFragment,
+    on_HeadingWithIconComponent: HeadingWithIconFragment,
   },
 });
 
