@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   basehub:
-    specifier: ^4.0.4
-    version: 4.0.4(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.0.5
+    version: 4.0.5(react-dom@18.2.0)(react@18.2.0)
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -935,8 +935,8 @@ packages:
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  /basehub@4.0.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-2X/w9qxW2jQidq8BqTKl7RbK1jBsfDeX3/HmmudF6TFcqNVAqNaRJ0yfA2wndTlCinMIvlfFS4LoAo2NsFYYSw==}
+  /basehub@4.0.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-fqcRf560pd3hngJF5DLYxo0ugmMEA52hKJUdljJnjp7k6hXEl9dw1j4oSIyzQmrQPikoYOhiZHkgD4njGURHFw==}
     hasBin: true
     peerDependencies:
       react: ^18.2.0
@@ -947,11 +947,11 @@ packages:
       arg: 5.0.1
       dotenv-mono: 1.3.10
       esbuild: 0.19.2
+      github-slugger: 2.0.0
       pusher-js: 8.3.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resolve-pkg: 2.0.0
-      slugify: 1.6.6
       sonner: 1.4.3(react-dom@18.2.0)(react@18.2.0)
       zod: 3.22.1
     transitivePeerDependencies:
@@ -1865,6 +1865,10 @@ packages:
     dependencies:
       resolve-pkg-maps: 1.0.0
     dev: true
+
+  /github-slugger@2.0.0:
+    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
+    dev: false
 
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -3124,11 +3128,6 @@ packages:
     dependencies:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 4.0.0
-    dev: false
-
-  /slugify@1.6.6:
-    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
-    engines: {node: '>=8.0.0'}
     dev: false
 
   /sonner@1.4.3(react-dom@18.2.0)(react@18.2.0):
