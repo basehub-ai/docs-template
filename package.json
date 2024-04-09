@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "basehub dev & next dev",
-    "build": "next build",
+    "build": "basehub && next build",
     "start": "next start",
     "lint": "next lint"
   },
