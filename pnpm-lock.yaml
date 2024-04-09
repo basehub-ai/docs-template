@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   basehub:
-    specifier: ^4.0.5
-    version: 4.0.5(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.0.6
+    version: 4.0.6(react-dom@18.2.0)(react@18.2.0)
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -935,8 +935,8 @@ packages:
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  /basehub@4.0.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-fqcRf560pd3hngJF5DLYxo0ugmMEA52hKJUdljJnjp7k6hXEl9dw1j4oSIyzQmrQPikoYOhiZHkgD4njGURHFw==}
+  /basehub@4.0.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-7vu+anGaV75AyxthD5Rg16ghM4RcxwqDH8nBXk0Oy3Jyf+2oWfP3vw1tXpIiTY5pzb/eFncChg+mY2d7kbVrgQ==}
     hasBin: true
     peerDependencies:
       react: ^18.2.0
