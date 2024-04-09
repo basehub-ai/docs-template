@@ -1,8 +1,4 @@
-import { fragmentOn } from "@/.basehub";
-import {
-  ArticleComponent,
-  ArticleComponentFilterInput,
-} from "@/.basehub/schema";
+import { fragmentOn, fragmentOnRecursiveCollection } from "@/.basehub";
 
 /* -------------------------------------------------------------------------------------------------
  * Helpers
@@ -42,41 +38,17 @@ export const ArticleFragment = fragmentOn("ArticleComponent", {
 
 export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>;
 
-/**
- * GraphQL doesn't support recursive fragments so we'll manually do it up to a certain level.
- */
-export function getArticleRecursive(options?: {
-  levels?: number;
-  path?: string[];
-  includeBody?: boolean;
-}) {
-  let { levels = 5, path, includeBody } = options || {};
-  includeBody = includeBody || path?.length === 0; // is edge
-
-  let current = {
-    ...ArticleFragment,
-  } as RecursiveCollection<typeof ArticleFragment, "children">;
-  const currentSlug = path?.[0] || null;
-  if (levels > 0) {
-    const nextPath = path?.slice(1);
-    current.children = {
-      ...(currentSlug
-        ? {
-            __args: { first: 1, filter: { _sys_slug: { eq: currentSlug } } },
-          }
-        : {}),
-      items: getArticleRecursive({
-        levels: levels - 1,
-        path: nextPath,
-        includeBody,
-      }),
-    };
+export const ArticleFragmentRecursive = fragmentOnRecursiveCollection(
+  "ArticleComponent",
+  ArticleFragment,
+  {
+    levels: 5,
+    recursiveKey: "children",
   }
-  return current;
-}
+);
 
 export type ArticleFragmentRecursive = fragmentOn.infer<
-  ReturnType<typeof getArticleRecursive>
+  typeof ArticleFragmentRecursive
 >;
 
 /* -------------------------------------------------------------------------------------------------
@@ -85,7 +57,7 @@ export type ArticleFragmentRecursive = fragmentOn.infer<
 
 export const PageFragment = fragmentOn("PagesItem", {
   _slug: true,
-  articles: { items: getArticleRecursive() },
+  articles: { items: ArticleFragmentRecursive },
 });
 
 export type PageFragment = fragmentOn.infer<typeof PageFragment>;

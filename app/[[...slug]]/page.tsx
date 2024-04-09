@@ -3,7 +3,6 @@ import {
   ArticleFragment,
   ArticleFragmentRecursive,
   PageFragment,
-  getArticleRecursive,
   pageBySlug,
 } from "@/basehub-helpers/fragments";
 import { Pump } from "@/.basehub/react-pump";
@@ -97,7 +96,7 @@ export default function ArticlePage({
                   first: 1,
                   filter: { _sys_slug: { eq: activeArticleSlug } },
                 },
-                items: getArticleRecursive({ path }),
+                items: ArticleFragmentRecursive,
               },
             },
           },
