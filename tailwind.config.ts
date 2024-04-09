@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: "var(--brand-color)",
+      },
+      spacing: {
+        header: "96px",
+        "site-nav": "56px",
+        "pages-nav": "40px",
+        sidebar: `calc(100vh - 56px - 40px)`,
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -15,6 +24,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;

@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Pump } from "@/.basehub/react-pump";
+import { pageBySlug } from "@/basehub-helpers/fragments";
+import { notFound } from "next/navigation";
+import { Sidebar } from "./_components/sidebar";
 import "./globals.css";
+import { PagesNav } from "./_components/pages-nav";
+import { Header } from "./_components/header";
+import { Footer } from "./_components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,12 +18,52 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { slug: string | undefined };
 }>) {
+  const page = params.slug?.[0];
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Pump queries={[{ settings: { brandColor: { hex: true } } }]}>
+          {async ([data]) => {
+            "use server";
+
+            return (
+              <style>{`
+                :root {
+                  --brand-color: ${data.settings.brandColor.hex};
+                }
+              `}</style>
+            );
+          }}
+        </Pump>
+        <Header />
+        <div className="flex gap-8 container mx-auto">
+          <div className="w-64">
+            <Pump queries={[{ pages: pageBySlug(page) }]}>
+              {async ([data]) => {
+                "use server";
+
+                const page = data.pages.items[0];
+                if (!page) notFound();
+
+                return (
+                  <Sidebar
+                    data={page.articles}
+                    level={0}
+                    pathname={`/${page._slug}`}
+                  />
+                );
+              }}
+            </Pump>
+          </div>
+          <main className="min-h-screen py-14 w-full">{children}</main>
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
