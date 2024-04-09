@@ -4,12 +4,11 @@ import { Pump } from "@/.basehub/react-pump";
 import { pageBySlug } from "@/basehub-helpers/fragments";
 import { notFound } from "next/navigation";
 import { Sidebar } from "./_components/sidebar";
-import "./globals.css";
-import { PagesNav } from "./_components/pages-nav";
 import { Header } from "./_components/header";
 import { Footer } from "./_components/footer";
-
-const inter = Inter({ subsets: ["latin"] });
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,7 +25,7 @@ export default function RootLayout({
   const page = params.slug?.[0];
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}>
         <Pump queries={[{ settings: { brandColor: { hex: true } } }]}>
           {async ([data]) => {
             "use server";
@@ -42,7 +41,7 @@ export default function RootLayout({
         </Pump>
         <Header />
         <div className="flex gap-8 container mx-auto">
-          <div className="w-64">
+          <div className="w-72">
             <Pump queries={[{ pages: pageBySlug(page) }]}>
               {async ([data]) => {
                 "use server";
@@ -60,7 +59,7 @@ export default function RootLayout({
               }}
             </Pump>
           </div>
-          <main className="min-h-screen py-14 w-full">{children}</main>
+          <main className="min-h-screen py-8 w-full">{children}</main>
         </div>
         <Footer />
       </body>

@@ -11,6 +11,10 @@ const config: Config = {
       colors: {
         brand: "var(--brand-color)",
       },
+      fontFamily: {
+        sans: ["var(--font-geist-sans), Inter, Roboto, sans-serif"],
+        mono: ["var(--font-geist-mono)"],
+      },
       spacing: {
         header: "96px",
         "site-nav": "56px",

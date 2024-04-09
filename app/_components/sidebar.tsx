@@ -37,7 +37,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
-      <aside className="w-full border-r border-gray-200 h-sidebar sticky top-header py-8 pr-3">
+      <aside className="w-full border-r border-gray-200 h-sidebar sticky top-header py-6 pr-3">
         {data.items.map((item) => {
           return (
             <SidebarItem
@@ -120,15 +120,16 @@ const SidebarItem = ({
   const titleNode = React.useMemo(() => {
     const title = data.titleSidebarOverride ?? data._title;
     const className =
-      "text-gray-500 font-medium text-sm items-center relative py-1.5 px-3 -mx-3 w-full flex leading-4";
+      "text-gray-500 font-medium text-sm items-center relative py-2 px-3 -mx-3 flex leading-4 transition-colors w-[calc(100%+12px)]";
 
     if (href)
       return (
         <Link
           href={href}
           className={clsx(
+            "hover:text-black rounded-lg",
             className,
-            isActive && "!text-black bg-gray-100 rounded-md"
+            isActive && "!text-black bg-gray-100"
           )}
         >
           {title}
@@ -139,7 +140,7 @@ const SidebarItem = ({
     }
     if (isRootLevel) {
       return (
-        <div className="border-b border-gray-200 mb-2">
+        <div className="border-b border-gray-200 mb-1">
           <p
             className={clsx(
               className,
@@ -170,9 +171,17 @@ const SidebarItem = ({
     <div>
       <div className={clsx("relative", isActive && "text-brand")}>
         {titleNode}
+
+        <div
+          className={clsx(
+            "w-px h-full bg-brand rounded-full absolute top-0 -left-5 transition",
+            isActive && level > 1 ? "" : "opacity-0 invisible"
+          )}
+        />
+
         {data.children && data.children.items.length > 0 && !isRootLevel && (
           <button
-            className="absolute top-1/2 right-2 -translate-y-1/2 cursor-default p-2 hover:bg-gray-200"
+            className="absolute top-1/2 right-2 -translate-y-1/2 cursor-default p-0.5 rounded-md border boder-gray-200 text-gray-500 flex items-center justify-center shadow-sm hover:border-gray-300 hover:text-gray-800 bg-white"
             onClick={toggleCollapsed}
           >
             <span className="sr-only">
@@ -202,24 +211,25 @@ const SidebarItem = ({
 
       <div
         className={clsx(
-          "relative",
-          isCollapsed && "hidden",
-          !isRootLevel && "pl-4"
+          "pt-1 pb-2",
+          (isCollapsed || data.children.items.length < 1) && "hidden"
         )}
       >
-        {!isRootLevel && (
-          <div className="h-full absolute top-0 left-2 w-px bg-gray-500" />
-        )}
-        {data.children.items.map((item) => {
-          return (
-            <SidebarItem
-              data={item}
-              key={item._id}
-              level={level - 1}
-              pathname={`${pathname}/${item._slug}`}
-            />
-          );
-        })}
+        <div className={clsx("relative", !isRootLevel && "pl-5")}>
+          {!isRootLevel && (
+            <div className="h-full absolute top-0 left-0 w-px bg-gray-200 rounded-full" />
+          )}
+          {data.children.items.map((item) => {
+            return (
+              <SidebarItem
+                data={item}
+                key={item._id}
+                level={level + 1}
+                pathname={`${pathname}/${item._slug}`}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
