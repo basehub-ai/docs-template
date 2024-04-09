@@ -1,7 +1,7 @@
 import { Article } from "@/app/_components/article";
 import {
   ArticleFragment,
-  ArticleMetaFragmentRecursive,
+  ArticleFragmentRecursive,
   PageFragment,
   getArticleRecursive,
   pageBySlug,
@@ -9,7 +9,10 @@ import {
 import { Pump } from "@/.basehub/react-pump";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getActiveSidebarItem } from "@/basehub-helpers/sidebar";
+import {
+  getActiveSidebarItem,
+  processArticle,
+} from "@/basehub-helpers/sidebar";
 import { basehub } from "@/.basehub";
 
 export const generateStaticParams = async (): Promise<
@@ -23,10 +26,7 @@ export const generateStaticParams = async (): Promise<
   /**
    * Recursive function to process every level of nesting
    */
-  function processArticle(
-    path: string[],
-    article: ArticleMetaFragmentRecursive
-  ) {
+  function processArticle(path: string[], article: ArticleFragmentRecursive) {
     const updatedPath = [...path, article._slug];
     if (article.body?.__typename) {
       // has body, therefore is linkable and should be added to result
@@ -58,13 +58,13 @@ export const generateMetadata = async ({
   const data = await basehub().query({ pages: pageBySlug(activePageSlug) });
 
   const page = data.pages.items[0];
-  if (!page) notFound();
+  if (!page) return {};
 
   const activeSidebarItem = getActiveSidebarItem({
     sidebar: page.articles,
     activeSlugs: params.slug?.slice(1) ?? [],
   });
-  if (!activeSidebarItem) notFound();
+  if (!activeSidebarItem) return {};
 
   return {
     title: activeSidebarItem._title,
@@ -77,6 +77,7 @@ export default function ArticlePage({
   params: { slug: string[] | undefined };
 }) {
   const [activePageSlug, activeArticleSlug, ...path] = params.slug ?? [];
+  const edgeSlug = path[path.length - 1];
 
   return (
     <Pump
@@ -108,36 +109,28 @@ export default function ArticlePage({
         const articles = data.pages.items[0]?.articles.items[0];
         if (!articles) notFound();
 
+        let first: undefined | ArticleFragment;
         let edge: undefined | ArticleFragment;
-        processArticle(articles, (article) => {
-          if (edge) return;
-          if (article.children.items.length < 1) {
-            if (article.body && "json" in article.body) {
-              // found the edge
-              edge = article as ArticleFragment;
-            }
+        let lastEdgeLevel = 0;
+        processArticle(articles, (article, { level }) => {
+          if (edge && lastEdgeLevel >= level) return;
+
+          if (!first && article.body?.json.content) {
+            first = article as ArticleFragment;
+          }
+
+          if (article._slug === edgeSlug) {
+            edge = article as ArticleFragment;
+            lastEdgeLevel = level;
           }
         });
+
+        edge = edge || first;
+
         if (!edge) notFound();
 
         return <Article data={edge} />;
       }}
     </Pump>
   );
-}
-
-/**
- * Recursive function to process every level of nesting
- */
-function processArticle(
-  article: ArticleMetaFragmentRecursive,
-  callback: (article: ArticleMetaFragmentRecursive) => void
-) {
-  callback(article);
-  // recursively process children
-  if (article.children.items && article.children.items.length > 0) {
-    article.children.items.forEach((child) => {
-      processArticle(child, callback);
-    });
-  }
 }

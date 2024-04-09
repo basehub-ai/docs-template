@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import {
-  ArticleMetaFragmentRecursive,
+  ArticleFragmentRecursive,
   PageFragment,
 } from "@/basehub-helpers/fragments";
 import Link from "next/link";
@@ -85,7 +85,7 @@ const SidebarItem = ({
   level,
   pathname,
 }: {
-  data: ArticleMetaFragmentRecursive;
+  data: ArticleFragmentRecursive;
   level: number;
   pathname: string;
 }) => {
@@ -101,7 +101,7 @@ const SidebarItem = ({
 
   const href = React.useMemo(() => {
     function getHrefFromArticle(
-      article: ArticleMetaFragmentRecursive
+      article: ArticleFragmentRecursive
     ): string | null {
       if (article.body?.__typename) {
         return pathname;
@@ -242,7 +242,7 @@ const SidebarItem = ({
 const SidebarContext = React.createContext<
   | undefined
   | {
-      activeSidebarItem: ArticleMetaFragmentRecursive | null;
+      activeSidebarItem: ArticleFragmentRecursive | null;
       activeSlugs: string[];
     }
 >(undefined);

@@ -25,6 +25,8 @@ export const PagesNav = async () => {
       {async ([data]) => {
         "use server";
 
+        let firstPageLinkId: string | null = null;
+
         return (
           <nav className="bg-gray-50 border-y border-gray-200 h-pages-nav">
             <div className="container mx-auto flex gap-4 items-center h-full">
@@ -34,8 +36,20 @@ export const PagesNav = async () => {
                   navLink.href ??
                   (navLink.page?._slug ? `/${navLink.page._slug}` : "");
                 if (!label || !href) return null;
+
+                const isPageLink = !!navLink.page;
+                if (!firstPageLinkId && isPageLink) {
+                  firstPageLinkId = navLink._id;
+                }
+
                 return (
-                  <NavLink href={href} key={navLink._id}>
+                  <NavLink
+                    href={href}
+                    key={navLink._id}
+                    isFirstPageLink={
+                      isPageLink && navLink._id === firstPageLinkId
+                    }
+                  >
                     {label}
                   </NavLink>
                 );

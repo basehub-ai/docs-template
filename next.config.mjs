@@ -4,8 +4,8 @@ const nextConfig = {
     return {
       fallback: [
         {
-          source: "/:path*", // Match all paths
-          destination: "/index/overview",
+          source: "/:path*",
+          destination: "/index/:path*",
         },
       ],
     };

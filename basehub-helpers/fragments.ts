@@ -16,17 +16,6 @@ type RecursiveCollection<T, Key extends string> = T & {
  * Article
  * -----------------------------------------------------------------------------------------------*/
 
-export const ArticleMetaFragment = fragmentOn("ArticleComponent", {
-  _id: true,
-  _title: true,
-  _slug: true,
-  _sys: {
-    lastModifiedAt: true,
-  },
-  titleSidebarOverride: true,
-  body: { __typename: true },
-});
-
 export const ArticleBodyFragment = fragmentOn("BodyRichText", {
   content: true,
   blocks: {
@@ -37,7 +26,13 @@ export const ArticleBodyFragment = fragmentOn("BodyRichText", {
 });
 
 export const ArticleFragment = fragmentOn("ArticleComponent", {
-  ...ArticleMetaFragment,
+  _id: true,
+  _title: true,
+  _slug: true,
+  _sys: {
+    lastModifiedAt: true,
+  },
+  titleSidebarOverride: true,
   body: {
     __typename: true,
     readingTime: true,
@@ -46,7 +41,6 @@ export const ArticleFragment = fragmentOn("ArticleComponent", {
 });
 
 export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>;
-export type ArticleMetaFragment = fragmentOn.infer<typeof ArticleMetaFragment>;
 
 /**
  * GraphQL doesn't support recursive fragments so we'll manually do it up to a certain level.
@@ -60,11 +54,8 @@ export function getArticleRecursive(options?: {
   includeBody = includeBody || path?.length === 0; // is edge
 
   let current = {
-    ...(includeBody ? ArticleFragment : ArticleMetaFragment),
-  } as RecursiveCollection<
-    typeof ArticleMetaFragment | typeof ArticleFragment,
-    "children"
-  >;
+    ...ArticleFragment,
+  } as RecursiveCollection<typeof ArticleFragment, "children">;
   const currentSlug = path?.[0] || null;
   if (levels > 0) {
     const nextPath = path?.slice(1);
@@ -84,7 +75,7 @@ export function getArticleRecursive(options?: {
   return current;
 }
 
-export type ArticleMetaFragmentRecursive = fragmentOn.infer<
+export type ArticleFragmentRecursive = fragmentOn.infer<
   ReturnType<typeof getArticleRecursive>
 >;
 
