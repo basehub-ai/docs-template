@@ -14,7 +14,7 @@ export default async function ArticleLayout({
 
   return (
     <div className="flex gap-8 container mx-auto">
-      <div className="w-72">
+      <div className="w-80">
         <Pump queries={[{ pages: pageBySlug(page) }]}>
           {async ([data]) => {
             "use server";

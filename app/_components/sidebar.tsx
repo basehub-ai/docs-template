@@ -37,7 +37,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
-      <aside className="w-full border-r border-gray-200 h-sidebar sticky top-header py-6 pr-3">
+      <aside className="w-full border-r border-gray-200 h-sidebar sticky top-header pt-6 pb-12 pr-3 pl-3 -ml-3 overflow-auto flex flex-col gap-3">
         {data.items.map((item) => {
           return (
             <SidebarItem
