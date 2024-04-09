@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Pump } from "@/.basehub/react-pump";
 import { pageBySlug } from "@/basehub-helpers/fragments";
 import { notFound } from "next/navigation";
