@@ -4,8 +4,9 @@ import { CalloutComponent } from './callout'
 import { HeadingWithIconComponent } from './heading-with-icon'
 import { Pump } from '@/.basehub/react-pump'
 import { notFound } from 'next/navigation'
-import s from './article.module.scss'
 import { draftMode } from 'next/headers'
+
+import s from './article.module.scss'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -35,7 +36,7 @@ export const Article = ({ id }: { id: string }) => {
               <h1>{article._title}</h1>
               <RichText
                 blocks={article.body?.json.blocks}
-                components={{ CalloutComponent, HeadingWithIconComponent }}
+                components={{ CalloutComponent, HeadingWithIconComponent_mark: HeadingWithIconComponent, HeadingWithIconComponent }}
               >
                 {article.body?.json.content}
               </RichText>
