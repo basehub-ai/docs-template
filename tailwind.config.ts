@@ -51,6 +51,13 @@ const config: Config = {
         'pages-nav': '40px',
         sidebar: `calc(100vh - 56px - 40px)`,
       },
+      borderRadius: {
+        round: '99px',
+      },
+      letterSpacing: {
+        default: '-0.26px',
+        'tighter-1': '-0.3px',
+      },
       boxShadow: {
         soft: '0px 1px 2px 0px rgba(9, 9, 11, 0.04)',
       },

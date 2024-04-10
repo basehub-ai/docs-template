@@ -29,10 +29,34 @@ export default function RootLayout({
           {async ([data]) => {
             'use server'
 
+            function hexToRgb(hex: string): {
+              r: number
+              g: number
+              b: number
+            } {
+              hex = hex.replace(/^#/, '')
+
+              if (hex.length === 3) {
+                hex = hex[0]! + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+              }
+
+              let bigint: number = parseInt(hex, 16)
+              let r: number = (bigint >> 16) & 255
+              let g: number = (bigint >> 8) & 255
+              let b: number = bigint & 255
+
+              return { r, g, b }
+            }
+
+            const { r, g, b } = hexToRgb(data.settings.brandColor.hex)
+
             return (
               <style>{`
                 :root {
                   --brand-color: ${data.settings.brandColor.hex};
+                  --brand-color-r: ${r};
+                  --brand-color-g: ${g};
+                  --brand-color-b: ${b};
                 }
               `}</style>
             )
