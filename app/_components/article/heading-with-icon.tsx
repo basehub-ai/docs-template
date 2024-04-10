@@ -8,7 +8,7 @@ export const HeadingWithIconComponent = ({
   return (
     <h3 className="relative">
       <Image
-        className="absolute -left-12 top-1/2 h-8 w-8 -translate-y-1/2 "
+        className="absolute -left-10 top-1/2 h-6 w-6 -translate-y-1/2 "
         alt={icon.alt ?? ''}
         width={icon.width}
         height={icon.height}
