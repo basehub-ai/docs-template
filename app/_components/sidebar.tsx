@@ -85,7 +85,7 @@ const SidebarItem = ({
   level,
   pathname,
 }: {
-  data: ArticleFragmentRecursive
+  data: ArticleMetaFragmentRecursive
   level: number
   pathname: string
 }) => {
@@ -101,7 +101,7 @@ const SidebarItem = ({
 
   const href = React.useMemo(() => {
     function getHrefFromArticle(
-      article: ArticleFragmentRecursive
+      article: ArticleMetaFragmentRecursive
     ): string | null {
       if (article.body?.__typename) {
         return pathname
@@ -242,7 +242,7 @@ const SidebarItem = ({
 const SidebarContext = React.createContext<
   | undefined
   | {
-      activeSidebarItem: ArticleFragmentRecursive | null
+      activeSidebarItem: ArticleMetaFragmentRecursive | null
       activeSlugs: string[]
     }
 >(undefined)
