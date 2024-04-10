@@ -11,13 +11,13 @@ export default async function ArticleLayout({
   children?: React.ReactNode
   params: { slug: string | undefined }
 }) {
-  const page = params.slug?.[0]
+  const activePageSlug = params.slug?.[0]
 
   return (
     <div className="container mx-auto flex gap-8">
       <div className="w-80">
         <Pump
-          queries={[{ pages: pageBySlug(page) }]}
+          queries={[{ pages: pageBySlug(activePageSlug) }]}
           next={{ revalidate: 30 }}
           draft={draftMode().isEnabled}
         >

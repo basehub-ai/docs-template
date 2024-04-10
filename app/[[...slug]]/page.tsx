@@ -1,6 +1,5 @@
 import { Article } from '@/app/_components/article'
 import {
-  ArticleMetaFragment,
   ArticleMetaFragmentRecursive,
   PageFragment,
   pageBySlug,
@@ -8,7 +7,7 @@ import {
 import { Pump } from '@/.basehub/react-pump'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getActiveSidebarItem, processArticle } from '@/basehub-helpers/sidebar'
+import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 
@@ -64,7 +63,7 @@ export const generateMetadata = async ({
     sidebar: page.articles,
     activeSlugs: params.slug?.slice(1) ?? [],
   })
-  if (!activeSidebarItem) return {}
+  if (!activeSidebarItem) return notFound()
 
   return {
     title: activeSidebarItem._title,
@@ -76,62 +75,29 @@ export default function ArticlePage({
 }: {
   params: { slug: string[] | undefined }
 }) {
-  const [activePageSlug, activeArticleSlug, ...path] = params.slug ?? []
-  const edgeSlug = path[path.length - 1]
+  const activePageSlug = params.slug?.[0]
+  const activeSlugs = params.slug?.slice(1) ?? []
 
   return (
     <Pump
-      queries={[
-        {
-          pages: {
-            __args: {
-              first: 1,
-              ...(activePageSlug && {
-                filter: { _sys_slug: { eq: activePageSlug } },
-              }),
-            },
-            items: {
-              _slug: true,
-              articles: {
-                __args: {
-                  first: 1,
-                  filter: { _sys_slug: { eq: activeArticleSlug } },
-                },
-                items: ArticleMetaFragmentRecursive,
-              },
-            },
-          },
-        },
-      ]}
+      queries={[{ pages: pageBySlug(activePageSlug) }]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'
-        const articles = data.pages.items[0]?.articles.items[0]
-        if (!articles) notFound()
 
-        let first: undefined | ArticleMetaFragment
-        let edge: undefined | ArticleMetaFragment
-        let lastEdgeLevel = 0
-        processArticle(articles, (article, { level }) => {
-          if (edge && lastEdgeLevel >= level) return
+        const page = data.pages.items[0]
+        if (!page) notFound()
 
-          if (!first && article.body?.__typename) {
-            first = article as ArticleMetaFragment
-          }
-
-          if (article._slug === edgeSlug) {
-            edge = article as ArticleMetaFragment
-            lastEdgeLevel = level
-          }
+        const activeSidebarItem = getActiveSidebarItem({
+          sidebar: page.articles,
+          activeSlugs,
         })
 
-        edge = edge || first
+        if (!activeSidebarItem) notFound()
 
-        if (!edge) notFound()
-
-        return <Article id={edge._id} />
+        return <Article id={activeSidebarItem._id} />
       }}
     </Pump>
   )

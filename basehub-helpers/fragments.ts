@@ -59,6 +59,7 @@ export type ArticleMetaFragmentRecursive = fragmentOn.infer<
  * -----------------------------------------------------------------------------------------------*/
 
 export const PageFragment = fragmentOn('PagesItem', {
+  _id: true,
   _slug: true,
   articles: { items: ArticleMetaFragmentRecursive },
 })
