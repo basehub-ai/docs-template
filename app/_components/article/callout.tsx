@@ -2,6 +2,7 @@ import { fragmentOn } from '@/.basehub'
 import { RichText } from 'basehub/react-rich-text'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { Body } from '.'
 
 export const CalloutComponent = ({
   _title,
@@ -24,23 +25,7 @@ export const CalloutComponent = ({
     <p className="!text-xs !font-medium !leading-4 !tracking-[-0.26px] !text-inherit">
       {_title}
     </p>
-    <RichText
-      components={{
-        p: ({ children }) => (
-          <p className="!text-xs !leading-4 text-[#52525B]">{children}</p>
-        ),
-        a: ({ children, ...rest }) => (
-          <Link
-            {...rest}
-            className="!border-none !text-[#18181B] hover:underline"
-          >
-            {children}
-          </Link>
-        ),
-      }}
-    >
-      {content?.json.content}
-    </RichText>
+    <Body>{content?.json.content}</Body>
   </div>
 )
 

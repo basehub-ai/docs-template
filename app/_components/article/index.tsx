@@ -1,10 +1,15 @@
-import { ArticleFragment } from '@/basehub-helpers/fragments'
-import { RichText } from '@/.basehub/react-rich-text'
-import { CalloutComponent } from './callout'
-import { HeadingWithIconComponent } from './heading-with-icon'
-import { Pump } from '@/.basehub/react-pump'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
+
+import { ArticleFragment } from '@/basehub-helpers/fragments'
+import { CustomBlocksBase, RichText, RichTextProps } from '@/.basehub/react-rich-text'
+import { Pump } from '@/.basehub/react-pump'
+
+import { HeadingWithIconComponent } from './heading-with-icon'
+import { CalloutComponent } from './callout'
+import { Video } from './video'
+import { Image } from './image/handler'
+import { BodyRichText } from '@/.basehub/schema'
 
 import s from './article.module.scss'
 
@@ -28,22 +33,39 @@ export const Article = ({ id }: { id: string }) => {
         'use server'
 
         const article = data._componentInstances.article.items[0]
-        if (!article) notFound()
+        if (!article?.body?.json) notFound()
 
         return (
           <article className="flex justify-center">
             <div className={s.body}>
               <h1>{article._title}</h1>
-              <RichText
-                blocks={article.body?.json.blocks}
-                components={{ CalloutComponent, HeadingWithIconComponent_mark: HeadingWithIconComponent, HeadingWithIconComponent }}
+              <Body
+                blocks={article.body.json.blocks}
+                components={{
+                  CalloutComponent,
+                  HeadingWithIconComponent_mark: HeadingWithIconComponent,
+                  HeadingWithIconComponent,
+                  video: Video,
+                  img: Image,
+                }}
               >
-                {article.body?.json.content}
-              </RichText>
+                {article.body.json.content}
+              </Body>
             </div>
           </article>
         )
       }}
     </Pump>
+  )
+}
+
+export const Body = <CustomBlocks extends CustomBlocksBase>(props: RichTextProps<CustomBlocks>) => {
+  return (
+    <RichText
+      blocks={props.blocks}
+      components={props.components}
+    >
+      {props.children}
+    </RichText>
   )
 }
