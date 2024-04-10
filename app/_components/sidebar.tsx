@@ -63,19 +63,24 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
 const collapsedMap = new Map<string, boolean>()
 
 const useCollapsedState = (key: string, initial: boolean) => {
-  const [isCollapsed, setIsCollapsed_INTERNAL] = React.useState(() => {
+  const [isCollapsed, setIsCollapsed] = React.useState(() => {
     if (initial === false) return false
     if (collapsedMap.has(key)) return collapsedMap.get(key)!
     return initial
   })
 
+  // sync with map
+  React.useEffect(() => {
+    if (isCollapsed) {
+      collapsedMap.set(key, true)
+    } else {
+      collapsedMap.set(key, false)
+    }
+  }, [isCollapsed, key])
+
   const toggleCollapsed = React.useCallback(() => {
-    setIsCollapsed_INTERNAL((p) => {
-      const newValue = !p
-      collapsedMap.set(key, newValue)
-      return newValue
-    })
-  }, [key])
+    setIsCollapsed((p) => !p)
+  }, [])
 
   return { isCollapsed, toggleCollapsed }
 }
