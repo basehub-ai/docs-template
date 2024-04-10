@@ -9,7 +9,7 @@ export const HeadingWithIconComponent = ({
     <h2>
       {_title}
       <Image
-        className="inline ml-2"
+        className="ml-2 inline"
         alt={icon.alt ?? ''}
         width={icon.width}
         height={icon.height}

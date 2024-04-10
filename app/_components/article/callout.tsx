@@ -11,17 +11,17 @@ export const CalloutComponent = ({
   <div
     className={clsx(
       {
-        'text-warning bg-warning-light border-warning-border':
+        'border-warning-border bg-warning-light text-warning':
           type === 'warning',
-        'text-danger bg-danger-light border-danger-border': type === 'danger',
-        'text-check bg-check-light border-check-border': type === 'check',
-        'text-note bg-note-light border-note-border': type === 'note',
-        'text-info bg-info-light border-info-border': type === 'info',
+        'border-danger-border bg-danger-light text-danger': type === 'danger',
+        'border-check-border bg-check-light text-check': type === 'check',
+        'border-note-border bg-note-light text-note': type === 'note',
+        'border-info-border bg-info-light text-info': type === 'info',
       },
-      'rounded-lg border p-3 space-y-1.5 shadow-soft'
+      'space-y-1.5 rounded-lg border p-3 shadow-soft'
     )}
   >
-    <p className="!text-inherit !text-xs !leading-4 !tracking-[-0.26px] !font-medium">
+    <p className="!text-xs !font-medium !leading-4 !tracking-[-0.26px] !text-inherit">
       {_title}
     </p>
     <RichText
@@ -32,7 +32,7 @@ export const CalloutComponent = ({
         a: ({ children, ...rest }) => (
           <Link
             {...rest}
-            className="!text-[#18181B] !border-none hover:underline"
+            className="!border-none !text-[#18181B] hover:underline"
           >
             {children}
           </Link>

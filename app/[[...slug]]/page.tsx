@@ -10,6 +10,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getActiveSidebarItem, processArticle } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
+import { draftMode } from 'next/headers'
 
 export const generateStaticParams = async (): Promise<
   Array<{ params: { slug: string[] } }>
@@ -102,6 +103,8 @@ export default function ArticlePage({
           },
         },
       ]}
+      next={{ revalidate: 30 }}
+      draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'

@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <footer className="border-gray-200 border-t">
+    <footer className="border-t border-gray-200">
       <div className="container mx-auto py-16">Footer</div>
     </footer>
-  );
-};
+  )
+}

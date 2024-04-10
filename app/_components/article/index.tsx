@@ -5,6 +5,7 @@ import { HeadingWithIconComponent } from './heading-with-icon'
 import { Pump } from '@/.basehub/react-pump'
 import { notFound } from 'next/navigation'
 import s from './article.module.scss'
+import { draftMode } from 'next/headers'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -19,6 +20,8 @@ export const Article = ({ id }: { id: string }) => {
           },
         },
       ]}
+      next={{ revalidate: 30 }}
+      draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'

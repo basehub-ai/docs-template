@@ -4,12 +4,12 @@ const nextConfig = {
     return {
       fallback: [
         {
-          source: "/:path*",
-          destination: "/index/:path*",
+          source: '/:path*',
+          destination: '/index/:path*',
         },
       ],
-    };
+    }
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

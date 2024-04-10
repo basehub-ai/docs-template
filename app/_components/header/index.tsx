@@ -1,17 +1,22 @@
-import { Pump } from "@/.basehub/react-pump";
-import { PagesNav } from "./pages-nav";
-import Link from "next/link";
+import { Pump } from '@/.basehub/react-pump'
+import { PagesNav } from './pages-nav'
+import Link from 'next/link'
+import { draftMode } from 'next/headers'
 
 export const Header = () => {
   return (
-    <Pump queries={[{ settings: { logo: { url: true } } }]}>
+    <Pump
+      queries={[{ settings: { logo: { url: true } } }]}
+      next={{ revalidate: 30 }}
+      draft={draftMode().isEnabled}
+    >
       {async ([data]) => {
-        "use server";
-        const logo = data.settings.logo.url;
+        'use server'
+        const logo = data.settings.logo.url
 
         return (
-          <header className="sticky top-0 bg-white z-50">
-            <div className="h-site-nav flex items-center container mx-auto">
+          <header className="sticky top-0 z-50 bg-white">
+            <div className="container mx-auto flex h-site-nav items-center">
               <Link href="/">
                 <span className="sr-only">Home</span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -20,8 +25,8 @@ export const Header = () => {
             </div>
             <PagesNav />
           </header>
-        );
+        )
       }}
     </Pump>
-  );
-};
+  )
+}
