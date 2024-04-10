@@ -17,6 +17,7 @@ export type TocProps = RichTextProps & {
 export const Toc = ({ blocks, children }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
+  const backToTopButton = React.useRef<HTMLButtonElement>(null)
 
   const setHighlightedSection = React.useCallback((sectionId: string) => {
     setCurrentSectionId((prevState) => {
@@ -72,18 +73,34 @@ export const Toc = ({ blocks, children }: TocProps) => {
     }
   }, [headingListLength, setHighlightedSection])
 
-  React.useEffect(() => {
-    const consoleLogCurrentScrollPercentage = () => {
-      const scrollPercentage = Math.round(window.scrollY)
-      console.log(scrollPercentage)
-    }
+  const handleScroll = React.useCallback(() => {
+    if (!backToTopButton.current) return
+    const scrollY = Math.round(window.scrollY)
 
-    document.addEventListener('scroll', consoleLogCurrentScrollPercentage)
-
-    return () => {
-      document.removeEventListener('scroll', consoleLogCurrentScrollPercentage)
+    if (scrollY > 300) {
+      backToTopButton.current.style.opacity = '1'
+      backToTopButton.current.style.pointerEvents = 'auto'
+    } else {
+      backToTopButton.current.style.opacity = '0'
+      backToTopButton.current.style.pointerEvents = 'none'
     }
   }, [])
+
+  React.useEffect(() => {
+    if (!backToTopButton.current) return
+
+    handleScroll()
+  }, [handleScroll])
+
+  React.useEffect(() => {
+    if (!backToTopButton.current) return
+
+    document.addEventListener('scroll', handleScroll)
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll)
+    }
+  }, [handleScroll])
 
   return (
     <aside className={s.toc}>
@@ -123,9 +140,16 @@ export const Toc = ({ blocks, children }: TocProps) => {
         </>
       )}
 
-      <button className="tracking-default bg-[rgba(244,244,245,0.64)] rounded-round mt-10 leading-4 p-1.5 pl-3 text-xs text-normal flex items-center">
+      <button
+        ref={backToTopButton}
+        style={{ opacity: 0, pointerEvents: 'none' }}
+        onClick={() => {
+          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+        }}
+        className="tracking-default bg-light rounded-round mt-10 flex items-center bg-opacity-65 p-1.5 pl-3 text-xs leading-4 text-normal transition-[opacity,background-color] duration-300 hover:bg-opacity-100"
+      >
         Back to top
-        <span className='shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)] border border-info-border rounded-round bg-white ml-2 inline-flex items-center justify-center w-4 h-4'>
+        <span className="rounded-round ml-2 inline-flex h-4 w-4 items-center justify-center border border-info-border bg-white shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)]">
           <ChevronUpIcon width={10} height={10} />
         </span>
       </button>

@@ -12,6 +12,8 @@ const config: Config = {
         brand: 'var(--brand-color)',
         normal: 'var(--normal)',
         strong: 'var(--strong)',
+        light: 'var(--light)',
+        dark: 'var(--dark)',
         warning: {
           DEFAULT: '#CB9509',
           light: '#FFFBEB',
@@ -57,6 +59,7 @@ const config: Config = {
       letterSpacing: {
         default: '-0.26px',
         'tighter-1': '-0.3px',
+        'tighter-3': '-0.52px',
       },
       boxShadow: {
         soft: '0px 1px 2px 0px rgba(9, 9, 11, 0.04)',

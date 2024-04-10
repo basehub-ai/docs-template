@@ -11,8 +11,10 @@ import { Pump } from '@/.basehub/react-pump'
 
 import { HeadingWithIconComponent } from './heading-with-icon'
 import { CalloutComponent } from './callout'
+import { StepperComponent } from './stepper'
 import { Video } from './video'
 import { Image } from './image/handler'
+
 import { Toc } from '../toc'
 
 import s from './article.module.scss'
@@ -47,9 +49,10 @@ export const Article = ({ id }: { id: string }) => {
                 <Body
                   blocks={article.body.json.blocks}
                   components={{
+                    StepperComponent,
                     CalloutComponent,
-                    HeadingWithIconComponent_mark: HeadingWithIconComponent,
                     HeadingWithIconComponent,
+                    HeadingWithIconComponent_mark: HeadingWithIconComponent,
                     video: Video,
                     img: Image,
                   }}
