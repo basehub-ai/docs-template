@@ -6,16 +6,16 @@ export const HeadingWithIconComponent = ({
   icon,
 }: HeadingWithIconFragment) => {
   return (
-    <h2>
-      {_title}
+    <h3 className="relative">
       <Image
-        className="ml-2 inline"
+        className="absolute -left-12 top-1/2 h-8 w-8 -translate-y-1/2 "
         alt={icon.alt ?? ''}
         width={icon.width}
         height={icon.height}
         src={icon.url}
       />
-    </h2>
+      {_title}
+    </h3>
   )
 }
 
