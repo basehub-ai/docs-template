@@ -2,14 +2,18 @@ import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 
 import { ArticleFragment } from '@/basehub-helpers/fragments'
-import { CustomBlocksBase, RichText, RichTextProps } from '@/.basehub/react-rich-text'
+import {
+  CustomBlocksBase,
+  RichText,
+  RichTextProps,
+} from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 
 import { HeadingWithIconComponent } from './heading-with-icon'
 import { CalloutComponent } from './callout'
 import { Video } from './video'
 import { Image } from './image/handler'
-import { BodyRichText } from '@/.basehub/schema'
+import { Toc } from '../toc'
 
 import s from './article.module.scss'
 
@@ -36,35 +40,37 @@ export const Article = ({ id }: { id: string }) => {
         if (!article?.body?.json) notFound()
 
         return (
-          <article className="flex justify-center">
-            <div className={s.body}>
-              <h1>{article._title}</h1>
-              <Body
-                blocks={article.body.json.blocks}
-                components={{
-                  CalloutComponent,
-                  HeadingWithIconComponent_mark: HeadingWithIconComponent,
-                  HeadingWithIconComponent,
-                  video: Video,
-                  img: Image,
-                }}
-              >
-                {article.body.json.content}
-              </Body>
-            </div>
-          </article>
+          <>
+            <article className="flex flex-1 justify-center">
+              <div className={s.body}>
+                <h1>{article._title}</h1>
+                <Body
+                  blocks={article.body.json.blocks}
+                  components={{
+                    CalloutComponent,
+                    HeadingWithIconComponent_mark: HeadingWithIconComponent,
+                    HeadingWithIconComponent,
+                    video: Video,
+                    img: Image,
+                  }}
+                >
+                  {article.body.json.content}
+                </Body>
+              </div>
+            </article>
+            <Toc>{article.body.json.toc}</Toc>
+          </>
         )
       }}
     </Pump>
   )
 }
 
-export const Body = <CustomBlocks extends CustomBlocksBase>(props: RichTextProps<CustomBlocks>) => {
+export const Body = <CustomBlocks extends CustomBlocksBase>(
+  props: RichTextProps<CustomBlocks>
+) => {
   return (
-    <RichText
-      blocks={props.blocks}
-      components={props.components}
-    >
+    <RichText blocks={props.blocks} components={props.components}>
       {props.children}
     </RichText>
   )

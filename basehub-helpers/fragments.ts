@@ -23,6 +23,7 @@ export type ArticleMetaFragment = fragmentOn.infer<typeof ArticleMetaFragment>
 
 export const ArticleBodyFragment = fragmentOn('BodyRichText', {
   content: true,
+  toc: true,
   blocks: {
     __typename: true,
     on_CalloutComponent: CalloutFragment,

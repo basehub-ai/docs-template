@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         brand: 'var(--brand-color)',
+        normal: 'var(--normal)',
+        strong: 'var(--strong)',
         warning: {
           DEFAULT: '#CB9509',
           light: '#FFFBEB',
@@ -31,7 +33,7 @@ const config: Config = {
           border: 'rgba(167, 243, 208, 0.88)',
         },
         info: {
-          DEFAULT: '#18181B',
+          DEFAULT: 'var(--strong)',
           light: '#FAFAFA',
           border: 'rgba(212, 212, 216, 0.56)',
         },

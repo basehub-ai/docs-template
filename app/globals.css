@@ -8,4 +8,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --strong: #18181b;
+  --normal: #71717a;
 }

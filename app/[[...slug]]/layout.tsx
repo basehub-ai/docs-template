@@ -37,7 +37,7 @@ export default async function ArticleLayout({
           }}
         </Pump>
       </div>
-      <main className="min-h-screen w-full py-8">{children}</main>
+      <main className="flex items-start min-h-screen w-full gap-x-8 py-8">{children}</main>
     </div>
   )
 }
