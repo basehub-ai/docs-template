@@ -1,6 +1,7 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
 import { CalloutFragment } from '@/app/_components/article/callout'
 import { HeadingWithIconFragment } from '@/app/_components/article/heading-with-icon'
+import { CardsGridFragment } from '@/app/_components/article/cards-grid'
 import { StepperFragment } from '@/app/_components/article/stepper'
 
 /* -------------------------------------------------------------------------------------------------
@@ -29,6 +30,7 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     __typename: true,
     on_CalloutComponent: CalloutFragment,
     on_HeadingWithIconComponent: HeadingWithIconFragment,
+    on_CardsGridComponent: CardsGridFragment,
     on_StepperComponent: StepperFragment,
   },
 })

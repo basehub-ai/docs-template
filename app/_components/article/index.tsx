@@ -14,6 +14,7 @@ import { CalloutComponent } from './callout'
 import { StepperComponent } from './stepper'
 import { Video } from './video'
 import { Image } from './image/handler'
+import { CardsGridComponent } from './cards-grid'
 
 import { Toc } from '../toc'
 
@@ -52,6 +53,8 @@ export const Article = ({ id }: { id: string }) => {
                     StepperComponent,
                     CalloutComponent,
                     HeadingWithIconComponent,
+                    CardsGridComponent,
+                    CardsGridComponent_mark: CardsGridComponent,
                     HeadingWithIconComponent_mark: HeadingWithIconComponent,
                     video: Video,
                     img: Image,
