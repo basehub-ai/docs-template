@@ -34,6 +34,7 @@
     font-size: 18px;
     margin-top: 2em;
     margin-bottom: 0.5em;
+    position: relative;
 
     &[data-type="stepper-checkpoint"] {
       span {
@@ -56,17 +57,18 @@
         border: 1px solid rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.20);
         background: rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.12);
         box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
+        z-index: 1;
 
-        &::after {
+        &:before {
           content: '';
           display: block;
           position: absolute;
-          top: 0;
-          left: 0;
-          width: calc(100% + 8px);
-          height: calc(100% + 8px);
-          border-radius: 99px;
-          background: red;
+          z-index: 0;
+          left: 10.5px;
+          width: 1px;
+          height: var(--step-height);
+          top: calc(var(--step-title-height) + 2px);
+          background-image: linear-gradient(180deg, rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.04), rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.32));
         }
       }
     }
@@ -178,21 +180,6 @@
     line-height: 16px;
     letter-spacing: -0.26px;
   };
-
-  div[data-type="stepper"] {
-    position: relative;
-
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 1px;
-      left: -24px;
-      background-color: rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.32);
-    }
-  }
 
   div[data-type="callout"] {
     border-radius: 8px;

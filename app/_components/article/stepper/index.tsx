@@ -1,10 +1,42 @@
 import * as React from 'react'
 import { fragmentOn } from '@/.basehub'
 
-import { Stepper } from './stepper'
+import { StepController } from './step-controller'
+import { Body } from '..'
 
-export const StepperComponent = ({ _id, stepperContent }: StepperFragment) => {
-  return <Stepper stepperContent={stepperContent} />
+export const StepperComponent = async ({
+  _id,
+  stepperContent,
+}: StepperFragment) => {
+  let checkpoints = 0
+
+  return (
+    <div data-type="stepper" data-stepper-id={_id}>
+      <Body
+        // @ts-ignore
+        components={{
+          h3: ({ children, ...rest }) => {
+            checkpoints++
+
+            return (
+              <StepController stepperId={_id} stepId={rest.id}>
+                <h3
+                  {...rest}
+                  data-type="stepper-checkpoint"
+                  className="relative"
+                >
+                  {children}
+                  <span>{checkpoints}</span>
+                </h3>
+              </StepController>
+            )
+          },
+        }}
+      >
+        {stepperContent.json.content}
+      </Body>
+    </div>
+  )
 }
 
 export const StepperFragment = fragmentOn('StepperComponent', {
