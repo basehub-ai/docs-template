@@ -13,7 +13,13 @@ import {
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
-import { CodeGroupFragment, CodeSnippet, CodeSnippetFragmentRecursive, CodeSnippetGroup } from './code-snippet'
+import {
+  CodeGroupFragment,
+  CodeSnippet,
+  CodeSnippetFragmentRecursive,
+  CodeSnippetGroup,
+} from './code-snippet'
+import { AccordionComponent, AccordionFragment } from './accordion'
 import { Video } from './video'
 import { Image } from './image/handler'
 
@@ -69,6 +75,7 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     on_CalloutComponent: CalloutFragment,
     on_HeadingWithIconComponent: HeadingWithIconFragment,
     on_CardsGridComponent: CardsGridFragment,
+    on_AccordionGroupComponent: AccordionFragment,
     on_StepperComponent: StepperFragment,
     on_CodeGroupComponent: CodeGroupFragment,
     on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
@@ -83,6 +90,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
       blocks={props.blocks}
       components={{
         StepperComponent,
+        AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
         CardsGridComponent,
         CardsGridComponent_mark: CardsGridComponent,
