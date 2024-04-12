@@ -1,20 +1,28 @@
 .toc {
    position: sticky;
    top: 128px;
+   width: 260px;
 
    ol {
       border-left: 1px solid #D4D4D88F;
-      padding-block: 15px;
+      padding-block: 3px;
       padding-left: 13px;
       font-size: 13px;
       color :var(--normal);
+      position: relative;
 
       li {
          position: relative;
+         line-height: 16px;
 
          a {
+            padding-top: 12px;
             position: relative;
             display: inline-block;
+
+            &:not(:only-child) {
+               padding-top: 12px;
+            }
 
             &:hover,
             &[data-active="true"] {
@@ -30,13 +38,13 @@
                   width: 1px;
                   position: absolute;
                   z-index: 0;
+                  top: 2px;
                   height: calc(100% + 6px);
                   background-image: linear-gradient(180deg, transparent 0%, rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.98) 100%);
                   left: 7.5px;
                   transition: background-color 0.1s ease-out;
                }
             }
-
 
             &:before {
                content: '';
@@ -47,7 +55,7 @@
                height: 16px;
                border-radius: 99px;
                background-color: white;
-               top: 2px;
+               top: 14px;
                transform: translateX(-21.5px) translateY(0px);
                transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
             }
@@ -64,7 +72,7 @@
             height: 12px;
             border-radius: 99px;
             background-color: white;
-            top: 0;
+            top: 12px;
             transform: translateX(-19.5px) translateY(4px);
             transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
          }
@@ -78,11 +86,12 @@
             height: 3px;
             border-radius: 99px;
             background-color: #D4D4D88F;
-            top: 0;
+            top: 12px;
             transform: translateX(-15px) translateY(8.5px);
             transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
          }
          
+         &:hover,
          &:has(a[data-active="true"]) {
             & > p > a {
                color: var(--strong);
@@ -106,8 +115,8 @@
          padding-left: 8px;
          padding-top: 8px;
          padding-bottom: 0;
-         line-height: 16px;
-
+         position: unset;
+         
          li {
             &:after,
             &:before {
@@ -115,11 +124,15 @@
             }
 
             &:first-child {
+               a {
                   padding-top: 0;
+               }
             }
 
             &:last-child {
+               a {
                   padding-bottom: 0;
+               }
             }
 
             a {

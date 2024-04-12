@@ -121,6 +121,17 @@
     line-height: 28px;
   }
 
+  code[data-type="inline-code"] {
+    font-weight: 500;
+    padding-inline: 4px;
+    font-size: 13px;
+    color: var(--strong);
+    background: rgba(212, 212, 216, 0.2);
+    border: 1px solid rgba(212, 212, 216, 0.56);
+    border-radius: 4px;
+    letter-spacing: -0.26px;
+  }
+
   p + p {
     margin-top: 16px;
   }
@@ -355,6 +366,75 @@
       top: 50%;
       transform: translateY(-50%);
       color: var(--normal);
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    text-align: left;
+
+    tbody {
+      tr:has(th) {
+        th {
+          color: var(--strong);
+          background: rgba(212, 212, 216, 0.2);
+          padding: 8px 12px;
+          border-block: 1px solid rgba(212, 212, 216, 0.56);
+        }
+      }
+      
+      tr:has(th:first-child) {
+        th:first-child {
+          border-left: 1px solid rgba(212, 212, 216, 0.56);
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+        }
+      }
+      
+      tr:has(th:last-child) {
+        th:last-child {
+          border-right: 1px solid rgba(212, 212, 216, 0.56);
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid rgba(212, 212, 216, 0.56);
+      }
+
+      th {
+        vertical-align: baseline;
+        line-height: 16px;
+        font-size: 13px;
+        font-weight: 500;
+
+        p {
+          line-height: 16px;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+
+      td {
+        vertical-align: baseline;
+        line-height: 16px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--normal);
+        padding: 8px 12px;
+        border-bottom: 1px solid rgba(212, 212, 216, 0.56);
+        
+        p {
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+          color: var(--normal);
+        }
+      }
     }
   }
 }
