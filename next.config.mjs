@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["basehub.earth"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'basehub.earth',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
   rewrites() {
     return {

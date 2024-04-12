@@ -12,9 +12,10 @@ import {
 } from './heading-with-icon'
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
+import { CardsGridComponent, CardsGridFragment } from './cards-grid'
+import { CodeGroupFragment, CodeSnippet, CodeSnippetFragmentRecursive, CodeSnippetGroup } from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
-import { CardsGridComponent, CardsGridFragment } from './cards-grid'
 
 import { Toc } from '../toc'
 
@@ -69,6 +70,8 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     on_HeadingWithIconComponent: HeadingWithIconFragment,
     on_CardsGridComponent: CardsGridFragment,
     on_StepperComponent: StepperFragment,
+    on_CodeGroupComponent: CodeGroupFragment,
+    on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
   },
 })
 
@@ -86,6 +89,24 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         HeadingWithIconComponent_mark: HeadingWithIconMark,
         video: Video,
         img: Image,
+        CodeSnippetComponent: CodeSnippet,
+        CodeGroupComponent: (props) => (
+          <CodeSnippetGroup snippets={props.codeSnippets.items} />
+        ),
+        code: ({ isInline, ...rest }) => {
+          if (isInline) {
+            return <code data-type="inline-code">{rest.children}</code>
+          }
+
+          return (
+            <CodeSnippet
+              _id="rich-text-code-snippet"
+              fileName=""
+              code={{ ...rest }}
+            />
+          )
+        },
+        pre: ({ children }) => <>{children}</>,
         ...props.components,
       }}
     >
