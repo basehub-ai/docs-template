@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.3.0
     version: 1.3.0(react@18.2.0)
   basehub:
-    specifier: ^4.0.6
-    version: 4.0.6(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.0.10
+    version: 4.0.10(react-dom@18.2.0)(react@18.2.0)
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -137,8 +137,8 @@ packages:
       - enquirer
     dev: false
 
-  /@basehub/mutation-api-helpers@1.0.0:
-    resolution: {integrity: sha512-0PyL0dTq6h8p/kQj4zdaO4KVD9LtnxVjsuYDDctNYTbnYxM/qV2Gn9fHqQgM5dv5deKYlt33ratS3DGRLtglQQ==}
+  /@basehub/mutation-api-helpers@1.0.1:
+    resolution: {integrity: sha512-D4ZVbkzE9WdanTqP/Mf3chR+ffv4V4XsHlmS2MoBZ0t83oWDRwSFsGdWGTeVw9TdoHVmeDHLm0t5iOei7INTNg==}
     dependencies:
       type-fest: 3.7.1
     dev: false
@@ -1265,15 +1265,15 @@ packages:
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  /basehub@4.0.6(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-7vu+anGaV75AyxthD5Rg16ghM4RcxwqDH8nBXk0Oy3Jyf+2oWfP3vw1tXpIiTY5pzb/eFncChg+mY2d7kbVrgQ==}
+  /basehub@4.0.10(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DYmXwTOvQLeyFz3C93jMpmjjSeB+E3LeewggxqHCNnxR1XCU3ARS8NaKh+60BcXam2dspmEfbqI3UvSqeypmvQ==}
     hasBin: true
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
       '@basehub/genql': 7.0.6
-      '@basehub/mutation-api-helpers': 1.0.0
+      '@basehub/mutation-api-helpers': 1.0.1
       arg: 5.0.1
       dotenv-mono: 1.3.10
       esbuild: 0.19.2

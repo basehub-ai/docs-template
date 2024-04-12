@@ -13,7 +13,6 @@ export const StepperComponent = async ({
   return (
     <div data-type="stepper" data-stepper-id={_id}>
       <Body
-        // @ts-ignore
         components={{
           h3: ({ children, ...rest }) => {
             checkpoints++

@@ -1,12 +1,12 @@
 import { fragmentOn } from '@/.basehub'
 import Image from 'next/image'
 
-export const HeadingWithIconComponent = ({
-  _title,
+export const HeadingWithIconMark = ({
   icon,
-}: HeadingWithIconFragment) => {
+  children,
+}: HeadingWithIconFragment & { children?: React.ReactNode }) => {
   return (
-    <h3 className="relative">
+    <>
       <Image
         className="absolute -left-10 top-1/2 h-6 w-6 -translate-y-1/2 "
         alt={icon.alt ?? ''}
@@ -14,14 +14,13 @@ export const HeadingWithIconComponent = ({
         height={icon.height}
         src={icon.url}
       />
-      {_title}
-    </h3>
+      {children}
+    </>
   )
 }
 
 export const HeadingWithIconFragment = fragmentOn('HeadingWithIconComponent', {
   _id: true,
-  _title: true,
   icon: {
     alt: true,
     width: true,

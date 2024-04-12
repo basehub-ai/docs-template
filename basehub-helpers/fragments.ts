@@ -1,8 +1,5 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
-import { CalloutFragment } from '@/app/_components/article/callout'
-import { HeadingWithIconFragment } from '@/app/_components/article/heading-with-icon'
-import { CardsGridFragment } from '@/app/_components/article/cards-grid'
-import { StepperFragment } from '@/app/_components/article/stepper'
+import { ArticleBodyFragment } from '@/app/_components/article'
 
 /* -------------------------------------------------------------------------------------------------
  * Article
@@ -22,18 +19,6 @@ export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
 })
 
 export type ArticleMetaFragment = fragmentOn.infer<typeof ArticleMetaFragment>
-
-export const ArticleBodyFragment = fragmentOn('BodyRichText', {
-  content: true,
-  toc: true,
-  blocks: {
-    __typename: true,
-    on_CalloutComponent: CalloutFragment,
-    on_HeadingWithIconComponent: HeadingWithIconFragment,
-    on_CardsGridComponent: CardsGridFragment,
-    on_StepperComponent: StepperFragment,
-  },
-})
 
 export const ArticleFragment = fragmentOn('ArticleComponent', {
   ...ArticleMetaFragment,
