@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
@@ -38,7 +40,6 @@ export const AccordionFragment = fragmentOn('AccordionGroupComponent', {
 })
 
 type AccordionFragment = fragmentOn.infer<typeof AccordionFragment>
-;('use client')
 
 const Accordion = AccordionPrimitive.Root
 
