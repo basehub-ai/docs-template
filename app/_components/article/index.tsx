@@ -13,7 +13,12 @@ import {
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
-import { CodeGroupFragment, CodeSnippet, CodeSnippetFragmentRecursive, CodeSnippetGroup } from './code-snippet'
+import {
+  CodeGroupFragment,
+  CodeSnippet,
+  CodeSnippetFragmentRecursive,
+  CodeSnippetGroup,
+} from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
 
@@ -101,7 +106,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           return (
             <CodeSnippet
               _id="rich-text-code-snippet"
-              fileName=""
+              fileName={null}
               code={{ ...rest }}
             />
           )

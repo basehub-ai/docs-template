@@ -13,24 +13,31 @@ type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>
  * -----------------------------------------------------------------------------------------------*/
 
 type CodeBlockClientControllerProps = {
-  children?: React.ReactNode
+  children: React.ReactNode
   snippets: Array<ClientSnippet>
 }
 
 const CodeBlockContext = React.createContext<
-  { activeSnippet: ClientSnippet | undefined } | undefined
+  | {
+      activeSnippet: ClientSnippet | undefined
+      snippets: ClientSnippet[]
+      selectSnippet: (snippet: ClientSnippet) => void
+    }
+  | undefined
 >(undefined)
 
 export const CodeBlockClientController = ({
   children,
   snippets,
 }: CodeBlockClientControllerProps) => {
-  const [activeSnippet, _setActiveSnippet] = React.useState<
-    ClientSnippet | undefined
-  >(snippets[0])
+  const [activeSnippet, _setActiveSnippet] = React.useState<ClientSnippet>(
+    snippets[0] as ClientSnippet
+  )
 
   return (
-    <CodeBlockContext.Provider value={{ activeSnippet }}>
+    <CodeBlockContext.Provider
+      value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}
+    >
       {children}
     </CodeBlockContext.Provider>
   )

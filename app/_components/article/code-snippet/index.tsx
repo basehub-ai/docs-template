@@ -35,7 +35,7 @@ export const CodeSnippet = ({
   return (
     <CodeBlockClientController snippets={[{ _id, fileName, code }]}>
       <div className="relative">
-        {fileName && <CodeBlockHeader />}
+        {fileName !== null && <CodeBlockHeader />}
         <Highlighter id={_id} lang={code.language as BundledLanguage}>
           {code.code}
         </Highlighter>
