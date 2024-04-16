@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
 
 import { CodeSnippetFragment } from './index'
-import { Portal } from '../../portal'
 import { createPortal } from 'react-dom'
 
 type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>

@@ -28,7 +28,7 @@ export const ImageWithZoom = ({
           height={height}
         />
       </picture>
-      {caption && <p data-type='caption'>{caption}</p>}
+      {caption && <p data-type="caption">{caption}</p>}
     </Zoom>
   )
 }

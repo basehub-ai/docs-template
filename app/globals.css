@@ -55,11 +55,4 @@ body {
     pointer-events: none;
     user-select: none;
   }
-
-  /* zoom image modal */
-  div[data-rmiz-modal-content] {
-    img {
-      min-width: 70vw;
-    }
-  }
 }

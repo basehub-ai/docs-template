@@ -13,6 +13,7 @@ import {
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
+import { AnchorHeading } from './heading'
 import {
   CodeGroupFragment,
   CodeSnippet,
@@ -89,6 +90,12 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
     <RichText
       blocks={props.blocks}
       components={{
+        h1: (props) => <AnchorHeading as="h1" id={props.id}>{props.children}</AnchorHeading>,
+        h2: (props) => <AnchorHeading as="h2" id={props.id}>{props.children}</AnchorHeading>,
+        h3: (props) => <AnchorHeading as="h3" id={props.id}>{props.children}</AnchorHeading>,
+        h4: (props) => <AnchorHeading as="h4" id={props.id}>{props.children}</AnchorHeading>,
+        h5: (props) => <AnchorHeading as="h5" id={props.id}>{props.children}</AnchorHeading>,
+        h6: (props) => <AnchorHeading as="h6" id={props.id}>{props.children}</AnchorHeading>,
         StepperComponent,
         CalloutComponent,
         CardsGridComponent,
@@ -104,9 +111,12 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           }
 
           return (
-            <div className='relative'>
+            <div className="relative">
               <CodeSnippet code={{ ...rest }} />
-              <CopyButton snippet={rest.code} className='!translate-y-0 !top-4 !right-4'/>
+              <CopyButton
+                snippet={rest.code}
+                className="!right-4 !top-4 !translate-y-0"
+              />
             </div>
           )
         },

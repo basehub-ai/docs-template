@@ -14,6 +14,7 @@
     letter-spacing: -0.025em;
     font-weight: 600;
     position: relative;
+    scroll-margin-top: 112px;
 
     b {
       font-weight: 600;
@@ -147,14 +148,7 @@
     }
   }
 
-  // ol {
-  //   list-style: decimal;
-  // }
-  // ul {
-  //   list-style: initial;
-  // }
-
-  a {
+  *:not(h1, h2, h3, h4, h5, h6) > a {
     color: var(--strong);
     border-bottom: 1px solid theme('colors.brand');
     font-weight: 500;
