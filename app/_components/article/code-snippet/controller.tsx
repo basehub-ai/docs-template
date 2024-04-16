@@ -97,6 +97,12 @@ export const CopyButton = ({
 
   const [isHoveringButton, setIsHoveringButton] = React.useState(false)
 
+  const [hasRendered, setHasRendered] = React.useState(false)
+
+  React.useEffect(() => {
+    setHasRendered(true)
+  }, [])
+
   React.useEffect(() => {
     if (!isHoveringButton) return
 
@@ -133,6 +139,8 @@ export const CopyButton = ({
   React.useEffect(() => {
     calculateTooltipPosition()
 
+    if (!document || !window) return
+
     window.addEventListener('resize', calculateTooltipPosition, {
       passive: true,
     })
@@ -160,13 +168,14 @@ export const CopyButton = ({
     >
       <CopyIcon width={12} height={12} />
 
-      {createPortal(
-        <span ref={tooltipRef} style={tooltipStyle} data-type="tooltip">
-          <span data-type="tooltip-content">Copy to Clipboard</span>
-          {copied && <span data-type="tooltip-success">Copied</span>}
-        </span>,
-        document.body
-      )}
+      {hasRendered &&
+        createPortal(
+          <span ref={tooltipRef} style={tooltipStyle} data-type="tooltip">
+            <span data-type="tooltip-content">Copy to Clipboard</span>
+            {copied && <span data-type="tooltip-success">Copied</span>}
+          </span>,
+          document.body
+        )}
     </button>
   )
 }
