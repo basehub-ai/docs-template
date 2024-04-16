@@ -5,6 +5,8 @@ import clsx from 'clsx'
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
 
 import { CodeSnippetFragment } from './index'
+import { Portal } from '../../portal'
+import { createPortal } from 'react-dom'
 
 type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>
 
@@ -30,15 +32,39 @@ export const CodeBlockClientController = ({
   children,
   snippets,
 }: CodeBlockClientControllerProps) => {
+  const groupRef = React.useRef<HTMLDivElement>(null)
   const [activeSnippet, _setActiveSnippet] = React.useState<ClientSnippet>(
     snippets[0] as ClientSnippet
   )
+
+  React.useEffect(() => {
+    if (!groupRef.current) return
+
+    const activeSnippetValue = groupRef.current.getAttribute(
+      'data-active-snippet'
+    )
+    const matchingDiv = groupRef.current.querySelectorAll('[data-snippet-id]')
+
+    matchingDiv.forEach((div) => {
+      if (!(div instanceof HTMLElement)) return
+
+      if (div.getAttribute('data-snippet-id') === activeSnippetValue) {
+        div.style.display = 'block'
+        div.setAttribute('data-active', 'true')
+      } else {
+        div.style.display = 'none'
+        div.setAttribute('data-active', 'false')
+      }
+    })
+  }, [activeSnippet])
 
   return (
     <CodeBlockContext.Provider
       value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}
     >
-      {children}
+      <div ref={groupRef} data-active-snippet={activeSnippet['_id']}>
+        {children}
+      </div>
     </CodeBlockContext.Provider>
   )
 }
@@ -57,9 +83,26 @@ export const useCodeBlock = () => {
  * Copy Button
  * -----------------------------------------------------------------------------------------------*/
 
-export const CopyButton = () => {
-  const { activeSnippet } = useCodeBlock()
+export const CopyButton = ({
+  snippet,
+  className,
+}: {
+  snippet: CodeSnippetFragment['code']['code']
+  className?: string
+}) => {
   const [copied, setCopied] = React.useState(false)
+  const copyButtonRef = React.useRef<HTMLButtonElement>(null)
+
+  const [tooltipStyle, setTooltipStyle] = React.useState({}) // State to hold tooltip styles
+  const tooltipRef = React.useRef<HTMLSpanElement>(null) // Ref for the tooltip element
+
+  const [isHoveringButton, setIsHoveringButton] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!isHoveringButton) return
+
+    setCopied(false)
+  }, [isHoveringButton])
 
   React.useEffect(() => {
     if (!copied) return
@@ -71,32 +114,60 @@ export const CopyButton = () => {
     return () => clearTimeout(timeout)
   }, [copied])
 
-  if (!activeSnippet) return null
+  const calculateTooltipPosition = React.useCallback(() => {
+    if (!copyButtonRef.current || !tooltipRef.current) return
+
+    const { left, top } = copyButtonRef.current.getBoundingClientRect()
+    const { width } = tooltipRef.current.getBoundingClientRect()
+    const tooltipLeft = left - width / 3
+    const tooltipTop = top - 28
+
+    setTooltipStyle({
+      position: 'fixed',
+      left: `${tooltipLeft}px`,
+      top: `${tooltipTop}px`,
+      opacity: isHoveringButton ? '1' : '0',
+      transitionDelay: isHoveringButton ? '0.1s' : '0',
+    })
+  }, [isHoveringButton])
+
+  React.useEffect(() => {
+    calculateTooltipPosition()
+
+    window.addEventListener('resize', calculateTooltipPosition, {
+      passive: true,
+    })
+    document.addEventListener('scroll', calculateTooltipPosition, {
+      passive: true,
+    })
+
+    return () => {
+      window.removeEventListener('resize', calculateTooltipPosition)
+      document.removeEventListener('scroll', calculateTooltipPosition)
+    }
+  }, [calculateTooltipPosition])
 
   return (
     <button
+      ref={copyButtonRef}
+      className={className}
       data-type="copy-snippet"
+      onMouseEnter={() => setIsHoveringButton(true)}
+      onMouseLeave={() => setIsHoveringButton(false)}
       onClick={() => {
         setCopied(true)
-        navigator.clipboard.writeText(activeSnippet.code.code)
+        navigator.clipboard.writeText(snippet)
       }}
     >
-      <CopyIcon
-        width={12}
-        height={12}
-        className={clsx(
-          'absolute transition-opacity duration-75 ease-linear',
-          copied ? 'opacity-0' : 'opacity-100 delay-100'
-        )}
-      />
-      <CheckIcon
-        width={12}
-        height={12}
-        className={clsx(
-          'absolute transition-opacity duration-75 ease-linear',
-          copied ? 'opacity-100 delay-100' : 'opacity-0'
-        )}
-      />
+      <CopyIcon width={12} height={12} />
+
+      {createPortal(
+        <span ref={tooltipRef} style={tooltipStyle} data-type="tooltip">
+          <span data-type="tooltip-content">Copy to Clipboard</span>
+          {copied && <span data-type="tooltip-success">Copied</span>}
+        </span>,
+        document.body
+      )}
     </button>
   )
 }

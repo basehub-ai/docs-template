@@ -1,25 +1,25 @@
-import { Highlighter, HighlighterProps } from './highlighter'
+import { BundledLanguage } from 'shiki'
+
+import { Highlighter } from './highlighter'
 
 import { CodeBlockClientController, CopyButton } from './controller'
 import { fragmentOn } from '@/.basehub'
-import { CodeBlockHeader } from './header'
-import { BundledLanguage, createCssVariablesTheme } from 'shiki'
+import { CodeGroupHeader } from './header'
 
 export const CodeSnippetGroup = ({
-  snippets,
+  codeSnippets,
 }: {
-  snippets: CodeSnippetFragment[]
+  codeSnippets: { items: CodeSnippetFragment[] }
 }) => {
   return (
-    <CodeBlockClientController snippets={snippets}>
-      <CodeBlockHeader />
-      {snippets.map((snippet) => {
+    <CodeBlockClientController snippets={codeSnippets.items}>
+      <CodeGroupHeader />
+      {codeSnippets.items.map((snippet) => {
         return (
           <CodeSnippet
             key={snippet._id}
             _id={snippet._id}
             code={snippet.code}
-            fileName={snippet.fileName}
           />
         )
       })}
@@ -27,31 +27,38 @@ export const CodeSnippetGroup = ({
   )
 }
 
-export const CodeSnippet = ({
-  _id,
-  code,
-  fileName,
-}: Omit<CodeSnippetFragment, '__typename'>) => {
+export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
   return (
-    <CodeBlockClientController snippets={[{ _id, fileName, code }]}>
-      <div className="relative">
-        {fileName !== null && <CodeBlockHeader />}
-        <Highlighter id={_id} lang={code.language as BundledLanguage}>
-          {code.code}
-        </Highlighter>
-        <CopyButton />
-      </div>
-    </CodeBlockClientController>
+    <>
+      <header data-type="code-snippet-header" className="p-3 pr-10">
+        {props.fileName || 'Untitled'}
+        <CopyButton snippet={props.code.code} />
+      </header>
+
+      <CodeSnippet {...props} />
+    </>
+  )
+}
+
+export const CodeSnippet = ({
+  _id = '',
+  code,
+}: Omit<CodeSnippetFragment, '__typename' | 'fileName' | '_id'> & {
+  _id?: CodeSnippetFragment['_id']
+}) => {
+  return (
+    <div data-snippet-id={_id}>
+      <Highlighter lang={code.language as BundledLanguage}>
+        {code.code}
+      </Highlighter>
+    </div>
   )
 }
 
 export const CodeSnippetFragment = fragmentOn('CodeSnippetComponent', {
   _id: true,
   __typename: true,
-  code: {
-    code: true,
-    language: true,
-  },
+  code: { code: true, language: true },
   fileName: true,
 })
 

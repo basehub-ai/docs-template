@@ -18,9 +18,11 @@ import {
   CodeSnippet,
   CodeSnippetFragmentRecursive,
   CodeSnippetGroup,
+  CodeSnippetSingle,
 } from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
+import { CopyButton } from './code-snippet/controller'
 
 import { Toc } from '../toc'
 
@@ -94,21 +96,18 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         HeadingWithIconComponent_mark: HeadingWithIconMark,
         video: Video,
         img: Image,
-        CodeSnippetComponent: CodeSnippet,
-        CodeGroupComponent: (props) => (
-          <CodeSnippetGroup snippets={props.codeSnippets.items} />
-        ),
+        CodeSnippetComponent: CodeSnippetSingle,
+        CodeGroupComponent: CodeSnippetGroup,
         code: ({ isInline, ...rest }) => {
           if (isInline) {
             return <code data-type="inline-code">{rest.children}</code>
           }
 
           return (
-            <CodeSnippet
-              _id="rich-text-code-snippet"
-              fileName={null}
-              code={{ ...rest }}
-            />
+            <div className='relative'>
+              <CodeSnippet code={{ ...rest }} />
+              <CopyButton snippet={rest.code} className='!translate-y-0 !top-4 !right-4'/>
+            </div>
           )
         },
         pre: ({ children }) => <>{children}</>,

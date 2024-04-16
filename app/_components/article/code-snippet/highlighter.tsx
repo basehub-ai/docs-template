@@ -18,7 +18,6 @@ const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs }
 type ComponentsToOverride = Pick<Components, 'pre' | 'code' | 'span'>
 
 export type HighlighterProps = {
-  id: string
   children: string
   lang: BundledLanguage
   components?: Partial<ComponentsToOverride>
@@ -32,7 +31,6 @@ const theme = createCssVariablesTheme({
 })
 
 export const Highlighter = async ({
-  id,
   children,
   lang,
   components,
@@ -72,5 +70,5 @@ export const Highlighter = async ({
     components,
   })
 
-  return <div data-snippet-id={id}>{content}</div>
+  return content
 }
