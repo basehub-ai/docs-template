@@ -138,6 +138,7 @@ export const CopyButton = ({
 
   React.useEffect(() => {
     calculateTooltipPosition()
+    if (!document || !window) return
 
     if (!document || !window) return
 

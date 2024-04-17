@@ -73,14 +73,13 @@ export const generateMetadata = async ({
 export default function ArticlePage({
   params,
 }: {
-  params: { slug: string[] | undefined }
+  params: { slug: string[] | undefined; category: string }
 }) {
-  const activePageSlug = params.slug?.[0]
-  const activeSlugs = params.slug?.slice(1) ?? []
+  const activeSlugs = params.slug ?? []
 
   return (
     <Pump
-      queries={[{ pages: pageBySlug(activePageSlug) }]}
+      queries={[{ pages: pageBySlug(params.category) }]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
     >
@@ -88,6 +87,7 @@ export default function ArticlePage({
         'use server'
 
         const page = data.pages.items[0]
+
         if (!page) notFound()
 
         const activeSidebarItem = getActiveSidebarItem({

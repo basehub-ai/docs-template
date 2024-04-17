@@ -1,30 +1,30 @@
-import { pageBySlug } from '@/basehub-helpers/fragments'
+import { Pump } from '@/.basehub/react-pump'
+import { SidebarFragment } from '@/basehub-helpers/fragments'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
-import { Pump } from '@/.basehub/react-pump'
-import { draftMode } from 'next/headers'
 
-export default async function ArticleLayout({
+export default function Layout({
   children,
   params,
 }: {
-  children?: React.ReactNode
-  params: { slug: string | undefined }
+  children: React.ReactNode
+  params: { category: string }
 }) {
-  const activePageSlug = params.slug?.[0]
-
   return (
     <div className="container mx-auto flex gap-8">
       <div className="w-80">
         <Pump
-          queries={[{ pages: pageBySlug(activePageSlug) }]}
+          queries={[{ pages: SidebarFragment }]}
           next={{ revalidate: 30 }}
           draft={draftMode().isEnabled}
         >
           {async ([data]) => {
             'use server'
 
-            const page = data.pages.items[0]
+            const page = data.pages.items.find(
+              (page) => params.category === page._slug
+            )
             if (!page) notFound()
 
             return (
@@ -37,7 +37,7 @@ export default async function ArticleLayout({
           }}
         </Pump>
       </div>
-      <main className="flex items-start min-h-screen w-full gap-x-8 py-8">{children}</main>
+      {children}
     </div>
   )
 }

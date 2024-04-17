@@ -1,16 +1,26 @@
 import { SidebarProps } from '@/app/_components/sidebar'
-import { ArticleMetaFragmentRecursive } from './fragments'
+import {
+  ArticleMetaFragmentRecursive,
+  PageFragment,
+  SidebarArticleFragmentRecursive,
+} from './fragments'
 
 export function getActiveSidebarItem({
   sidebar,
   activeSlugs,
 }: {
-  sidebar: SidebarProps['data']
+  sidebar: SidebarProps['data'] | PageFragment['articles']
   activeSlugs: string[]
-}): ArticleMetaFragmentRecursive | null {
-  let current: ArticleMetaFragmentRecursive | null = null
+}): SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive | null {
+  let current:
+    | SidebarArticleFragmentRecursive
+    | ArticleMetaFragmentRecursive
+    | null = null
   let currentItems = sidebar.items
-  let firstValidItem: ArticleMetaFragmentRecursive | null = null
+  let firstValidItem:
+    | SidebarArticleFragmentRecursive
+    | ArticleMetaFragmentRecursive
+    | null = null
 
   for (const slug of activeSlugs) {
     const item = currentItems.find((item) => {
@@ -39,9 +49,9 @@ export function getActiveSidebarItem({
  * Recursive function to process every level of nesting
  */
 export function processArticle(
-  article: ArticleMetaFragmentRecursive,
+  article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
   callback: (
-    article: ArticleMetaFragmentRecursive,
+    article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
     meta: { level: number; path: string[]; index: number }
   ) => void,
   meta?: { level: number; path: string[]; index: number }
