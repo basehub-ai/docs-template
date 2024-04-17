@@ -6,13 +6,11 @@ import { ArticleFragment } from '@/basehub-helpers/fragments'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 
-import {
-  HeadingWithIconFragment,
-  HeadingWithIconMark,
-} from './heading-with-icon'
+import { HeadingWithIconFragment, HeadingWithIconMark } from './heading-with-icon'
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
+import { AccordionComponent, AccordionFragment } from './accordion'
 import { AnchorHeading } from './heading'
 import {
   CodeGroupFragment,
@@ -28,7 +26,6 @@ import { CopyButton } from './code-snippet/controller'
 import { Toc } from '../toc'
 
 import s from './article.module.scss'
-import { AccordionComponent, AccordionFragment } from './accordion'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -36,10 +33,7 @@ export const Article = ({ id }: { id: string }) => {
       queries={[
         {
           _componentInstances: {
-            article: {
-              __args: { first: 1, filter: { _sys_id: { eq: id } } },
-              items: ArticleFragment,
-            },
+            article: { __args: { first: 1, filter: { _sys_id: { eq: id } } }, items: ArticleFragment },
           },
         },
       ]}
@@ -109,9 +103,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         CodeSnippetComponent: CodeSnippetSingle,
         CodeGroupComponent: CodeSnippetGroup,
         code: ({ isInline, ...rest }) => {
-          if (isInline) {
-            return <code data-type="inline-code">{rest.children}</code>
-          }
+          if (isInline) return <code data-type="inline-code">{rest.children}</code>
 
           return (
             <div className="relative">
