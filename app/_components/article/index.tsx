@@ -6,11 +6,14 @@ import { ArticleFragment } from '@/basehub-helpers/fragments'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 
-import { HeadingWithIconFragment, HeadingWithIconMark } from './heading-with-icon'
+import {
+  HeadingWithIconFragment,
+  HeadingWithIconMark,
+} from './heading-with-icon'
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
-import { AccordionComponent, AccordionFragment } from './accordion'
+import { AccordionComponent, AccordionGroupFragment } from './accordion'
 import { AnchorHeading } from './heading'
 import {
   CodeGroupFragment,
@@ -33,7 +36,10 @@ export const Article = ({ id }: { id: string }) => {
       queries={[
         {
           _componentInstances: {
-            article: { __args: { first: 1, filter: { _sys_id: { eq: id } } }, items: ArticleFragment },
+            article: {
+              __args: { first: 1, filter: { _sys_id: { eq: id } } },
+              items: ArticleFragment,
+            },
           },
         },
       ]}
@@ -72,7 +78,7 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     on_CalloutComponent: CalloutFragment,
     on_HeadingWithIconComponent: HeadingWithIconFragment,
     on_CardsGridComponent: CardsGridFragment,
-    on_AccordionGroupComponent: AccordionFragment,
+    on_AccordionGroupComponent: AccordionGroupFragment,
     on_StepperComponent: StepperFragment,
     on_CodeGroupComponent: CodeGroupFragment,
     on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
@@ -86,12 +92,36 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
     <RichText
       blocks={props.blocks}
       components={{
-        h1: (props) => <AnchorHeading as="h1" id={props.id}>{props.children}</AnchorHeading>,
-        h2: (props) => <AnchorHeading as="h2" id={props.id}>{props.children}</AnchorHeading>,
-        h3: (props) => <AnchorHeading as="h3" id={props.id}>{props.children}</AnchorHeading>,
-        h4: (props) => <AnchorHeading as="h4" id={props.id}>{props.children}</AnchorHeading>,
-        h5: (props) => <AnchorHeading as="h5" id={props.id}>{props.children}</AnchorHeading>,
-        h6: (props) => <AnchorHeading as="h6" id={props.id}>{props.children}</AnchorHeading>,
+        h1: (props) => (
+          <AnchorHeading as="h1" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
+        h2: (props) => (
+          <AnchorHeading as="h2" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
+        h3: (props) => (
+          <AnchorHeading as="h3" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
+        h4: (props) => (
+          <AnchorHeading as="h4" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
+        h5: (props) => (
+          <AnchorHeading as="h5" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
+        h6: (props) => (
+          <AnchorHeading as="h6" id={props.id}>
+            {props.children}
+          </AnchorHeading>
+        ),
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -103,7 +133,8 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         CodeSnippetComponent: CodeSnippetSingle,
         CodeGroupComponent: CodeSnippetGroup,
         code: ({ isInline, ...rest }) => {
-          if (isInline) return <code data-type="inline-code">{rest.children}</code>
+          if (isInline)
+            return <code data-type="inline-code">{rest.children}</code>
 
           return (
             <div className="relative">

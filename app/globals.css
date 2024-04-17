@@ -4,6 +4,17 @@
 
 @layer base {
   :root {
+    text-rendering: geometricprecision;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --strong: #18181b;
+    --normal: #71717a;
+    --light: #f4f4f5;
+    --dark: #09090b;
+
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
 

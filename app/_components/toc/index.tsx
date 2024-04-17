@@ -146,10 +146,10 @@ export const Toc = ({ blocks, children }: TocProps) => {
         onClick={() => {
           document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
         }}
-        className="tracking-default bg-light rounded-round mt-10 flex items-center bg-opacity-65 p-1.5 pl-3 text-xs leading-4 text-normal transition-[opacity,background-color] duration-300 hover:bg-opacity-100"
+        className="mt-10 flex items-center rounded-round bg-[rgba(244,244,245,0.64)] p-1.5 pl-3 text-xs leading-4 tracking-default text-normal transition-[opacity,background-color] duration-300 hover:bg-[rgb(244,244,245)]"
       >
         Back to top
-        <span className="rounded-round ml-2 inline-flex h-4 w-4 items-center justify-center border border-info-border bg-white shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)]">
+        <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-round border border-info-border bg-white shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)]">
           <ChevronUpIcon width={10} height={10} />
         </span>
       </button>
