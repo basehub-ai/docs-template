@@ -2,7 +2,6 @@
 import * as React from 'react'
 import {
   ArticleMetaFragmentRecursive,
-  SidebarArticleFragment,
   SidebarArticleFragmentRecursive,
   SidebarFragment,
 } from '@/basehub-helpers/fragments'
@@ -103,6 +102,7 @@ const SidebarItem = ({
   const isRootLevel = level === 0
   const { activeSidebarItem, activeSlugs } = useSidebarContext()
   const isActive = activeSidebarItem?._id === data._id
+  const userCollapsedSidebar = React.useRef(false)
   const isActiveInPath = React.useMemo(
     () => activeSlugs.includes(data._slug),
     [activeSlugs, data._slug]
@@ -114,6 +114,11 @@ const SidebarItem = ({
   )
 
   React.useEffect(() => {
+    if (userCollapsedSidebar.current) {
+      userCollapsedSidebar.current = false
+      return
+    }
+
     if (isActiveInPath && isCollapsed) setNotCollapsed()
   }, [isActiveInPath, isCollapsed, setNotCollapsed])
 
@@ -172,7 +177,13 @@ const SidebarItem = ({
       )
     }
     return (
-      <button onClick={toggleCollapsed} className={className}>
+      <button
+        onClick={() => {
+          userCollapsedSidebar.current = true
+          toggleCollapsed()
+        }}
+        className={className}
+      >
         {title}
       </button>
     )
@@ -201,7 +212,10 @@ const SidebarItem = ({
         {data.children && data.children.items.length > 0 && !isRootLevel && (
           <button
             className="boder-gray-200 absolute right-2 top-1/2 flex -translate-y-1/2 cursor-default items-center justify-center rounded-md border bg-white p-0.5 text-gray-500 shadow-sm hover:border-gray-300 hover:text-gray-800"
-            onClick={toggleCollapsed}
+            onClick={() => {
+              userCollapsedSidebar.current = true
+              toggleCollapsed()
+            }}
           >
             <span className="sr-only">
               {isCollapsed ? 'Expand' : 'Collapse'}

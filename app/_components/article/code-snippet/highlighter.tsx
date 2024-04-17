@@ -1,9 +1,4 @@
-import {
-  codeToHast,
-  BundledLanguage,
-  BundledTheme,
-  createCssVariablesTheme,
-} from 'shiki'
+import { codeToHast, BundledLanguage, createCssVariablesTheme } from 'shiki'
 import * as prod from 'react/jsx-runtime'
 import {
   transformerNotationDiff,

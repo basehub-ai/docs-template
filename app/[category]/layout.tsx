@@ -1,7 +1,7 @@
 import { Pump } from '@/.basehub/react-pump'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 
 export default function Layout({
@@ -22,10 +22,11 @@ export default function Layout({
           {async ([data]) => {
             'use server'
 
-            const page = data.pages.items.find(
-              (page) => params.category === page._slug
-            )
-            if (!page) notFound()
+            if (!data.pages.items.length) notFound()
+            const page = data.pages.items.find((page) => params.category === page._slug)
+            const firstPage = data.pages.items[0]
+            if (!firstPage) notFound()
+            if (!page) redirect(firstPage._slug)
 
             return (
               <Sidebar
