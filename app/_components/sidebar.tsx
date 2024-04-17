@@ -2,19 +2,21 @@
 import * as React from 'react'
 import {
   ArticleMetaFragmentRecursive,
-  PageFragment,
+  SidebarArticleFragment,
+  SidebarArticleFragmentRecursive,
+  SidebarFragment,
 } from '@/basehub-helpers/fragments'
 import Link from 'next/link'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
-import { useParams } from 'next/navigation'
 import { clsx } from 'clsx'
+import { useParams } from 'next/navigation'
 
 /* -------------------------------------------------------------------------------------------------
  * Root
  * -----------------------------------------------------------------------------------------------*/
 
 export type SidebarProps = {
-  data: PageFragment['articles']
+  data: SidebarFragment['items'][number]['articles']
   level: number
   pathname: string
 }
@@ -25,7 +27,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
   const activeSlugs: string[] = React.useMemo(() => {
     const slugs = params.slug as string[] | undefined
     if (!slugs) return []
-    return slugs.slice(1)
+    return slugs
   }, [params.slug])
 
   const activeSidebarItem = React.useMemo(() => {
@@ -82,7 +84,11 @@ const useCollapsedState = (key: string, initial: boolean) => {
     setIsCollapsed((p) => !p)
   }, [])
 
-  return { isCollapsed, toggleCollapsed }
+  const setNotCollapsed = React.useCallback(() => {
+    setIsCollapsed(false)
+  }, [])
+
+  return { isCollapsed, toggleCollapsed, setNotCollapsed }
 }
 
 const SidebarItem = ({
@@ -90,25 +96,32 @@ const SidebarItem = ({
   level,
   pathname,
 }: {
-  data: ArticleMetaFragmentRecursive
+  data: SidebarArticleFragmentRecursive
   level: number
   pathname: string
 }) => {
   const isRootLevel = level === 0
   const { activeSidebarItem, activeSlugs } = useSidebarContext()
   const isActive = activeSidebarItem?._id === data._id
-  const isActiveInPath = activeSlugs.includes(data._slug)
+  const isActiveInPath = React.useMemo(
+    () => activeSlugs.includes(data._slug),
+    [activeSlugs, data._slug]
+  )
 
-  const { isCollapsed, toggleCollapsed } = useCollapsedState(
+  const { isCollapsed, toggleCollapsed, setNotCollapsed } = useCollapsedState(
     `sidebar-item-collapsed-${data._id}`,
     isRootLevel || isActiveInPath ? false : true
   )
 
+  React.useEffect(() => {
+    if (isActiveInPath && isCollapsed) setNotCollapsed()
+  }, [isActiveInPath, isCollapsed, setNotCollapsed])
+
   const href = React.useMemo(() => {
     function getHrefFromArticle(
-      article: ArticleMetaFragmentRecursive
+      article: SidebarArticleFragmentRecursive
     ): string | null {
-      if (article.body?.__typename) {
+      if (!article.children.items.length) {
         return pathname
       } else if (isRootLevel) {
         return null
@@ -136,6 +149,7 @@ const SidebarItem = ({
             className,
             isActive && 'bg-gray-100 !text-black'
           )}
+          prefetch={false}
         >
           {title}
         </Link>
@@ -247,7 +261,10 @@ const SidebarItem = ({
 const SidebarContext = React.createContext<
   | undefined
   | {
-      activeSidebarItem: ArticleMetaFragmentRecursive | null
+      activeSidebarItem:
+        | SidebarArticleFragmentRecursive
+        | ArticleMetaFragmentRecursive
+        | null
       activeSlugs: string[]
     }
 >(undefined)

@@ -16,6 +16,7 @@
          line-height: 16px;
 
          a {
+            white-space: nowrap;
             padding-top: 12px;
             position: relative;
             display: inline-block;
@@ -40,7 +41,7 @@
                   z-index: 0;
                   top: 2px;
                   height: calc(100% + 6px);
-                  background-image: linear-gradient(180deg, transparent 0%, rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.98) 100%);
+                  background-image: linear-gradient(180deg, rgb(229, 231, 235) 0%, rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.98) 100%);
                   left: 7.5px;
                   transition: background-color 0.1s ease-out;
                }
@@ -55,12 +56,12 @@
                height: 16px;
                border-radius: 99px;
                background-color: white;
-               top: 14px;
+               top: 12px;
                transform: translateX(-21.5px) translateY(0px);
-               transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+               transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
             }
 
-            transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
          }
 
          &:before {
@@ -72,9 +73,9 @@
             height: 12px;
             border-radius: 99px;
             background-color: white;
-            top: 12px;
+            top: 10px;
             transform: translateX(-19.5px) translateY(4px);
-            transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
          }
 
          &:after {
@@ -86,9 +87,9 @@
             height: 3px;
             border-radius: 99px;
             background-color: #D4D4D88F;
-            top: 12px;
+            top: 10px;
             transform: translateX(-15px) translateY(8.5px);
-            transition: color 0.35s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
          }
          
          &:hover,
@@ -116,7 +117,11 @@
          padding-top: 8px;
          padding-bottom: 0;
          position: unset;
-         
+
+         ol {
+            display: none;
+         }
+
          li {
             &:after,
             &:before {
@@ -149,7 +154,7 @@
                   position: absolute;
                   z-index: 0;
                   height: 100%;
-                  top: 0;
+                  top: -0;
                   background-color: transparent;
                   background-image: none;
                   left: -22px;

@@ -13,19 +13,22 @@ import {
 import { CalloutComponent, CalloutFragment } from './callout'
 import { StepperComponent, StepperFragment } from './stepper'
 import { CardsGridComponent, CardsGridFragment } from './cards-grid'
+import { AnchorHeading } from './heading'
 import {
   CodeGroupFragment,
   CodeSnippet,
   CodeSnippetFragmentRecursive,
   CodeSnippetGroup,
+  CodeSnippetSingle,
 } from './code-snippet'
-import { AccordionComponent, AccordionFragment } from './accordion'
 import { Video } from './video'
 import { Image } from './image/handler'
+import { CopyButton } from './code-snippet/controller'
 
 import { Toc } from '../toc'
 
 import s from './article.module.scss'
+import { AccordionComponent, AccordionFragment } from './accordion'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -89,6 +92,12 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
     <RichText
       blocks={props.blocks}
       components={{
+        h1: (props) => <AnchorHeading as="h1" id={props.id}>{props.children}</AnchorHeading>,
+        h2: (props) => <AnchorHeading as="h2" id={props.id}>{props.children}</AnchorHeading>,
+        h3: (props) => <AnchorHeading as="h3" id={props.id}>{props.children}</AnchorHeading>,
+        h4: (props) => <AnchorHeading as="h4" id={props.id}>{props.children}</AnchorHeading>,
+        h5: (props) => <AnchorHeading as="h5" id={props.id}>{props.children}</AnchorHeading>,
+        h6: (props) => <AnchorHeading as="h6" id={props.id}>{props.children}</AnchorHeading>,
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -97,21 +106,21 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         HeadingWithIconComponent_mark: HeadingWithIconMark,
         video: Video,
         img: Image,
-        CodeSnippetComponent: CodeSnippet,
-        CodeGroupComponent: (props) => (
-          <CodeSnippetGroup snippets={props.codeSnippets.items} />
-        ),
+        CodeSnippetComponent: CodeSnippetSingle,
+        CodeGroupComponent: CodeSnippetGroup,
         code: ({ isInline, ...rest }) => {
           if (isInline) {
             return <code data-type="inline-code">{rest.children}</code>
           }
 
           return (
-            <CodeSnippet
-              _id="rich-text-code-snippet"
-              fileName=""
-              code={{ ...rest }}
-            />
+            <div className="relative">
+              <CodeSnippet code={{ ...rest }} />
+              <CopyButton
+                snippet={rest.code}
+                className="!right-4 !top-4 !translate-y-0"
+              />
+            </div>
           )
         },
         pre: ({ children }) => <>{children}</>,

@@ -34,10 +34,7 @@ export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>
 export const ArticleMetaFragmentRecursive = fragmentOnRecursiveCollection(
   'ArticleComponent',
   ArticleMetaFragment,
-  {
-    levels: 5,
-    recursiveKey: 'children',
-  }
+  { levels: 5, recursiveKey: 'children' }
 )
 
 export type ArticleMetaFragmentRecursive = fragmentOn.infer<
@@ -67,3 +64,41 @@ export const pageBySlug = (slug: string | undefined) => {
     items: PageFragment,
   })
 }
+
+/* -------------------------------------------------------------------------------------------------
+ * Sidebar
+ * -----------------------------------------------------------------------------------------------*/
+
+const SidebarArticleFragment = fragmentOn('ArticleComponent', {
+  _id: true,
+  _slug: true,
+  __typename: true,
+  _title: true,
+  titleSidebarOverride: true,
+  body: { __typename: true },
+})
+
+export type SidebarArticleFragment = fragmentOn.infer<
+  typeof SidebarArticleFragment
+>
+
+export const SidebarArticleFragmentRecursive = fragmentOnRecursiveCollection(
+  'ArticleComponent',
+  SidebarArticleFragment,
+  { levels: 5, recursiveKey: 'children' }
+)
+
+export type SidebarArticleFragmentRecursive = fragmentOn.infer<
+  typeof SidebarArticleFragmentRecursive
+>
+
+export const SidebarFragment = fragmentOn('Pages', {
+  items: {
+    _id: true,
+    _title: true,
+    _slug: true,
+    articles: { items: SidebarArticleFragmentRecursive },
+  },
+})
+
+export type SidebarFragment = fragmentOn.infer<typeof SidebarFragment>
