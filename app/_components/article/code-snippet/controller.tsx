@@ -1,8 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import clsx from 'clsx'
-import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
+import { CopyIcon } from '@radix-ui/react-icons'
 
 import { CodeSnippetFragment } from './index'
 import { createPortal } from 'react-dom'
@@ -22,6 +21,7 @@ const CodeBlockContext = React.createContext<
   | {
       activeSnippet: ClientSnippet | undefined
       snippets: ClientSnippet[]
+      // eslint-disable-next-line no-unused-vars
       selectSnippet: (snippet: ClientSnippet) => void
     }
   | undefined

@@ -65,9 +65,7 @@ export const generateMetadata = async ({
   })
   if (!activeSidebarItem) return notFound()
 
-  return {
-    title: activeSidebarItem._title,
-  }
+  return { title: activeSidebarItem._title }
 }
 
 export default function ArticlePage({

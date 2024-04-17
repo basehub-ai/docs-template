@@ -1,6 +1,5 @@
 export default async function ArticleLayout({
   children,
-  params,
 }: {
   children?: React.ReactNode
   params: { category: string; slug: string[] }
