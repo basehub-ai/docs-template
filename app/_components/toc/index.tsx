@@ -4,11 +4,11 @@ import * as React from 'react'
 import Link from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
+import { Box, Button, Flex, Text } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
 import s from './toc.module.scss'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
 
 export type TocProps = RichTextProps & {
   currentSectionId?: string
@@ -39,7 +39,10 @@ export const Toc = ({ blocks, children }: TocProps) => {
       let lastActive = ''
       const headingList = Array.from(
         document.querySelectorAll<HTMLHeadingElement>('h1, h2, h3, h4, h5, h6')
-      ).filter((node) => node.id)
+      ).filter((node) => {
+        if (node.dataset.type === 'stepper-checkpoint') return false
+        return node.id
+      })
 
       if (
         window.innerHeight + Math.round(window.scrollY) >=
@@ -54,7 +57,6 @@ export const Toc = ({ blocks, children }: TocProps) => {
 
           if (
             element &&
-            // Element is scrolled to the half of the screen bottom
             offsetTop <= window.innerHeight / 2 + Math.round(window.scrollY)
           ) {
             lastActive = heading.id
@@ -93,46 +95,6 @@ export const Toc = ({ blocks, children }: TocProps) => {
 
     handleScroll()
   }, [handleScroll])
-
-  React.useEffect(() => {
-    if (!tocRef.current) return
-
-    const colorToRgb = (color: string) => {
-      const match = /color\(display-p3\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/.exec(
-        color
-      )
-
-      if (!match) return null
-
-      const [_, r, g, b] = match
-      if (r === undefined || g === undefined || b === undefined) return null
-
-      return {
-        r: Math.round(parseFloat(r) * 255),
-        g: Math.round(parseFloat(g) * 255),
-        b: Math.round(parseFloat(b) * 255),
-      }
-    }
-
-    const accentIndicatorShade = colorToRgb(
-      getComputedStyle(tocRef.current).getPropertyValue('--accent-indicator')
-    )
-
-    if (!accentIndicatorShade) return
-
-    tocRef.current.style.setProperty(
-      '--accent-indicator-r',
-      accentIndicatorShade.r.toString()
-    )
-    tocRef.current.style.setProperty(
-      '--accent-indicator-g',
-      accentIndicatorShade.g.toString()
-    )
-    tocRef.current.style.setProperty(
-      '--accent-indicator-b',
-      accentIndicatorShade.b.toString()
-    )
-  }, [])
 
   React.useEffect(() => {
     if (!backToTopButton.current) return

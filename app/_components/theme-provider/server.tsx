@@ -3,6 +3,7 @@ import { Theme } from '@radix-ui/themes'
 import { ThemeProvider as NextThemesThemeProvider } from 'next-themes'
 import { Pump } from '@/.basehub/react-pump'
 import { LiveThemeSwitcher } from './client'
+import { draftMode } from 'next/headers'
 
 import '@radix-ui/themes/styles.css'
 
@@ -40,7 +41,10 @@ export const ThemeProvider = async ({
         panelBackground={data.settings.theme.panelBackground as any}
       >
         {children}
-        <Pump queries={[{ settings: ThemeSettingsFragment }]}>
+        <Pump
+          queries={[{ settings: ThemeSettingsFragment }]}
+          draft={draftMode().isEnabled}
+        >
           {async ([data]) => {
             'use server'
             return <LiveThemeSwitcher theme={data.settings.theme} />

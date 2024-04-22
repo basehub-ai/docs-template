@@ -1,7 +1,16 @@
 .heading {
    position: relative;
    scroll-margin-top: calc(var(--header-height) + var(--space-6));
-   
+   color: var(--strong);
+   line-height: 1.375;
+   letter-spacing: -0.025em;
+   font-weight: 600;
+   position: relative;
+
+   b {
+     font-weight: 600;
+   }
+
    a {
       text-decoration: none;
 

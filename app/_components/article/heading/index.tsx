@@ -14,8 +14,18 @@ type HeadingProps = JSX.IntrinsicElements['h1'] & {
 }
 
 export const Heading = ({ children, as, id, href }: HeadingProps) => {
+  const size = as === 'h1' ? '8' : as === 'h2' ? '6' : as === 'h3' ? '4' : '3'
+
   return (
-    <RadixHeading as={as} id={id} className={s.heading} color="gray">
+    <RadixHeading
+      as={as}
+      id={id}
+      className={s.heading}
+      color="gray"
+      size={size}
+      mb="3"
+      mt="8"
+    >
       {!id ? (
         children
       ) : (
@@ -32,7 +42,13 @@ export const Heading = ({ children, as, id, href }: HeadingProps) => {
           >
             {children}
             {!href && (
-              <Box asChild display="inline-block" position="relative" ml="2" mb="1">
+              <Box
+                asChild
+                display="inline-block"
+                position="relative"
+                ml="2"
+                mb="1"
+              >
                 <Link2Icon width={15} height={15} />
               </Box>
             )}

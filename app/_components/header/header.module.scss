@@ -11,7 +11,10 @@
    }
 
    .header__main-cta {
-      line-height: 16px; /* 123.077% */
       letter-spacing: -0.52px;
+
+      &:hover {
+         text-decoration: none;
+      }
    }
 }

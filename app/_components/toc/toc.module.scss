@@ -4,9 +4,10 @@
    width: 260px;
 
    ol {
-      border-left: 1px solid var(--gray-2);
+      border-left: 1px solid var(--gray-4);
       color: var(--normal);
       position: relative;
+      padding-bottom: var(--space-1);
 
       li {
          position: relative;
@@ -33,7 +34,7 @@
                   z-index: 0;
                   top: 0;
                   left: -1px;
-                  height: var(--space-6);
+                  height: var(--space-7);
                   background-image: linear-gradient(180deg, var(--gray-4) 0%, rgba(var(--accent-indicator-r), var(--accent-indicator-g), var(--accent-indicator-b), 0.98) 100%);
                }
             }
@@ -51,8 +52,21 @@
                left: calc((var(--space-4) + 1px) * -1 / 2);
                transform: translateY(0px);
             }
-
          }
+
+         &:last-child {
+            &:not(:has(ol)) {
+               a {
+                   &:hover,
+                   &[data-active="true"] {
+                      &::before {
+                         height: var(--space-6);
+                      }
+                   }
+                }
+            }
+         }
+
 
          &:before {
             content: '';

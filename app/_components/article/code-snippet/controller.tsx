@@ -1,11 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import { CopyIcon } from '@radix-ui/react-icons'
+import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
 
 import { CodeSnippetFragment } from './index'
-import { createPortal } from 'react-dom'
-import { useHasRendered } from '@/hooks/use-has-rendered'
+import { Tooltip } from '@radix-ui/themes'
 
 type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>
 
@@ -95,18 +94,6 @@ export const CopyButton = ({
   const [copied, setCopied] = React.useState(false)
   const copyButtonRef = React.useRef<HTMLButtonElement>(null)
 
-  const [tooltipStyle, setTooltipStyle] = React.useState({}) // State to hold tooltip styles
-  const tooltipRef = React.useRef<HTMLSpanElement>(null) // Ref for the tooltip element
-
-  const [isHoveringButton, setIsHoveringButton] = React.useState(false)
-  const hasRendered = useHasRendered()
-
-  React.useEffect(() => {
-    if (!isHoveringButton) return
-
-    setCopied(false)
-  }, [isHoveringButton])
-
   React.useEffect(() => {
     if (!copied) return
 
@@ -117,65 +104,24 @@ export const CopyButton = ({
     return () => clearTimeout(timeout)
   }, [copied])
 
-  const calculateTooltipPosition = React.useCallback(() => {
-    if (!copyButtonRef.current || !tooltipRef.current) return
-
-    const { left, top } = copyButtonRef.current.getBoundingClientRect()
-    const { width } = tooltipRef.current.getBoundingClientRect()
-    const tooltipLeft = left - width / 3
-    const tooltipTop = top - 28
-
-    setTooltipStyle({
-      position: 'fixed',
-      left: `${tooltipLeft}px`,
-      top: `${tooltipTop}px`,
-      opacity: isHoveringButton ? '1' : '0',
-      transitionDelay: isHoveringButton ? '0.1s' : '0',
-    })
-  }, [isHoveringButton])
-
-  React.useEffect(() => {
-    calculateTooltipPosition()
-    if (!document || !window) return
-
-    if (!document || !window) return
-
-    window.addEventListener('resize', calculateTooltipPosition, {
-      passive: true,
-    })
-    document.addEventListener('scroll', calculateTooltipPosition, {
-      passive: true,
-    })
-
-    return () => {
-      window.removeEventListener('resize', calculateTooltipPosition)
-      document.removeEventListener('scroll', calculateTooltipPosition)
-    }
-  }, [calculateTooltipPosition])
-
   return (
-    <button
-      ref={copyButtonRef}
-      className={className}
-      style={style}
-      data-type="copy-snippet"
-      onMouseEnter={() => setIsHoveringButton(true)}
-      onMouseLeave={() => setIsHoveringButton(false)}
-      onClick={() => {
-        setCopied(true)
-        navigator.clipboard.writeText(snippet)
-      }}
-    >
-      <CopyIcon width={12} height={12} />
-
-      {hasRendered &&
-        createPortal(
-          <span ref={tooltipRef} style={tooltipStyle} data-type="tooltip">
-            <span data-type="tooltip-content">Copy to Clipboard</span>
-            {copied && <span data-type="tooltip-success">Copied</span>}
-          </span>,
-          document.body
+    <Tooltip content={copied ? 'Copied!' : 'Copy to Clipboard'}>
+      <button
+        ref={copyButtonRef}
+        className={className}
+        style={style}
+        data-type="copy-snippet"
+        onClick={() => {
+          setCopied(true)
+          navigator.clipboard.writeText(snippet)
+        }}
+      >
+        {copied ? (
+          <CheckIcon width={12} height={12} />
+        ) : (
+          <CopyIcon width={12} height={12} />
         )}
-    </button>
+      </button>
+    </Tooltip>
   )
 }

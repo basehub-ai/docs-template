@@ -25,6 +25,9 @@ export const StepperComponent = async ({
                   {...rest}
                   data-type="stepper-checkpoint"
                   style={{ position: 'relative' }}
+                  size="4"
+                  mb="3"
+                  mt="5"
                 >
                   {children}
                   <span>{checkpoints}</span>

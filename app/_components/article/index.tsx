@@ -5,8 +5,11 @@ import {
   ArticleBodyFragment,
   ArticleFragment,
 } from '@/basehub-helpers/fragments'
+import NextLink from 'next/link'
+import { Link, Heading as RadixHeading } from '@radix-ui/themes'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
+import { Box, Code, Table, Text } from '@radix-ui/themes'
 
 import { HeadingWithIconMark } from './heading-with-icon'
 import { CalloutComponent } from './callout'
@@ -25,8 +28,8 @@ import { CopyButton } from './code-snippet/controller'
 
 import { Toc } from '../toc'
 
+import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
-import { Box } from '@radix-ui/themes'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -54,7 +57,15 @@ export const Article = ({ id }: { id: string }) => {
           <>
             <article className="flex flex-1 justify-center">
               <div className={s.body}>
-                <h1>{article._title}</h1>
+                <RadixHeading
+                  as="h1"
+                  size="8"
+                  className={headingStyles.heading}
+                  mt="0"
+                  mb="5"
+                >
+                  {article._title}
+                </RadixHeading>
                 <Body blocks={article.body.json.blocks}>
                   {article.body.json.content}
                 </Body>
@@ -73,6 +84,11 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
     <RichText
       blocks={props.blocks}
       components={{
+        a: ({ children, ...rest }) => (
+          <Link size="3" asChild>
+            <NextLink {...rest}>{children}</NextLink>
+          </Link>
+        ),
         h1: (props) => (
           <Heading as="h1" id={props.id}>
             {props.children}
@@ -103,6 +119,11 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             {props.children}
           </Heading>
         ),
+        table: (props) => <Table.Root {...props} size="1" />,
+        tbody: (props) => <Table.Body {...props} />,
+        tr: (props) => <Table.Row {...props} />,
+        th: (props) => <Table.RowHeaderCell {...props} />,
+        td: (props) => <Table.Cell {...props} />,
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -113,9 +134,14 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         img: Image,
         CodeSnippetComponent: CodeSnippetSingle,
         CodeGroupComponent: CodeSnippetGroup,
+        p: ({ children }) => (
+          <Text as="p" size="3">
+            {children}
+          </Text>
+        ),
         code: ({ isInline, ...rest }) => {
           if (isInline)
-            return <code data-type="inline-code">{rest.children}</code>
+            return <Code data-type="inline-code">{rest.children}</Code>
 
           return (
             <Box position="relative">
