@@ -1,8 +1,8 @@
 import { Pump } from '@/.basehub/react-pump'
 import { PagesNav } from './pages-nav'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import { draftMode } from 'next/headers'
-import { Container, Flex } from '@radix-ui/themes'
+import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
 
 import s from './header.module.scss'
@@ -22,12 +22,29 @@ export const Header = () => {
           <header className={s.header}>
             <Container size="4" py="4" px="8">
               <Flex align="center" height="9" justify="between">
-                <Link href="/">
+                <NextLink href="/">
                   <span className="sr-only">Home</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo} alt="logo" className={s['header__logo']} />
-                </Link>
-                <ThemeSwitcher />
+                </NextLink>
+                <Flex align="center" justify="center">
+                  <ThemeSwitcher />
+                  <Button
+                    asChild
+                    ml="5"
+                    radius="full"
+                    className={s['header__main-cta']}
+                    size="2"
+                  >
+                    <Link asChild>
+                      <NextLink href="#">
+                        <Text as="span" weight="medium">
+                          Main CTA
+                        </Text>
+                      </NextLink>
+                    </Link>
+                  </Button>
+                </Flex>
               </Flex>
             </Container>
             <PagesNav />

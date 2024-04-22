@@ -1,8 +1,7 @@
 .sidebar {
-   background-color: var(--gray-1);
    top: var(--header);
    height: var(--sidebar); overflow: auto;
-   border-right: 1px solid var(--gray-4);
+   border-right: 1px solid var(--gray-2);
    position: sticky;
    width: 320px;
 }
@@ -29,7 +28,7 @@
    color: var(--gray-5);
    font-weight: 500;
    border-width: 1px;
-   border-color: var(--gray-4);
+   border-color: var(--gray-2);
    position: relative;
 }
 
@@ -55,7 +54,7 @@
    top: 0;
    width: 1px;
    border-radius: var(--rounded-6);
-   background-color: var(--gray-4);
+   background-color: var(--gray-2);
 }
 
 .sidebar__item--toggle {
@@ -68,7 +67,7 @@
    border-width: 1px;
    border-style: solid;
    border-radius: var(--radius-2);
-   border-color: var(--gray-4);
+   border-color: var(--gray-2);
    background-color: var(--gray-1);
    box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
    width: 1em;
@@ -111,5 +110,5 @@
 .sidebar__divider {
    border-bottom-width: 1px;
    border-style: solid;
-   border-color: var(--gray-4);
+   border-color: var(--gray-2);
 }

@@ -50,7 +50,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
         width="100%"
         gap="3"
         overflow="auto"
-        style={{ borderColor: 'var(--gray-4)' }}
+        style={{ borderColor: 'var(--gray-3)' }}
         pb="12"
         pl="3"
         pr="3"
