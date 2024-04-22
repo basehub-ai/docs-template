@@ -5,6 +5,7 @@ import { CopyIcon } from '@radix-ui/react-icons'
 
 import { CodeSnippetFragment } from './index'
 import { createPortal } from 'react-dom'
+import { useHasRendered } from '@/hooks/use-has-rendered'
 
 type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>
 
@@ -98,12 +99,7 @@ export const CopyButton = ({
   const tooltipRef = React.useRef<HTMLSpanElement>(null) // Ref for the tooltip element
 
   const [isHoveringButton, setIsHoveringButton] = React.useState(false)
-
-  const [hasRendered, setHasRendered] = React.useState(false)
-
-  React.useEffect(() => {
-    setHasRendered(true)
-  }, [])
+  const hasRendered = useHasRendered()
 
   React.useEffect(() => {
     if (!isHoveringButton) return

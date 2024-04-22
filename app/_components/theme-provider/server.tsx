@@ -31,20 +31,12 @@ export const ThemeProvider = async ({
   })
 
   return (
-    <NextThemesThemeProvider
-      attribute="class"
-      forcedTheme={
-        data.settings.theme.appearance === 'inherit'
-          ? undefined
-          : data.settings.theme.appearance
-      }
-    >
+    <NextThemesThemeProvider attribute="class">
       <Theme
         accentColor={data.settings.theme.accentColor as any}
         grayColor={data.settings.theme.grayScale as any}
         radius={data.settings.theme.radius as any}
         scaling={data.settings.theme.scaling as any}
-        appearance={data.settings.theme.appearance as any}
         panelBackground={data.settings.theme.panelBackground as any}
       >
         {children}

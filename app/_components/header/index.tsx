@@ -3,6 +3,7 @@ import { PagesNav } from './pages-nav'
 import Link from 'next/link'
 import { draftMode } from 'next/headers'
 import { Container, Flex } from '@radix-ui/themes'
+import { ThemeSwitcher } from '../theme-switcher'
 
 import s from './header.module.scss'
 
@@ -19,15 +20,16 @@ export const Header = () => {
 
         return (
           <header className={s.header}>
-            <Flex align="center">
-              <Container height="9" py="4" px="8" size="4">
+            <Container size="4" py="4" px="8">
+              <Flex align="center" height="9" justify="between">
                 <Link href="/">
                   <span className="sr-only">Home</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo} alt="logo" style={{ height: 24 }} />
                 </Link>
-              </Container>
-            </Flex>
+                <ThemeSwitcher />
+              </Flex>
+            </Container>
             <PagesNav />
           </header>
         )
