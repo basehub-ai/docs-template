@@ -4,33 +4,26 @@
    width: 260px;
 
    ol {
-      border-left: 1px solid #D4D4D88F;
+      border-left: 1px solid var(--gray-4);
       padding-block: 3px;
-      padding-left: 13px;
-      font-size: 13px;
-      color :var(--normal);
+      color: var(--normal);
       position: relative;
 
       li {
          position: relative;
-         line-height: 16px;
+         line-height: 1.14;
 
          a {
             white-space: nowrap;
-            padding-top: 12px;
-            position: relative;
+            padding-top: var(--space-3);
             display: inline-block;
-
-            &:not(:only-child) {
-               padding-top: 12px;
-            }
 
             &:hover,
             &[data-active="true"] {
                color: var(--strong);
                
                &:after {
-                  background-color: rgb(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b));
+                  background-color: var(--accent-indicator);
                }
 
                &::before {
@@ -39,10 +32,10 @@
                   width: 1px;
                   position: absolute;
                   z-index: 0;
-                  top: 2px;
-                  height: calc(100% + 6px);
-                  background-image: linear-gradient(180deg, rgb(229, 231, 235) 0%, rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.98) 100%);
-                  left: 7.5px;
+                  top: var(--space-1);
+                  left: -1px;
+                  height: calc(100% + var(--space-1));
+                  background-image: linear-gradient(180deg, var(--gray-4) 0%, rgba(var(--accent-indicator-r), var(--accent-indicator-g), var(--accent-indicator-b), 0.98) 100%);
                   transition: background-color 0.1s ease-out;
                }
             }
@@ -52,16 +45,17 @@
                display: block;
                position: absolute;
                z-index: 2;
-               width: 16px;
-               height: 16px;
-               border-radius: 99px;
-               background-color: white;
-               top: 12px;
-               transform: translateX(-21.5px) translateY(0px);
-               transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+               width: var(--space-4);
+               height: var(--space-4);
+               border-radius: var(--radius-6);
+               background-color: var(--color-background);
+               bottom: 0;
+               left: calc((var(--space-4) + 1px) * -1 / 2);
+               transform: translateY(0px);
+               transition: color 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
             }
 
-            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            transition: color 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
          }
 
          &:before {
@@ -69,13 +63,13 @@
             display: block;
             position: absolute;
             z-index: 3;
-            width: 12px;
-            height: 12px;
-            border-radius: 99px;
-            background-color: white;
-            top: 10px;
-            transform: translateX(-19.5px) translateY(4px);
-            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            width: var(--space-3);
+            height: var(--space-3);
+            border-radius: var(--radius-6);
+            background-color: var(--color-background);
+            left: calc((var(--space-3) + 1px) * -1 / 2);
+            bottom: calc(var(--space-1) / 2);
+            transition: color 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
          }
 
          &:after {
@@ -83,13 +77,13 @@
             display: block;
             position: absolute;
             z-index: 4;
-            width: 3px;
-            height: 3px;
-            border-radius: 99px;
-            background-color: #D4D4D88F;
-            top: 10px;
-            transform: translateX(-15px) translateY(8.5px);
-            transition: color 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            width: var(--space-1);
+            height: var(--space-1);
+            border-radius: var(--radius-6);
+            background-color: var(--gray-4);
+            left: calc((var(--space-1) + 1px) * -1 / 2);
+            bottom: 21%;
+            transition: color 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
          }
          
          &:hover,
@@ -99,22 +93,21 @@
             }
 
             &:before {
-               background: rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.16);
+               background-color: rgba(var(--accent-indicator-r), var(--accent-indicator-g), var(--accent-indicator-b), 0.16);
                box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
             }
             
             &:after {
-               box-shadow: 0px 0px 2px 0px rgba(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b), 0.72);
-               background-color: rgb(var(--brand-color-r), var(--brand-color-g), var(--brand-color-b));
+               box-shadow: 0px 0px 2px 0px rgba(var(--accent-indicator-r), var(--accent-indicator-g), var(--accent-indicator-b), 0.72);
+               background-color: var(--accent-indicator);
             }
-         
          }
       }
-      
+
       & ol {
          border-left: none;
-         padding-left: 8px;
-         padding-top: 8px;
+         padding-left: var(--space-2);
+         padding-top: var(--space-2);
          padding-bottom: 0;
          position: unset;
 
@@ -154,14 +147,51 @@
                   position: absolute;
                   z-index: 0;
                   height: 100%;
-                  top: -0;
+                  top: 0;
                   background-color: transparent;
                   background-image: none;
-                  left: -22px;
+                  left: 0;
                   transition: background-color 0.1s ease-out;
                }
             }
          }
+      }
+   }
+}
+
+.back-to-top {
+   background-color: var(--gray-2);
+   color: var(--gray-10);
+   transition: opacity 0.2s, background-color 0.2s;
+   letter-spacing: 0.0185em;
+   letter-spacing: var(--tracking-default);
+   cursor: pointer;
+   font-weight: 500;
+   padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+   font-size: 0.8125rem;
+   line-height: 0.8;
+
+   &:hover {
+      background-color: var(--gray-3);
+
+      div > svg {
+         border: 1px solid var(--gray-7);
+      }
+   }
+
+   div > svg {
+      transition: border-color 0.2s;
+      width: var(--space-4);
+      height: var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--gray-4);
+      background-color: var(--gray-1);
+      box-shadow :0px 1px 2px 0px rgba(9,9,11,0.04);
+
+      svg {
+         width: var(--space-4);
+         height: var(--space-4);
+         fill: var(--gray-10);
       }
    }
 }

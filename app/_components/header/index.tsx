@@ -2,6 +2,9 @@ import { Pump } from '@/.basehub/react-pump'
 import { PagesNav } from './pages-nav'
 import Link from 'next/link'
 import { draftMode } from 'next/headers'
+import { Container, Flex } from '@radix-ui/themes'
+
+import s from './header.module.scss'
 
 export const Header = () => {
   return (
@@ -15,14 +18,16 @@ export const Header = () => {
         const logo = data.settings.logo.url
 
         return (
-          <header className="sticky top-0 z-50 bg-white">
-            <div className="container mx-auto flex h-site-nav items-center">
-              <Link href="/">
-                <span className="sr-only">Home</span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={logo} alt="logo" className="h-6" />
-              </Link>
-            </div>
+          <header className={s.header}>
+            <Flex align="center">
+              <Container height="9" py="4" px="8" size="4">
+                <Link href="/">
+                  <span className="sr-only">Home</span>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={logo} alt="logo" style={{ height: 24 }} />
+                </Link>
+              </Container>
+            </Flex>
             <PagesNav />
           </header>
         )

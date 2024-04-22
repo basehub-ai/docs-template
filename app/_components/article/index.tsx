@@ -1,24 +1,21 @@
-import { fragmentOn } from '@/.basehub'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 
-import { ArticleFragment } from '@/basehub-helpers/fragments'
+import {
+  ArticleBodyFragment,
+  ArticleFragment,
+} from '@/basehub-helpers/fragments'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 
+import { HeadingWithIconMark } from './heading-with-icon'
+import { CalloutComponent } from './callout'
+import { StepperComponent } from './stepper'
+import { CardsGridComponent } from './cards-grid'
+import { AccordionComponent } from './accordion'
+import { Heading } from './heading'
 import {
-  HeadingWithIconFragment,
-  HeadingWithIconMark,
-} from './heading-with-icon'
-import { CalloutComponent, CalloutFragment } from './callout'
-import { StepperComponent, StepperFragment } from './stepper'
-import { CardsGridComponent, CardsGridFragment } from './cards-grid'
-import { AccordionComponent, AccordionGroupFragment } from './accordion'
-import { AnchorHeading } from './heading'
-import {
-  CodeGroupFragment,
   CodeSnippet,
-  CodeSnippetFragmentRecursive,
   CodeSnippetGroup,
   CodeSnippetSingle,
 } from './code-snippet'
@@ -29,6 +26,7 @@ import { CopyButton } from './code-snippet/controller'
 import { Toc } from '../toc'
 
 import s from './article.module.scss'
+import { Box } from '@radix-ui/themes'
 
 export const Article = ({ id }: { id: string }) => {
   return (
@@ -70,57 +68,40 @@ export const Article = ({ id }: { id: string }) => {
   )
 }
 
-export const ArticleBodyFragment = fragmentOn('BodyRichText', {
-  content: true,
-  toc: true,
-  blocks: {
-    __typename: true,
-    on_CalloutComponent: CalloutFragment,
-    on_HeadingWithIconComponent: HeadingWithIconFragment,
-    on_CardsGridComponent: CardsGridFragment,
-    on_AccordionGroupComponent: AccordionGroupFragment,
-    on_StepperComponent: StepperFragment,
-    on_CodeGroupComponent: CodeGroupFragment,
-    on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
-  },
-})
-
-export type ArticleBodyFragment = fragmentOn.infer<typeof ArticleBodyFragment>
-
 export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
   return (
     <RichText
       blocks={props.blocks}
       components={{
         h1: (props) => (
-          <AnchorHeading as="h1" id={props.id}>
+          <Heading as="h1" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h2: (props) => (
-          <AnchorHeading as="h2" id={props.id}>
+          <Heading as="h2" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h3: (props) => (
-          <AnchorHeading as="h3" id={props.id}>
+          <Heading as="h3" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h4: (props) => (
-          <AnchorHeading as="h4" id={props.id}>
+          <Heading as="h4" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h5: (props) => (
-          <AnchorHeading as="h5" id={props.id}>
+          <Heading as="h5" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h6: (props) => (
-          <AnchorHeading as="h6" id={props.id}>
+          <Heading as="h6" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
@@ -137,13 +118,17 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             return <code data-type="inline-code">{rest.children}</code>
 
           return (
-            <div className="relative">
+            <Box position="relative">
               <CodeSnippet code={{ ...rest }} />
               <CopyButton
                 snippet={rest.code}
-                className="!right-4 !top-4 !translate-y-0"
+                style={{
+                  right: '4',
+                  top: '4',
+                  transform: 'translateY(0)',
+                }}
               />
-            </div>
+            </Box>
           )
         },
         pre: ({ children }) => <>{children}</>,

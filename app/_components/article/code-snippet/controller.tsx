@@ -85,9 +85,11 @@ export const useCodeBlock = () => {
 export const CopyButton = ({
   snippet,
   className,
+  style,
 }: {
   snippet: CodeSnippetFragment['code']['code']
   className?: string
+  style?: JSX.IntrinsicElements['button']['style']
 }) => {
   const [copied, setCopied] = React.useState(false)
   const copyButtonRef = React.useRef<HTMLButtonElement>(null)
@@ -159,6 +161,7 @@ export const CopyButton = ({
     <button
       ref={copyButtonRef}
       className={className}
+      style={style}
       data-type="copy-snippet"
       onMouseEnter={() => setIsHoveringButton(true)}
       onMouseLeave={() => setIsHoveringButton(false)}

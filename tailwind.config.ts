@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: 'var(--brand-color)',
         normal: 'var(--normal)',
         strong: 'var(--strong)',
         light: 'var(--light)',

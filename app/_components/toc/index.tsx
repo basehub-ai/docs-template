@@ -8,6 +8,7 @@ import { ChevronUpIcon } from '@radix-ui/react-icons'
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
 import s from './toc.module.scss'
+import { Box, Button, Flex, Text } from '@radix-ui/themes'
 
 export type TocProps = RichTextProps & {
   currentSectionId?: string
@@ -17,6 +18,7 @@ export type TocProps = RichTextProps & {
 export const Toc = ({ blocks, children }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
+  const tocRef = React.useRef<HTMLElement>(null)
   const backToTopButton = React.useRef<HTMLButtonElement>(null)
 
   const setHighlightedSection = React.useCallback((sectionId: string) => {
@@ -93,6 +95,46 @@ export const Toc = ({ blocks, children }: TocProps) => {
   }, [handleScroll])
 
   React.useEffect(() => {
+    if (!tocRef.current) return
+
+    const colorToRgb = (color: string) => {
+      const match = /color\(display-p3\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/.exec(
+        color
+      )
+
+      if (!match) return null
+
+      const [_, r, g, b] = match
+      if (r === undefined || g === undefined || b === undefined) return null
+
+      return {
+        r: Math.round(parseFloat(r) * 255),
+        g: Math.round(parseFloat(g) * 255),
+        b: Math.round(parseFloat(b) * 255),
+      }
+    }
+
+    const accentIndicatorShade = colorToRgb(
+      getComputedStyle(tocRef.current).getPropertyValue('--accent-indicator')
+    )
+
+    if (!accentIndicatorShade) return
+
+    tocRef.current.style.setProperty(
+      '--accent-indicator-r',
+      accentIndicatorShade.r.toString()
+    )
+    tocRef.current.style.setProperty(
+      '--accent-indicator-g',
+      accentIndicatorShade.g.toString()
+    )
+    tocRef.current.style.setProperty(
+      '--accent-indicator-b',
+      accentIndicatorShade.b.toString()
+    )
+  }, [])
+
+  React.useEffect(() => {
     if (!backToTopButton.current) return
 
     document.addEventListener('scroll', handleScroll)
@@ -103,15 +145,29 @@ export const Toc = ({ blocks, children }: TocProps) => {
   }, [handleScroll])
 
   return (
-    <aside className={s.toc}>
+    <aside ref={tocRef} className={s.toc}>
       {Boolean(children) && (
         <>
-          <p className="mb-1 flex items-center text-sm font-medium leading-normal text-strong">
-            On this page
-          </p>
+          <Text asChild size="2" weight="medium" mb="1">
+            <p>On this page</p>
+          </Text>
           <RichText
             blocks={blocks}
             components={{
+              ol: ({ children, ...props }) => (
+                <Box asChild position="relative">
+                  <Text size="2" asChild>
+                    <ol {...props}>{children}</ol>
+                  </Text>
+                </Box>
+              ),
+              li: ({ children, ...props }) => (
+                <Box asChild pl="3">
+                  <Text asChild size="2">
+                    <li {...props}>{children}</li>
+                  </Text>
+                </Box>
+              ),
               a: ({ href, children }) => {
                 if (!children) return <></>
                 const childrenAsString = children.toString()
@@ -140,19 +196,24 @@ export const Toc = ({ blocks, children }: TocProps) => {
         </>
       )}
 
-      <button
-        ref={backToTopButton}
-        style={{ opacity: 0, pointerEvents: 'none' }}
-        onClick={() => {
-          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-        }}
-        className="mt-10 flex items-center rounded-round bg-[rgba(244,244,245,0.64)] p-1.5 pl-3 text-xs leading-4 tracking-default text-normal transition-[opacity,background-color] duration-300 hover:bg-[rgb(244,244,245)]"
-      >
-        Back to top
-        <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-round border border-info-border bg-white shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)]">
-          <ChevronUpIcon width={10} height={10} />
-        </span>
-      </button>
+      <Flex asChild align="center" gap="2">
+        <Button
+          mt="7"
+          radius="full"
+          color="gray"
+          ref={backToTopButton}
+          style={{ opacity: 0, pointerEvents: 'none' }}
+          className={s['back-to-top']}
+          onClick={() => {
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
+          Back to top
+          <Flex align="center" justify="center">
+            <ChevronUpIcon width={10} height={10} />
+          </Flex>
+        </Button>
+      </Flex>
     </aside>
   )
 }
