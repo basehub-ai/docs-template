@@ -25,7 +25,7 @@ export const Header = () => {
                 <Link href="/">
                   <span className="sr-only">Home</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={logo} alt="logo" style={{ height: 24 }} />
+                  <img src={logo} alt="logo" className={s['header__logo']} />
                 </Link>
                 <ThemeSwitcher />
               </Flex>

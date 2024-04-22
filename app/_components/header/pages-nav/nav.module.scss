@@ -2,6 +2,7 @@
   border-block-width: 1px;
   border-block-color: var(--gray-4);
   background-color: var(--gray-2);
+  position: relative;
 
   .nav {
     & > a {
@@ -32,6 +33,6 @@
   border-radius: var(--radius-6);
   background-color: var(--accent-indicator);
   display: block;
-  bottom: 0;
+  bottom: -1px;
   transition: all 0.3s ease-in-out;
 }

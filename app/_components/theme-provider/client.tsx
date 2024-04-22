@@ -13,7 +13,6 @@ export const LiveThemeSwitcher = ({
     onAccentColorChange,
     onRadiusChange,
     onGrayColorChange,
-    onAppearanceChange,
     onPanelBackgroundChange,
     onScalingChange,
   } = useThemeContext()
@@ -22,18 +21,15 @@ export const LiveThemeSwitcher = ({
     onAccentColorChange(theme.accentColor as any)
     onRadiusChange(theme.radius as any)
     onGrayColorChange(theme.grayScale as any)
-    onAppearanceChange(theme.appearance as any)
     onPanelBackgroundChange(theme.panelBackground as any)
     onScalingChange(theme.scaling as any)
   }, [
     theme.accentColor,
     theme.radius,
     theme.grayScale,
-    theme.appearance,
     theme.panelBackground,
     theme.scaling,
     onAccentColorChange,
-    onAppearanceChange,
     onGrayColorChange,
     onPanelBackgroundChange,
     onRadiusChange,

@@ -161,10 +161,10 @@ export const Toc = ({ blocks, children }: TocProps) => {
                   </Text>
                 </Box>
               ),
-              li: ({ children, ...props }) => (
+              li: ({ children }) => (
                 <Box asChild pl="3">
                   <Text asChild size="2">
-                    <li {...props}>{children}</li>
+                    <li>{children}</li>
                   </Text>
                 </Box>
               ),

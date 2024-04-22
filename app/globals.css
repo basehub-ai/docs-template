@@ -13,13 +13,13 @@
   --strong: var(--gray-12);
   --normal: var(--gray-11);
   --dark: var(--gray-1);
-  --header: 96px;
   
   --tracking-default: -0.26px;
   --tracking-tighter-1: -0.3px;
   --tracking-tighter-3: -0.52px;
   
   .radix-themes {
+    --header: calc(96px * var(--scaling));
     --sidebar: calc(100vh - calc(56px * var(--scaling)) - var(--space-7));
     --default-font-family: var(--font-geist-sans);
     --container-4: 1280px;
