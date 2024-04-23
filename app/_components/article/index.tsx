@@ -25,7 +25,6 @@ import {
 import { Video } from './video'
 import { Image } from './image/handler'
 import { CopyButton } from './code-snippet/controller'
-
 import { Toc } from '../toc'
 
 import headingStyles from './heading/heading.module.scss'
@@ -119,11 +118,19 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             {props.children}
           </Heading>
         ),
-        table: (props) => <Table.Root {...props} size="1" />,
+        table: (props) => <Table.Root {...props} size="1" variant="surface" />,
         tbody: (props) => <Table.Body {...props} />,
-        tr: (props) => <Table.Row {...props} />,
-        th: (props) => <Table.RowHeaderCell {...props} />,
-        td: (props) => <Table.Cell {...props} />,
+        tr: ({ children }) => <Table.Row>{children}</Table.Row>,
+        th: ({ children, rowspan, colspan }) => (
+          <Table.ColumnHeaderCell colSpan={colspan} rowSpan={rowspan}>
+            {children}
+          </Table.ColumnHeaderCell>
+        ),
+        td: ({ children, rowspan, colspan }) => (
+          <Table.Cell colSpan={colspan} rowSpan={rowspan}>
+            {children}
+          </Table.Cell>
+        ),
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -146,14 +153,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           return (
             <Box position="relative">
               <CodeSnippet code={{ ...rest }} />
-              <CopyButton
-                snippet={rest.code}
-                style={{
-                  right: '4',
-                  top: '4',
-                  transform: 'translateY(0)',
-                }}
-              />
+              <CopyButton snippet={rest.code} style={{ right: 16, top: 16 }} />
             </Box>
           )
         },

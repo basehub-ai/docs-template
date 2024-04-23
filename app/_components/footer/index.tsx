@@ -26,7 +26,6 @@ export const Footer = () => {
         return (
           <Flex asChild justify="center" align="center" direction="column">
             <footer className={s.footer}>
-              <Separator color="gray" size="4" />
               <Container
                 className={s.container}
                 py="9"

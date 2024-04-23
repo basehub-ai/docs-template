@@ -15,6 +15,7 @@ type HeadingProps = JSX.IntrinsicElements['h1'] & {
 
 export const Heading = ({ children, as, id, href }: HeadingProps) => {
   const size = as === 'h1' ? '8' : as === 'h2' ? '6' : as === 'h3' ? '4' : '3'
+  const marginTop = as === 'h1' ? '8' : as === 'h2' ? '7' : '6'
 
   return (
     <RadixHeading
@@ -24,7 +25,7 @@ export const Heading = ({ children, as, id, href }: HeadingProps) => {
       color="gray"
       size={size}
       mb="3"
-      mt="8"
+      mt={marginTop}
     >
       {!id ? (
         children

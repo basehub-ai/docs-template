@@ -174,14 +174,16 @@ const SidebarItem = ({
             asChild
           >
             <NextLink href={href} prefetch={false}>
-              {title}
+              {title || 'Untitled article'}
             </NextLink>
           </Link>
         </Flex>
       )
 
     if (data.children.items.length <= 0)
-      return <Text className={s.sidebar__title}>{title}</Text>
+      return (
+        <Text className={s.sidebar__title}>{title || 'Untitled article'}</Text>
+      )
 
     if (isRootLevel) {
       return (
@@ -200,7 +202,7 @@ const SidebarItem = ({
           toggleCollapsed()
         }}
       >
-        {title}
+        {title || 'Untitled article'}
       </button>
     )
   }, [

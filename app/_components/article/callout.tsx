@@ -1,5 +1,5 @@
 import { fragmentOn } from '@/.basehub'
-import { Callout } from '@radix-ui/themes'
+import { Callout, Heading } from '@radix-ui/themes'
 import { Body } from '.'
 
 export const CalloutComponent = (props: CalloutFragment) => {
@@ -24,10 +24,34 @@ export const CalloutComponent = (props: CalloutFragment) => {
   }
 
   return (
-    <Callout.Root color={calloutColor} variant="surface" data-type="callout">
+    <Callout.Root
+      color={calloutColor}
+      variant="surface"
+      data-type="callout"
+      my="4"
+    >
       <Body
         components={{
-          p: ({ children }) => <Callout.Text size="1">{children}</Callout.Text>,
+          p: ({ children }) => (
+            <Callout.Text size="1" color="gray">
+              {children}
+            </Callout.Text>
+          ),
+          h1: ({ children }) => (
+            <Heading as="h1" size="3" weight="medium">
+              {children}
+            </Heading>
+          ),
+          h2: ({ children }) => (
+            <Heading as="h2" size="2" weight="medium">
+              {children}
+            </Heading>
+          ),
+          h3: ({ children }) => (
+            <Heading as="h3" size="1" weight="medium">
+              {children}
+            </Heading>
+          ),
         }}
       >
         {props.content?.json.content}

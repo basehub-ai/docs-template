@@ -4,6 +4,8 @@ import * as React from 'react'
 
 import { CopyButton, useCodeBlock } from './controller'
 
+import s from './code-snippet.module.scss'
+
 export const CodeGroupHeader = () => {
   const highligterRef = React.useRef<HTMLDivElement>(null)
   const { activeSnippet, snippets, selectSnippet } = useCodeBlock()
@@ -25,7 +27,7 @@ export const CodeGroupHeader = () => {
   if (!activeSnippet) return null
 
   return (
-    <header data-type="code-snippet-header">
+    <header className={s['code-snippet-header']}>
       {snippets.length > 1
         ? snippets.map((snippet) => (
             <button
@@ -39,11 +41,7 @@ export const CodeGroupHeader = () => {
         : activeSnippet.fileName || 'Untitled'}
 
       <CopyButton snippet={activeSnippet.code.code} />
-      <div
-        ref={highligterRef}
-        style={{ backgroundColor: 'var(--brand-color)' }}
-        className="absolute -bottom-px h-px rounded-full transition-all duration-300 ease-out"
-      />
+      <div ref={highligterRef} className={s['code-snippet-header__highlighter']} />
     </header>
   )
 }

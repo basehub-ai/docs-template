@@ -19,7 +19,9 @@
   --tracking-tighter-3: -0.52px;
   
   .radix-themes {
-    --header: calc(96px * var(--scaling));
+    --header: calc(92px * var(--scaling));
+    --header-head: calc(52px * var(--scaling));
+    --header-pages-nav: calc(40px * var(--scaling));
     --sidebar: calc(100vh - calc(56px * var(--scaling)) - var(--space-7));
     --default-font-family: var(--font-geist-sans);
     --container-4: 1280px;

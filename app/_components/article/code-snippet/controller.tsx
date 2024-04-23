@@ -6,6 +6,8 @@ import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
 import { CodeSnippetFragment } from './index'
 import { Tooltip } from '@radix-ui/themes'
 
+import s from './code-snippet.module.scss'
+
 type ClientSnippet = Omit<CodeSnippetFragment, '__typename'>
 
 /* -------------------------------------------------------------------------------------------------
@@ -61,7 +63,7 @@ export const CodeBlockClientController = ({
     <CodeBlockContext.Provider
       value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}
     >
-      <div ref={groupRef} data-active-snippet={activeSnippet['_id']}>
+      <div ref={groupRef} data-active-snippet={activeSnippet['_id']} className={s['code-snippet']}>
         {children}
       </div>
     </CodeBlockContext.Provider>
@@ -84,11 +86,9 @@ export const useCodeBlock = () => {
 
 export const CopyButton = ({
   snippet,
-  className,
   style,
 }: {
   snippet: CodeSnippetFragment['code']['code']
-  className?: string
   style?: JSX.IntrinsicElements['button']['style']
 }) => {
   const [copied, setCopied] = React.useState(false)
@@ -107,10 +107,9 @@ export const CopyButton = ({
   return (
     <Tooltip content={copied ? 'Copied!' : 'Copy to Clipboard'}>
       <button
-        ref={copyButtonRef}
-        className={className}
         style={style}
-        data-type="copy-snippet"
+        ref={copyButtonRef}
+        className={s['code-snippet-header__copy']}
         onClick={() => {
           setCopied(true)
           navigator.clipboard.writeText(snippet)

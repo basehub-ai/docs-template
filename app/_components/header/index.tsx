@@ -6,6 +6,7 @@ import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
 
 import s from './header.module.scss'
+import Search from './search'
 
 export const Header = () => {
   return (
@@ -20,13 +21,14 @@ export const Header = () => {
 
         return (
           <header className={s.header}>
-            <Container size="4" py="4" px="8">
-              <Flex align="center" height="9" justify="between">
+            <Container size="4" px="8" height="100%">
+              <Flex align="center" height="100%" justify="between">
                 <NextLink href="/">
                   <span className="sr-only">Home</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo} alt="logo" className={s['header__logo']} />
                 </NextLink>
+                <Search />
                 <Flex align="center" justify="center">
                   <ThemeSwitcher />
                   <Button

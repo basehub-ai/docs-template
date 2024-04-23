@@ -1,4 +1,6 @@
 .footer {
+   border-top: 1px solid var(--gray-3);
+
    .footer__logo {
       height: var(--space-5);
       margin-inline: auto;
@@ -52,7 +54,7 @@
 
       &:hover {
          text-decoration: none;
-         border-color: rgba(228, 115, 32, 0.38);
+         border-color: rgba(228, 115, 32, 0.18);
       }
    }
 }
