@@ -12,14 +12,14 @@
       span {
         font-family: 'Geist Mono';
         color: var(--accent-indicator);
-        border-radius: 99px;
+        border-radius: var(--radius-5);
         display: flex;
         align-items: center;
         justify-content: center;
-        top: 2px;
+        top: 0;
         position: absolute;
-        left: -36px;
-        letter-spacing: theme('letterSpacing.tighter-3');
+        left: calc(var(--space-7) * -1);
+        letter-spacing: var(--tracking-default);
         font-weight: 500;
         text-shadow: 0px 0px 1px
           rgba(
@@ -30,8 +30,8 @@
           );
         line-height: var(--space-4);
         font-size: var(--font-size-2);
-        width: var(--space-6);
-        height: var(--space-6);
+        width: var(--space-5);
+        height: var(--space-5);
         border: 1px solid
           rgba(
             var(--accent-indicator-r),
@@ -56,7 +56,7 @@
           left: 10.5px;
           width: 1px;
           height: var(--step-height);
-          top: calc(var(--step-title-height) + 2px);
+          top: calc(var(--step-title-height) + var(--space-1));
           background-image: linear-gradient(
             180deg,
             rgba(
@@ -113,20 +113,20 @@
   }
 
   picture {
-    background-color: var(--gray-6);
-    padding: 4px;
+    background-color: var(--gray-2);
+    padding: var(--space-1);
     display: block;
     max-width: max-content;
     margin-block: var(--space-6);
     border-radius: var(--radius-3);
-    border: 1px solid var(--gray-7);
+    border: 1px solid var(--gray-5);
     z-index: 1;
     position: relative;
     box-shadow: 0px 1px 2px 0px var(--gray-6);
 
     video,
     img {
-      border-radius: 4px;
+      border-radius: var(--radius-1);
       position: relative;
     }
 
@@ -138,7 +138,7 @@
   :modal {
     outline: none;
     background-color: var(--gray-6);
-    padding: 4px;
+    padding: var(--space-1);
     display: block;
     max-width: max-content;
     margin-bottom: var(--space-6);
@@ -274,7 +274,7 @@
     div[data-type="accordion-content"] {
       padding: 0 var(--space-3) var(--space-3);
       margin: 0 var(--space-2) var(--space-2);
-      border-radius: 0px 0px 4px 4px;
+      border-radius: 0px 0px var(--radius-1) var(--radius-1);
       border-bottom: 1px solid var(--gray-1);
       position: relative;
       background: linear-gradient(180deg, transparent 3.75%, var(--gray-2) 100%);

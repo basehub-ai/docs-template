@@ -9,7 +9,7 @@ import NextLink from 'next/link'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { clsx } from 'clsx'
 import { useParams } from 'next/navigation'
-import { Box, Flex, Link, Text } from '@radix-ui/themes'
+import { Box, Flex, Link, Text, VisuallyHidden } from '@radix-ui/themes'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
 
 import s from './sidebar.module.scss'
@@ -238,9 +238,9 @@ const SidebarItem = ({
                 toggleCollapsed()
               }}
             >
-              <span className="sr-only">
+              <VisuallyHidden>
                 {isCollapsed ? 'Expand' : 'Collapse'}
-              </span>
+              </VisuallyHidden>
               <ChevronRightIcon />
             </button>
           </Flex>

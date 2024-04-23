@@ -1,8 +1,15 @@
 import { Pump } from '@/.basehub/react-pump'
-import { PagesNav } from './pages-nav'
+import { HeaderFragment, PagesNav } from './pages-nav'
 import NextLink from 'next/link'
 import { draftMode } from 'next/headers'
-import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
+import {
+  Button,
+  Container,
+  Flex,
+  Link,
+  Text,
+  VisuallyHidden,
+} from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
 
 import s from './header.module.scss'
@@ -11,30 +18,33 @@ import Search from './search'
 export const Header = () => {
   return (
     <Pump
-      queries={[{ settings: { logo: { url: true } } }]}
+      queries={[
+        { settings: { logo: { url: true } } },
+        { header: HeaderFragment },
+      ]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
     >
-      {async ([data]) => {
+      {async ([{ settings }, {header}]) => {
         'use server'
-        const logo = data.settings.logo.url
+        const logo = settings.logo.url
 
         return (
           <header className={s.header}>
             <Container size="4" px="8" height="100%">
               <Flex align="center" height="100%" justify="between">
                 <NextLink href="/">
-                  <span className="sr-only">Home</span>
+                  <VisuallyHidden>Home</VisuallyHidden>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={logo} alt="logo" className={s['header__logo']} />
                 </NextLink>
-                <Search />
+                <Search searchCategories={header.navLinks.items} />
                 <Flex align="center" justify="center">
                   <ThemeSwitcher />
                   <Button
                     asChild
                     ml="5"
-                    radius="full"
+                    radius="large"
                     className={s['header__main-cta']}
                     size="2"
                   >
