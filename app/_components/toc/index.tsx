@@ -4,6 +4,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
+import { Box, Button, Flex, Text } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
@@ -17,6 +18,7 @@ export type TocProps = RichTextProps & {
 export const Toc = ({ blocks, children }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
+  const tocRef = React.useRef<HTMLElement>(null)
   const backToTopButton = React.useRef<HTMLButtonElement>(null)
 
   const setHighlightedSection = React.useCallback((sectionId: string) => {
@@ -37,7 +39,10 @@ export const Toc = ({ blocks, children }: TocProps) => {
       let lastActive = ''
       const headingList = Array.from(
         document.querySelectorAll<HTMLHeadingElement>('h1, h2, h3, h4, h5, h6')
-      ).filter((node) => node.id)
+      ).filter((node) => {
+        if (node.dataset.type === 'stepper-checkpoint') return false
+        return node.id
+      })
 
       if (
         window.innerHeight + Math.round(window.scrollY) >=
@@ -52,7 +57,6 @@ export const Toc = ({ blocks, children }: TocProps) => {
 
           if (
             element &&
-            // Element is scrolled to the half of the screen bottom
             offsetTop <= window.innerHeight / 2 + Math.round(window.scrollY)
           ) {
             lastActive = heading.id
@@ -103,15 +107,29 @@ export const Toc = ({ blocks, children }: TocProps) => {
   }, [handleScroll])
 
   return (
-    <aside className={s.toc}>
+    <aside ref={tocRef} className={s.toc}>
       {Boolean(children) && (
         <>
-          <p className="mb-1 flex items-center text-sm font-medium leading-normal text-strong">
-            On this page
-          </p>
+          <Text asChild size="2" weight="medium" mb="1">
+            <p>On this page</p>
+          </Text>
           <RichText
             blocks={blocks}
             components={{
+              ol: ({ children, ...props }) => (
+                <Box asChild position="relative">
+                  <Text size="2" asChild>
+                    <ol {...props}>{children}</ol>
+                  </Text>
+                </Box>
+              ),
+              li: ({ children }) => (
+                <Box asChild pl="3">
+                  <Text asChild size="2">
+                    <li>{children}</li>
+                  </Text>
+                </Box>
+              ),
               a: ({ href, children }) => {
                 if (!children) return <></>
                 const childrenAsString = children.toString()
@@ -140,19 +158,24 @@ export const Toc = ({ blocks, children }: TocProps) => {
         </>
       )}
 
-      <button
-        ref={backToTopButton}
-        style={{ opacity: 0, pointerEvents: 'none' }}
-        onClick={() => {
-          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-        }}
-        className="mt-10 flex items-center rounded-round bg-[rgba(244,244,245,0.64)] p-1.5 pl-3 text-xs leading-4 tracking-default text-normal transition-[opacity,background-color] duration-300 hover:bg-[rgb(244,244,245)]"
-      >
-        Back to top
-        <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-round border border-info-border bg-white shadow-[0px_1px_2px_0px_rgba(9,9,11,0.04)]">
-          <ChevronUpIcon width={10} height={10} />
-        </span>
-      </button>
+      <Flex asChild align="center" gap="2">
+        <Button
+          mt="7"
+          radius="full"
+          color="gray"
+          ref={backToTopButton}
+          style={{ opacity: 0, pointerEvents: 'none' }}
+          className={s['back-to-top']}
+          onClick={() => {
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
+          Back to top
+          <Flex align="center" justify="center">
+            <ChevronUpIcon width={10} height={10} />
+          </Flex>
+        </Button>
+      </Flex>
     </aside>
   )
 }

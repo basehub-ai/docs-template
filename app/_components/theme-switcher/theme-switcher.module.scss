@@ -1,0 +1,29 @@
+.theme-switcher__wrapper {
+   border: 1px solid var(--gray-3);
+   max-width: max-content;
+   border-radius: var(--radius-6);
+   background: var(--gray-2);
+   padding: var(--space-1);
+   height: var(--space-6);
+
+   .theme-switcher__button {
+      cursor: pointer;
+      aspect-ratio: 1;
+      padding: var(--space-1);
+      color: var(--gray-9);
+      
+      &:not(:hover) {
+         background-color: transparent;
+      }
+
+      &:hover {
+         color: var(--strong);
+         background-color: var(--gray-3);
+      }
+
+      &[data-active="true"] {
+         color: var(--strong);
+         background-color: var(--gray-3);
+      }
+   }
+}

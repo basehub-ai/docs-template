@@ -8,7 +8,7 @@ export const HeadingWithIconMark = ({
   return (
     <>
       <Image
-        className="absolute -left-10 top-1/2 h-6 w-6 -translate-y-1/2 "
+        className="absolute -left-10 top-1/2 h-6 w-6 -translate-y-1/2"
         alt={icon.alt ?? ''}
         width={icon.width}
         height={icon.height}

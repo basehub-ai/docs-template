@@ -3,6 +3,7 @@ import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { draftMode } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
+import { Container, Flex } from '@radix-ui/themes'
 
 export default function Layout({
   children,
@@ -12,8 +13,8 @@ export default function Layout({
   params: { category: string }
 }) {
   return (
-    <div className="container mx-auto flex gap-8">
-      <div className="w-80">
+    <Container size="4" px="8">
+      <Flex>
         <Pump
           queries={[{ pages: SidebarFragment }]}
           next={{ revalidate: 30 }}
@@ -23,7 +24,9 @@ export default function Layout({
             'use server'
 
             if (!data.pages.items.length) notFound()
-            const page = data.pages.items.find((page) => params.category === page._slug)
+            const page = data.pages.items.find(
+              (page) => params.category === page._slug
+            )
             const firstPage = data.pages.items[0]
             if (!firstPage) notFound()
             if (!page) redirect(firstPage._slug)
@@ -37,8 +40,8 @@ export default function Layout({
             )
           }}
         </Pump>
-      </div>
-      {children}
-    </div>
+        {children}
+      </Flex>
+    </Container>
   )
 }

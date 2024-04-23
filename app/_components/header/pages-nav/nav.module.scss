@@ -1,0 +1,38 @@
+.pages-nav {
+  border-block-width: 1px;
+  border-block-color: var(--gray-3);
+  background-color: var(--gray-1);
+  position: relative;
+
+  .nav {
+    & > a {
+      padding: var(--space-2);
+  
+      &:first-child {
+        margin-left: calc(var(--space-2) * -1);
+      }
+    }
+  }
+}
+
+.nav__link {
+  font-weight: 500;
+
+  &:hover {
+    color: var(--gray);
+    text-decoration: none;
+  }
+}
+
+.nav__link[data-active='true'] {
+  color: var(--gray);
+  position: relative;
+}
+
+.active-indicator {
+  border-radius: var(--radius-6);
+  background-color: var(--accent-indicator);
+  display: block;
+  bottom: -1px;
+  transition: all 0.3s ease-in-out;
+}

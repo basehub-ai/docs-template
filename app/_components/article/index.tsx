@@ -1,33 +1,33 @@
-import { fragmentOn } from '@/.basehub'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 
-import { ArticleFragment } from '@/basehub-helpers/fragments'
+import {
+  ArticleBodyFragment,
+  ArticleFragment,
+} from '@/basehub-helpers/fragments'
+import NextLink from 'next/link'
+import { Link, Heading as RadixHeading } from '@radix-ui/themes'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
+import { Box, Code, Table, Text } from '@radix-ui/themes'
 
+import { HeadingWithIconMark } from './heading-with-icon'
+import { CalloutComponent } from './callout'
+import { StepperComponent } from './stepper'
+import { CardsGridComponent } from './cards-grid'
+import { AccordionComponent } from './accordion'
+import { Heading } from './heading'
 import {
-  HeadingWithIconFragment,
-  HeadingWithIconMark,
-} from './heading-with-icon'
-import { CalloutComponent, CalloutFragment } from './callout'
-import { StepperComponent, StepperFragment } from './stepper'
-import { CardsGridComponent, CardsGridFragment } from './cards-grid'
-import { AccordionComponent, AccordionGroupFragment } from './accordion'
-import { AnchorHeading } from './heading'
-import {
-  CodeGroupFragment,
   CodeSnippet,
-  CodeSnippetFragmentRecursive,
   CodeSnippetGroup,
   CodeSnippetSingle,
 } from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
 import { CopyButton } from './code-snippet/controller'
-
 import { Toc } from '../toc'
 
+import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
 
 export const Article = ({ id }: { id: string }) => {
@@ -56,7 +56,15 @@ export const Article = ({ id }: { id: string }) => {
           <>
             <article className="flex flex-1 justify-center">
               <div className={s.body}>
-                <h1>{article._title}</h1>
+                <RadixHeading
+                  as="h1"
+                  size="8"
+                  className={headingStyles.heading}
+                  mt="0"
+                  mb="5"
+                >
+                  {article._title}
+                </RadixHeading>
                 <Body blocks={article.body.json.blocks}>
                   {article.body.json.content}
                 </Body>
@@ -70,57 +78,58 @@ export const Article = ({ id }: { id: string }) => {
   )
 }
 
-export const ArticleBodyFragment = fragmentOn('BodyRichText', {
-  content: true,
-  toc: true,
-  blocks: {
-    __typename: true,
-    on_CalloutComponent: CalloutFragment,
-    on_HeadingWithIconComponent: HeadingWithIconFragment,
-    on_CardsGridComponent: CardsGridFragment,
-    on_AccordionGroupComponent: AccordionGroupFragment,
-    on_StepperComponent: StepperFragment,
-    on_CodeGroupComponent: CodeGroupFragment,
-    on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
-  },
-})
-
-export type ArticleBodyFragment = fragmentOn.infer<typeof ArticleBodyFragment>
-
 export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
   return (
     <RichText
       blocks={props.blocks}
       components={{
+        a: ({ children, ...rest }) => (
+          <Link size="3" asChild>
+            <NextLink {...rest}>{children}</NextLink>
+          </Link>
+        ),
         h1: (props) => (
-          <AnchorHeading as="h1" id={props.id}>
+          <Heading as="h1" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h2: (props) => (
-          <AnchorHeading as="h2" id={props.id}>
+          <Heading as="h2" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h3: (props) => (
-          <AnchorHeading as="h3" id={props.id}>
+          <Heading as="h3" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h4: (props) => (
-          <AnchorHeading as="h4" id={props.id}>
+          <Heading as="h4" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h5: (props) => (
-          <AnchorHeading as="h5" id={props.id}>
+          <Heading as="h5" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
         ),
         h6: (props) => (
-          <AnchorHeading as="h6" id={props.id}>
+          <Heading as="h6" id={props.id}>
             {props.children}
-          </AnchorHeading>
+          </Heading>
+        ),
+        table: (props) => <Table.Root {...props} size="1" variant="surface" />,
+        tbody: (props) => <Table.Body {...props} />,
+        tr: ({ children }) => <Table.Row>{children}</Table.Row>,
+        th: ({ children, rowspan, colspan }) => (
+          <Table.ColumnHeaderCell colSpan={colspan} rowSpan={rowspan}>
+            {children}
+          </Table.ColumnHeaderCell>
+        ),
+        td: ({ children, rowspan, colspan }) => (
+          <Table.Cell colSpan={colspan} rowSpan={rowspan}>
+            {children}
+          </Table.Cell>
         ),
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
@@ -132,18 +141,20 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         img: Image,
         CodeSnippetComponent: CodeSnippetSingle,
         CodeGroupComponent: CodeSnippetGroup,
+        p: ({ children }) => (
+          <Text as="p" size="3">
+            {children}
+          </Text>
+        ),
         code: ({ isInline, ...rest }) => {
           if (isInline)
-            return <code data-type="inline-code">{rest.children}</code>
+            return <Code data-type="inline-code">{rest.children}</Code>
 
           return (
-            <div className="relative">
+            <Box position="relative">
               <CodeSnippet code={{ ...rest }} />
-              <CopyButton
-                snippet={rest.code}
-                className="!right-4 !top-4 !translate-y-0"
-              />
-            </div>
+              <CopyButton snippet={rest.code} style={{ right: 16, top: 16 }} />
+            </Box>
           )
         },
         pre: ({ children }) => <>{children}</>,

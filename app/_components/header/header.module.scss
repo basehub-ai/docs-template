@@ -1,0 +1,27 @@
+.header {
+   position: sticky;
+   top: 0;
+   z-index: 50;
+   height: var(--header);
+   background-color: var(--color-background);
+
+   & > div:first-child {
+      height: var(--header-head);
+   }
+   & > div:nth-child(2) {
+      height: var(--header-pages-nav);
+   }
+
+   .header__logo {
+      height: var(--space-5);
+      margin-inline: auto;
+   }
+
+   .header__main-cta {
+      letter-spacing: -0.52px;
+
+      &:hover {
+         text-decoration: none;
+      }
+   }
+}

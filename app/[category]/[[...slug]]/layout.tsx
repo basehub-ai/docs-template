@@ -1,3 +1,5 @@
+import { Flex } from '@radix-ui/themes'
+
 export default async function ArticleLayout({
   children,
 }: {
@@ -5,8 +7,8 @@ export default async function ArticleLayout({
   params: { category: string; slug: string[] }
 }) {
   return (
-    <main className="flex min-h-screen w-full items-start gap-x-8 py-8">
-      {children}
-    </main>
+    <Flex asChild minHeight="100vh" width="100%" align="start" gapX="6" py="6">
+      <main>{children}</main>
+    </Flex>
   )
 }

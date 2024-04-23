@@ -3,6 +3,7 @@ import { fragmentOn } from '@/.basehub'
 
 import { StepController } from './step-controller'
 import { Body } from '..'
+import { Heading } from '@radix-ui/themes'
 
 export const StepperComponent = async ({
   _id,
@@ -19,14 +20,18 @@ export const StepperComponent = async ({
 
             return (
               <StepController stepperId={_id} stepId={rest.id}>
-                <h3
+                <Heading
+                  as="h3"
                   {...rest}
                   data-type="stepper-checkpoint"
-                  className="relative"
+                  style={{ position: 'relative' }}
+                  size="4"
+                  mb="3"
+                  mt="5"
                 >
                   {children}
                   <span>{checkpoints}</span>
-                </h3>
+                </Heading>
               </StepController>
             )
           },

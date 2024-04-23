@@ -9,10 +9,28 @@
   -moz-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --strong: #18181b;
-  --normal: #71717a;
-  --light: #f4f4f5;
-  --dark: #09090b;
+  --light: var(--gray-10);
+  --strong: var(--gray-12);
+  --normal: var(--gray-11);
+  --dark: var(--gray-1);
+  
+  --tracking-default: -0.26px;
+  --tracking-tighter-1: -0.3px;
+  --tracking-tighter-3: -0.52px;
+  
+  .radix-themes {
+    --header: calc(92px * var(--scaling));
+    --header-head: calc(52px * var(--scaling));
+    --header-pages-nav: calc(40px * var(--scaling));
+    --sidebar: calc(100vh - calc(56px * var(--scaling)) - var(--space-7));
+    --default-font-family: var(--font-geist-sans);
+    --container-4: 1280px;
+    --color-background: var(--gray-1);
+  }
+}
+
+html.dark body .radix-themes {
+  --color-background: #09090B;
 }
 
 body {
@@ -29,10 +47,10 @@ body {
   span[data-type="tooltip-content"] {
     font-size: 13px;
     color: var(--normal);
-    background-color: #FAFAFA;
+    background-color: var(--color-background);
     padding: 2px 6px;
     border-radius: 99px;
-    border: 1px solid theme('colors.info.border');
+    border: 1px solid var(--gray-2);
     box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
     line-height: 16px;
     pointer-events: none;

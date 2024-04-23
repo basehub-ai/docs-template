@@ -1,0 +1,45 @@
+.heading {
+   position: relative;
+   scroll-margin-top: calc(var(--header) + var(--space-6));
+   color: var(--strong);
+   line-height: 1.375;
+   letter-spacing: -0.025em;
+   font-weight: 600;
+   position: relative;
+
+   b {
+     font-weight: 600;
+   }
+
+   a {
+      text-decoration: none;
+
+      & > svg {
+         transform: translateY(0.25rem);
+         vertical-align: middle;
+         opacity: 0;
+         transition: transform 0.2s, opacity 0.2s;
+      }
+
+      &:hover {
+         & > svg {
+            transform: translateY(0);
+            opacity: 100;
+         }
+      }
+
+      &:focus {
+         & > svg {
+            transform: translateY(0);
+            opacity: 100;
+         }
+      }
+
+      &:focus-visible {
+         & > svg {
+            transform: translateY(0);
+            opacity: 100;
+         }
+      }
+   }
+}

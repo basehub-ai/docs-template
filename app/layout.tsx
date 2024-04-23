@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Pump } from '@/.basehub/react-pump'
 import { Header } from './_components/header'
 import { Footer } from './_components/footer'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { draftMode } from 'next/headers'
+import { ThemeProvider } from './_components/theme-provider/server'
 
 import './globals.css'
 
@@ -21,39 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}>
-        <Pump
-          queries={[{ settings: { brandColor: { rgb: true } } }]}
-          next={{ revalidate: 30 }}
-          draft={draftMode().isEnabled}
-        >
-          {async ([data]) => {
-            'use server'
-
-            function getIsolatedColorSegments(rgb: string) {
-              return rgb.split(',').map((segment) => {
-                return segment.replace(/[^\d]/g, '')
-              })
-            }
-
-            const [r, g, b] = getIsolatedColorSegments(
-              data.settings.brandColor.rgb
-            )
-
-            return (
-              <style>{`
-                :root {
-                  --brand-color: ${data.settings.brandColor.rgb};
-                  --brand-color-r: ${r};
-                  --brand-color-g: ${g};
-                  --brand-color-b: ${b};
-                }
-              `}</style>
-            )
-          }}
-        </Pump>
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
