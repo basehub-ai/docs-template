@@ -46,7 +46,7 @@ export const StepController = ({
         return
 
       const height =
-        heightUntilNextH3(step as HTMLHeadingElement, 0) - step.offsetHeight - 8
+        heightUntilNextH3(step as HTMLHeadingElement, 0) - step.offsetHeight - 12
       step.style.setProperty('--step-title-height', `${step.offsetHeight}px`)
       step.style.setProperty('--step-height', `${height}px`)
     })

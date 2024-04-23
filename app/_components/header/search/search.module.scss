@@ -1,4 +1,4 @@
-.search__button {
+.search-dialog__trigger {
    border: 1px solid var(--gray-4);
    background: var(--gray-2);
    box-shadow: 0px 1px 3px 0px var(--gray-1);
@@ -13,12 +13,12 @@
    &:hover {
       background: var(--gray-3);
 
-      .search__keycap {
+      .search-dialog__keycap {
          background-color: var(--gray-2);
       }
    }
 
-   .search__keycap {
+   .search-dialog__keycap {
       border-radius: calc(var(--radius-1) + 1px);
       border: 1px solid var(--gray-4);
       background: var(--gray-1);
@@ -27,5 +27,93 @@
       height: var(--space-5);
       width: var(--space-5);
       color: var(--gray-11);
+   }
+}
+
+.search-dialog__content {
+   height: 500px;
+   max-height: 80vh;
+   overflow: hidden !important;
+   padding: 0 !important;
+   top: -10vh;
+
+   .search-dialog__empty-state {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+   }
+
+   .search-dialog-content__footer {
+      background-color: var(--gray-3);
+   }
+
+   .search-dialog__input {
+      position: relative;
+      padding-left: var(--space-5);
+      padding-right: var(--space-8);
+      background-color: transparent;
+
+      .search-dialog__keycap {
+         border-radius: calc(var(--radius-1) + 1px);
+         border: 1px solid var(--gray-4);
+         background: var(--gray-1);
+         font-weight: 500;
+         box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
+         height: var(--space-5);
+         padding-inline: var(--space-1);
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         right: var(--space-2);
+         color: var(--gray-11);
+      }
+
+      & > svg {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         left: var(--space-3);
+         width: var(--width-md);
+         height: var(--width-md);
+      }
+   }
+   
+   .search-dialog__results {
+      flex: 1;
+      overflow-y: auto;
+      
+      .search-dialog-content__result {
+         scroll-margin-block: var(--space-2);
+      }
+
+      .search-dialog-content__result > a {
+         display: block;
+         margin: 0;
+         border-width: 1px;
+         border-style: solid;
+         border-color: transparent;
+
+         &:hover {
+            text-decoration: none;
+         }
+         
+         &[data-selected="false"] {
+            &:hover {
+               border-color: transparent !important;
+               background-color: transparent !important;
+            }
+         }
+
+         &[data-selected="true"] {
+            border-color: var(--gray-6) !important;
+            background-color: var(--gray-4);
+         }
+
+         & > p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+         }
+      }
    }
 }

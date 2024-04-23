@@ -24,7 +24,6 @@ export const ThemeSwitcher = () => {
         onClick={() => setTheme('light')}
         data-active={hasRendered && theme === 'light'}
         className={s['theme-switcher__button']}
-        radius="full"
       >
         <SunIcon width={16} height={16} color="currentColor" />
       </Button>
@@ -33,7 +32,6 @@ export const ThemeSwitcher = () => {
         onClick={() => setTheme('system')}
         data-active={hasRendered && theme === 'system'}
         className={s['theme-switcher__button']}
-        radius="full"
       >
         <Half2Icon width={16} height={16} color="currentColor" />
       </Button>
@@ -42,7 +40,6 @@ export const ThemeSwitcher = () => {
         onClick={() => setTheme('dark')}
         data-active={hasRendered && theme === 'dark'}
         className={s['theme-switcher__button']}
-        radius="full"
       >
         <MoonIcon width={16} height={16} color="currentColor" />
       </Button>

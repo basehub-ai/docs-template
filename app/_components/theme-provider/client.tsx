@@ -2,7 +2,7 @@
 
 import { useThemeContext } from '@radix-ui/themes'
 import { ThemeSettingsFragment } from './server'
-import { useEffect } from 'react'
+import * as React from 'react'
 
 export const LiveThemeSwitcher = ({
   theme,
@@ -10,35 +10,14 @@ export const LiveThemeSwitcher = ({
   theme: ThemeSettingsFragment['theme']
 }) => {
   const {
-    onAccentColorChange,
+    onAccentColorChange: themeOnAccentColorChange,
     onRadiusChange,
     onGrayColorChange,
     onPanelBackgroundChange,
     onScalingChange,
   } = useThemeContext()
 
-  useEffect(() => {
-    onAccentColorChange(theme.accentColor as any)
-    onRadiusChange(theme.radius as any)
-    onGrayColorChange(theme.grayScale as any)
-    onPanelBackgroundChange(theme.panelBackground as any)
-    onScalingChange(theme.scaling as any)
-  }, [
-    theme.accentColor,
-    theme.radius,
-    theme.grayScale,
-    theme.panelBackground,
-    theme.scaling,
-    onAccentColorChange,
-    onGrayColorChange,
-    onPanelBackgroundChange,
-    onRadiusChange,
-    onScalingChange,
-  ])
-
-  useEffect(() => {
-    if (!document) return
-
+  const setAccentColorComposition = () => {
     const colorToRgb = (color: string) => {
       const match = /color\(display-p3\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/.exec(
         color
@@ -76,7 +55,34 @@ export const LiveThemeSwitcher = ({
       '--accent-indicator-b',
       accentIndicatorShade.b.toString()
     )
-  }, [theme.accentColor])
+  }
+
+  const onAccentColorChange = React.useCallback(
+    (color: string) => {
+      themeOnAccentColorChange(color as any)
+      setTimeout(() => setAccentColorComposition(), 2000)
+    },
+    [themeOnAccentColorChange]
+  )
+
+  React.useEffect(() => {
+    onAccentColorChange(theme.accentColor as any)
+    onRadiusChange(theme.radius as any)
+    onGrayColorChange(theme.grayScale as any)
+    onPanelBackgroundChange(theme.panelBackground as any)
+    onScalingChange(theme.scaling as any)
+  }, [
+    theme.accentColor,
+    theme.radius,
+    theme.grayScale,
+    theme.panelBackground,
+    theme.scaling,
+    onAccentColorChange,
+    onGrayColorChange,
+    onPanelBackgroundChange,
+    onRadiusChange,
+    onScalingChange,
+  ])
 
   return null
 }

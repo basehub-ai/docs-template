@@ -18,7 +18,7 @@ export const PagesNav = async () => {
         'use server'
 
         return (
-          <Box height="40px" className={s['pages-nav']}>
+          <Box className={s['pages-nav']}>
             <Flex
               asChild
               justify="between"
@@ -38,7 +38,7 @@ export const PagesNav = async () => {
   )
 }
 
-const HeaderFragment = fragmentOn('Header', {
+export const HeaderFragment = fragmentOn('Header', {
   navLinks: {
     items: {
       _id: true,

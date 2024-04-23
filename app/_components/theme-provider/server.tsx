@@ -47,6 +47,7 @@ export const ThemeProvider = async ({
         >
           {async ([data]) => {
             'use server'
+
             return <LiveThemeSwitcher theme={data.settings.theme} />
           }}
         </Pump>

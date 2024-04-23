@@ -161,7 +161,6 @@ export const Toc = ({ blocks, children }: TocProps) => {
       <Flex asChild align="center" gap="2">
         <Button
           mt="7"
-          radius="full"
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}

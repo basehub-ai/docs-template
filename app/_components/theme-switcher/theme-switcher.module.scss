@@ -11,6 +11,7 @@
       aspect-ratio: 1;
       padding: var(--space-1);
       color: var(--gray-9);
+      border-radius: var(--radius-5);
       
       &:not(:hover) {
          background-color: transparent;
