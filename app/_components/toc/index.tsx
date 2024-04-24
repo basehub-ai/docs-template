@@ -1,10 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
+import { Link, Box, Button, Flex, Text } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
@@ -127,21 +127,24 @@ export const Toc = ({ blocks, children }: TocProps) => {
               a: ({ href, children }) => {
                 if (!children) return <></>
                 const childrenAsString = children.toString()
+
                 return (
-                  <Link
-                    href={href}
-                    data-active={href === `#${currentSectionId}`}
-                    onClick={() => {
-                      setHighlightedSection(href.split('#')[1] as string)
-                      disabled.current = true
-                      setTimeout(() => (disabled.current = false), 400)
-                    }}
-                  >
-                    <span>
-                      {childrenAsString.length < 35
-                        ? childrenAsString
-                        : childrenAsString.slice(0, 35) + '...'}
-                    </span>
+                  <Link asChild style={{ color: 'var(--gray)' }}>
+                    <NextLink
+                      href={href}
+                      data-active={href === `#${currentSectionId}`}
+                      onClick={() => {
+                        setHighlightedSection(href.split('#')[1] as string)
+                        disabled.current = true
+                        setTimeout(() => (disabled.current = false), 400)
+                      }}
+                    >
+                      <span>
+                        {childrenAsString.length < 35
+                          ? childrenAsString
+                          : childrenAsString.slice(0, 35) + '...'}
+                      </span>
+                    </NextLink>
                   </Link>
                 )
               },

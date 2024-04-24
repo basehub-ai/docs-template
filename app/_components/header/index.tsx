@@ -33,11 +33,13 @@ export const Header = () => {
           <header className={s.header}>
             <Container size="4" px={{ initial: '5', md: '8' }} height="100%">
               <Flex align="center" height="100%" justify="between">
-                <NextLink href="/">
-                  <VisuallyHidden>Home</VisuallyHidden>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={logo} alt="logo" className={s['header__logo']} />
-                </NextLink>
+                <Link asChild>
+                  <NextLink href="/">
+                    <VisuallyHidden>Home</VisuallyHidden>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={logo} alt="logo" className={s['header__logo']} />
+                  </NextLink>
+                </Link>
                 <Search searchCategories={header.navLinks.items} />
                 <Flex align="center" justify="center">
                   <ThemeSwitcher />

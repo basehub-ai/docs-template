@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const CardsGridComponent = ({ _title, cards }: CardsGridFragment) => {
   return (
     <div data-type="cards-grid">
-      <Heading as="h2" mb="4">{_title}</Heading>
+      <Heading as="h2" mb="5">{_title}</Heading>
       <Grid columns={{ xs: '1', sm: '2' }} gap="4">
         {cards.items.map((card) => (
           <Card key={card._id} size="2" asChild>
@@ -13,7 +13,7 @@ export const CardsGridComponent = ({ _title, cards }: CardsGridFragment) => {
               <Heading weight="bold" size="3" as="h6">
                 {card._title}
               </Heading>
-              <Text color="gray" size="2" mt="1">
+              <Text color="gray" size="2" mt="1" as="p">
                 {card.description}
               </Text>
             </Link>

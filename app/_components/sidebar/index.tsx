@@ -9,7 +9,14 @@ import NextLink from 'next/link'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { clsx } from 'clsx'
 import { useParams } from 'next/navigation'
-import { Box, Flex, Link, Text, VisuallyHidden } from '@radix-ui/themes'
+import {
+  Box,
+  Flex,
+  IconButton,
+  Link,
+  Text,
+  VisuallyHidden,
+} from '@radix-ui/themes'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
 
 import s from './sidebar.module.scss'
@@ -230,8 +237,12 @@ const SidebarItem = ({
 
         {data.children && data.children.items.length > 0 && !isRootLevel && (
           <Flex asChild align="center" justify="center">
-            <button
+            <IconButton
               data-collapsed={isCollapsed}
+              variant="surface"
+              radius="large"
+              color="gray"
+              size="1"
               className={s['sidebar__item--toggle']}
               onClick={() => {
                 userCollapsedSidebar.current = true
@@ -242,7 +253,7 @@ const SidebarItem = ({
                 {isCollapsed ? 'Expand' : 'Collapse'}
               </VisuallyHidden>
               <ChevronRightIcon />
-            </button>
+            </IconButton>
           </Flex>
         )}
       </Box>

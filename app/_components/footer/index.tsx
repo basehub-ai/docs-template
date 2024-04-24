@@ -91,7 +91,7 @@ export const Footer = () => {
                   align="center"
                   justify="center"
                 >
-                  <Link asChild size="2">
+                  <Link asChild size="2" color='gray'>
                     <NextLink
                       href="https://basehub.com/home"
                       className={s['footer__badge']}

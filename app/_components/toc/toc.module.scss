@@ -55,7 +55,7 @@
          &:hover,
          &:has(a[data-active="true"]) {
             & > p > a {
-               color: var(--strong);
+               color: var(--strong) !important;
             }
 
             &:before {
@@ -119,6 +119,7 @@
    font-size: 0.8125rem;
    border-radius: var(--radius-6);
    line-height: 0.8;
+   border: 1px solid var(--gray-3);
 
    &:hover {
       background-color: var(--gray-3);

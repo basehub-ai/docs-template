@@ -13,6 +13,11 @@
       display: block;
    }
 
+   &:focus,
+   &:focus-visible {
+      outline: 2px solid var(--focus-8);
+   }
+
    &:hover {
       background: var(--gray-3);
       border-color: var(--gray-6);
