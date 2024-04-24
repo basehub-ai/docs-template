@@ -13,7 +13,7 @@ export default function Layout({
   params: { category: string }
 }) {
   return (
-    <Container size="4" px="8">
+    <Container size="4" px={{ initial: '5', md: '8' }}>
       <Flex>
         <Pump
           queries={[{ pages: SidebarFragment }]}

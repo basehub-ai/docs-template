@@ -22,7 +22,7 @@ export const NavLink = React.forwardRef<
   return (
     <Flex height="100%" align="center" asChild>
       <Link asChild color="gray">
-        <Text size="2" asChild>
+        <Text size="2" asChild wrap="nowrap">
           <NextLink
             {...rest}
             ref={ref}

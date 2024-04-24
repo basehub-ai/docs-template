@@ -15,30 +15,25 @@
       text-decoration: none;
 
       & > svg {
-         transform: translateY(0.25rem);
          vertical-align: middle;
-         opacity: 0;
-         transition: transform 0.2s, opacity 0.2s;
+         visibility: hidden;
       }
 
       &:hover {
          & > svg {
-            transform: translateY(0);
-            opacity: 100;
+            visibility: visible;
          }
       }
 
       &:focus {
          & > svg {
-            transform: translateY(0);
-            opacity: 100;
+            visibility: visible;
          }
       }
 
       &:focus-visible {
          & > svg {
-            transform: translateY(0);
-            opacity: 100;
+            visibility: visible;
          }
       }
    }

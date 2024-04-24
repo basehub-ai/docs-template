@@ -18,7 +18,7 @@ export const PagesNav = async () => {
         'use server'
 
         return (
-          <Box className={s['pages-nav']}>
+          <Box className={s['pages-nav']} overflowX={{ lg: 'visible' }}>
             <Flex
               asChild
               justify="between"
@@ -26,7 +26,7 @@ export const PagesNav = async () => {
               gap="7"
               height="100%"
             >
-              <Container height="100%" px="8">
+              <Container height="100%" px={{ initial: '5', md: '8' }}>
                 <Nav navLinks={data.header.navLinks} />
                 {draftMode().isEnabled && <DraftModeHeader />}
               </Container>

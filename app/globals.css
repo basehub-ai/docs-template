@@ -22,7 +22,7 @@
     --header: calc(92px * var(--scaling));
     --header-head: calc(52px * var(--scaling));
     --header-pages-nav: calc(40px * var(--scaling));
-    --sidebar: calc(100vh - calc(56px * var(--scaling)) - var(--space-7));
+    --sidebar: calc(100vh - var(--header));
     --default-font-family: var(--font-geist-sans);
     --container-4: 1280px;
     --color-background: var(--gray-1);

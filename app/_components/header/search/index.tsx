@@ -8,6 +8,7 @@ import {
   Card,
   Dialog,
   Flex,
+  Kbd,
   Link,
   Select,
   Separator,
@@ -109,12 +110,8 @@ const Search = ({
               Search
             </Flex>
             <Flex align="center" justify="between" gap="1">
-              <Box as="span" className={s['search-dialog__keycap']}>
-                ⌘
-              </Box>
-              <Box as="span" className={s['search-dialog__keycap']}>
-                k
-              </Box>
+              <Kbd>⌘</Kbd>
+              <Kbd>k</Kbd>
             </Flex>
           </button>
         </Flex>
@@ -146,15 +143,12 @@ const Search = ({
               })
             }}
           >
-            <MagnifyingGlassIcon color="currentColor" />
-            <Text
-              size="2"
-              as="span"
-              weight="medium"
-              className={s['search-dialog__keycap']}
-            >
-              Esc
-            </Text>
+            <TextField.Slot>
+              <MagnifyingGlassIcon color="currentColor" />
+            </TextField.Slot>
+            <TextField.Slot>
+              <Kbd style={{ marginBlock: 'auto' }}>Esc</Kbd>
+            </TextField.Slot>
           </TextField.Root>
           <Separator size="4" mt="2" />
           <Box

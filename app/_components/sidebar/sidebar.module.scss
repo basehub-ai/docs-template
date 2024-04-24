@@ -1,7 +1,9 @@
 .sidebar {
    top: var(--header);
-   height: var(--sidebar); overflow: auto;
-   border-right: 1px solid var(--gray-3);
+   height: var(--sidebar);
+   overflow: auto;
+   padding-bottom: var(--space-6);
+   border-right: 1px solid var(--gray-5);
    position: sticky;
    width: 320px;
    display: none;
@@ -13,10 +15,9 @@
 
 .sidebar__item {
    line-height: var(--line-height-2);
-   border-radius: var(--radius-4);
+   border-radius: var(--radius-3);
    color: var(--gray-10);
    width: calc(100% + var(--space-3));
-   transition: color 0.2s;
 
    &:hover {
       color: var(--gray-12);
@@ -33,7 +34,7 @@
    color: var(--gray-5);
    font-weight: 500;
    border-width: 1px;
-   border-color: var(--gray-3);
+   border-color: var(--gray-5);
    position: relative;
 }
 
@@ -46,7 +47,6 @@
    position: absolute;
    border-radius: var(--rounded-6);
    background-color: var(--accent-indicator);
-   transition: color 0.2s, background-color 0.2s;
 
    &[data-active="false"]{
       visibility: hidden;
@@ -64,20 +64,9 @@
 
 .sidebar__item--toggle {
    position: absolute;
-   right: var(--space-2);
+   right: 2px;
    top: 50%;
-   display: flex;
    transform: translateY(-50%);
-   cursor: default;
-   border-width: 1px;
-   border-style: solid;
-   border-radius: var(--radius-2);
-   border-color: var(--gray-3);
-   background-color: var(--gray-1);
-   box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
-   width: 1em;
-   height: 1em;
-   color: var(--gray-10);
 
    &:hover {
       border-color: var(--gray-7);
@@ -95,8 +84,8 @@
    
    svg {
       color: currentColor;
-      width: 0.75em;
-      height: 0.75em;
+      width: var(--space-4);
+      height: var(--space-4);
    }
 }
 
@@ -115,5 +104,5 @@
 .sidebar__divider {
    border-bottom-width: 1px;
    border-style: solid;
-   border-color: var(--gray-3);
+   border-color: var(--gray-5);
 }

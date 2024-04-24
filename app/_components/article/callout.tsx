@@ -1,6 +1,7 @@
 import { fragmentOn } from '@/.basehub'
-import { Callout, Heading } from '@radix-ui/themes'
+import { Callout, Heading, Link } from '@radix-ui/themes'
 import { Body } from '.'
+import NextLink from 'next/link'
 
 export const CalloutComponent = (props: CalloutFragment) => {
   let calloutColor: React.ComponentProps<typeof Callout.Root>['color'] = 'gray'
@@ -33,7 +34,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
       <Body
         components={{
           p: ({ children }) => (
-            <Callout.Text size="1" color="gray">
+            <Callout.Text size="2" color="gray">
               {children}
             </Callout.Text>
           ),
@@ -48,9 +49,14 @@ export const CalloutComponent = (props: CalloutFragment) => {
             </Heading>
           ),
           h3: ({ children }) => (
-            <Heading as="h3" size="1" weight="medium">
+            <Heading as="h3" size="2" weight="medium">
               {children}
             </Heading>
+          ),
+          a: ({ children, ...rest }) => (
+            <Link size="1" asChild>
+              <NextLink {...rest}>{children}</NextLink>
+            </Link>
           ),
         }}
       >
