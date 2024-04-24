@@ -205,8 +205,6 @@
       }
 
       &:hover {
-        background-color: var(--gray-3);
-
         span:has(svg) {
           border-color: var(--gray-7);
         }

@@ -161,7 +161,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
               <CodeSnippet code={{ ...rest }} />
               <CopyButton
                 snippet={rest.code}
-                style={{ right: 'var(--space-3)', top: 'var(--space-3)' }}
+                style={{ position: 'absolute', right: 'var(--space-3)', top: 'var(--space-3)' }}
               />
             </Box>
           )

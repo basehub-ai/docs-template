@@ -5,7 +5,7 @@ import { Highlighter } from './highlighter'
 import { CodeBlockClientController, CopyButton } from './controller'
 import { fragmentOn } from '@/.basehub'
 import { CodeGroupHeader } from './header'
-import { Box } from '@radix-ui/themes'
+import { Flex } from '@radix-ui/themes'
 
 import s from './code-snippet.module.scss'
 
@@ -33,12 +33,12 @@ export const CodeSnippetGroup = ({
 export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
   return (
     <div className={s['code-snippet']}>
-      <Box asChild pr="7" p="3">
+      <Flex asChild align="center" justify="between" p="3">
         <header className={s['code-snippet-header']}>
           {props.fileName || 'Untitled'}
           <CopyButton snippet={props.code.code} />
         </header>
-      </Box>
+      </Flex>
 
       <CodeSnippet {...props} />
     </div>

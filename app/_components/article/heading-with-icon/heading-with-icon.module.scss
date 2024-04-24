@@ -1,0 +1,13 @@
+.heading-icon {
+   position: absolute;
+   left: calc(var(--space-7) * -1);
+   top: 50%;
+   transform: translateY(-50%);
+   height: var(--space-4);
+   width: var(--space-4);
+
+   @media screen and (min-width: 768px) {
+      height: var(--space-5);
+      width: var(--space-5);
+   }
+}

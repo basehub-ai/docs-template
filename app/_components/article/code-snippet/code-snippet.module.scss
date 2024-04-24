@@ -1,11 +1,9 @@
 
 .code-snippet-header {
    border-radius: var(--radius-3) var(--space-2) 0px 0px;
-   border: 1px solid var(--gray-3);
-   background: var(--gray-1);
+   border: 1px solid var(--gray-6);
+   background: var(--gray-3);
    color: var(--normal);
-   padding-right: var(--space-6);
-   display: flex;
    overflow-x: clip;
    font-size: var(--font-size-2);
    position: relative;
@@ -18,12 +16,6 @@
    letter-spacing: var(--tracking-default);
   
    button {
-      &.code-snippet-header__copy {
-         top: 50%;
-         transform: translateY(-50%);
-         right: var(--space-3);
-      }
-
       &:not(.code-snippet-header__copy) {
          position: relative;
          padding-block: var(--space-3);
@@ -105,8 +97,4 @@
         }
       }
    }
-}
-
-.code-snippet-header__copy {
-   position: absolute;
 }

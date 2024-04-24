@@ -3,7 +3,10 @@ import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
 import { AccordionGroupFragment } from '@/app/_components/article/accordion'
 import { CalloutFragment } from '@/app/_components/article/callout'
 import { CardsGridFragment } from '@/app/_components/article/cards-grid'
-import { CodeGroupFragment, CodeSnippetFragmentRecursive } from '@/app/_components/article/code-snippet'
+import {
+  CodeGroupFragment,
+  CodeSnippetFragmentRecursive,
+} from '@/app/_components/article/code-snippet'
 import { HeadingWithIconFragment } from '@/app/_components/article/heading-with-icon'
 import { StepperFragment } from '@/app/_components/article/stepper'
 
@@ -24,9 +27,7 @@ export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
   },
 })
 
-
 export type ArticleMetaFragment = fragmentOn.infer<typeof ArticleMetaFragment>
-
 
 export const ArticleBodyFragment = fragmentOn('BodyRichText', {
   content: true,
