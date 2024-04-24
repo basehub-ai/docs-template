@@ -93,12 +93,6 @@ export const Toc = ({ blocks, children }: TocProps) => {
   React.useEffect(() => {
     if (!backToTopButton.current) return
 
-    handleScroll()
-  }, [handleScroll])
-
-  React.useEffect(() => {
-    if (!backToTopButton.current) return
-
     document.addEventListener('scroll', handleScroll)
 
     return () => {
@@ -160,7 +154,7 @@ export const Toc = ({ blocks, children }: TocProps) => {
 
       <Flex asChild align="center" gap="2">
         <Button
-          mt="7"
+          mt="5"
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}

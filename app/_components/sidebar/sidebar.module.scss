@@ -1,7 +1,7 @@
 .sidebar {
    top: var(--header);
    height: var(--sidebar); overflow: auto;
-   border-right: 1px solid var(--gray-3);
+   border-right: 1px solid var(--gray-5);
    position: sticky;
    width: 320px;
    display: none;
@@ -33,7 +33,7 @@
    color: var(--gray-5);
    font-weight: 500;
    border-width: 1px;
-   border-color: var(--gray-3);
+   border-color: var(--gray-5);
    position: relative;
 }
 
@@ -64,19 +64,18 @@
 
 .sidebar__item--toggle {
    position: absolute;
-   right: var(--space-2);
+   right: var(--space-1);
    top: 50%;
    display: flex;
    transform: translateY(-50%);
    cursor: default;
    border-width: 1px;
    border-style: solid;
-   border-radius: var(--radius-2);
-   border-color: var(--gray-3);
-   background-color: var(--gray-1);
+   border-radius: var(--radius-3);
+   border-color: var(--gray-5);
    box-shadow: 0px 1px 2px 0px rgba(9, 9, 11, 0.04);
-   width: 1em;
-   height: 1em;
+   background-color: var(--gray-1);
+   padding: calc(var(--space-1) /2);
    color: var(--gray-10);
 
    &:hover {
@@ -95,8 +94,8 @@
    
    svg {
       color: currentColor;
-      width: 0.75em;
-      height: 0.75em;
+      width: var(--space-4);
+      height: var(--space-4);
    }
 }
 
@@ -115,5 +114,5 @@
 .sidebar__divider {
    border-bottom-width: 1px;
    border-style: solid;
-   border-color: var(--gray-3);
+   border-color: var(--gray-5);
 }

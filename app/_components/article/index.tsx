@@ -6,7 +6,7 @@ import {
   ArticleFragment,
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
-import { Link, Heading as RadixHeading } from '@radix-ui/themes'
+import { Flex, Link, Heading as RadixHeading } from '@radix-ui/themes'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Code, Table, Text } from '@radix-ui/themes'
@@ -54,22 +54,24 @@ export const Article = ({ id }: { id: string }) => {
 
         return (
           <>
-            <article className="flex flex-1 justify-center">
-              <div className={s.body}>
-                <RadixHeading
-                  as="h1"
-                  size="8"
-                  className={headingStyles.heading}
-                  mt="0"
-                  mb="5"
-                >
-                  {article._title}
-                </RadixHeading>
-                <Body blocks={article.body.json.blocks}>
-                  {article.body.json.content}
-                </Body>
-              </div>
-            </article>
+            <Flex asChild justify="center">
+              <article>
+                <Box className={s.body}>
+                  <RadixHeading
+                    as="h1"
+                    size="8"
+                    className={headingStyles.heading}
+                    mt="0"
+                    mb="5"
+                  >
+                    {article._title}
+                  </RadixHeading>
+                  <Body blocks={article.body.json.blocks}>
+                    {article.body.json.content}
+                  </Body>
+                </Box>
+              </article>
+            </Flex>
             <Toc>{article.body.json.toc}</Toc>
           </>
         )
@@ -148,12 +150,19 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         ),
         code: ({ isInline, ...rest }) => {
           if (isInline)
-            return <Code data-type="inline-code">{rest.children}</Code>
+            return (
+              <Code data-type="inline-code" variant="outline">
+                {rest.children}
+              </Code>
+            )
 
           return (
             <Box position="relative">
               <CodeSnippet code={{ ...rest }} />
-              <CopyButton snippet={rest.code} style={{ right: 16, top: 16 }} />
+              <CopyButton
+                snippet={rest.code}
+                style={{ right: 'var(--space-3)', top: 'var(--space-3)' }}
+              />
             </Box>
           )
         },

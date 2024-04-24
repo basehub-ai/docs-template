@@ -1,5 +1,5 @@
 .footer {
-   border-top: 1px solid var(--gray-3);
+   border-top: 1px solid var(--gray-5);
 
    .footer__logo {
       height: var(--space-5);
@@ -41,8 +41,8 @@
    }
 
    .footer__badge {
-      background-color: var(--gray-2);
-      border: 1px solid var(--gray-2);
+      background-color: var(--gray-3);
+      border: 1px solid var(--gray-4);
       border-radius: var(--radius-6);
       color: var(--strong);
       padding: var(--space-1) var(--space-3);
@@ -54,7 +54,7 @@
 
       &:hover {
          text-decoration: none;
-         border-color: rgba(228, 115, 32, 0.18);
+         border-color: var(--gray-6);
       }
    }
 }

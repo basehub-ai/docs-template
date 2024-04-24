@@ -25,13 +25,13 @@ export const Header = () => {
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
     >
-      {async ([{ settings }, {header}]) => {
+      {async ([{ settings }, { header }]) => {
         'use server'
         const logo = settings.logo.url
 
         return (
           <header className={s.header}>
-            <Container size="4" px="8" height="100%">
+            <Container size="4" px={{ initial: '5', md: '8' }} height="100%">
               <Flex align="center" height="100%" justify="between">
                 <NextLink href="/">
                   <VisuallyHidden>Home</VisuallyHidden>

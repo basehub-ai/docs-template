@@ -10,7 +10,6 @@ import '@radix-ui/themes/styles.css'
 export const ThemeSettingsFragment = fragmentOn('Settings', {
   theme: {
     accentColor: true,
-    appearance: true,
     grayScale: true,
     panelBackground: true,
     radius: true,

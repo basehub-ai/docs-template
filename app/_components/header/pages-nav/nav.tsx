@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Box, Flex } from '@radix-ui/themes'
+import { Box, Flex, Text } from '@radix-ui/themes'
 import { HeaderFragment } from '.'
 import { NavLink } from './nav-link'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -84,7 +84,7 @@ export const Nav = ({ navLinks }: HeaderFragment) => {
               key={navLink._id}
               isFirstPageLink={isPageLink && navLink._id === firstPageLinkId}
             >
-              {label}
+              <Text weight="medium">{label}</Text>
             </NavLink>
           )
         })}
