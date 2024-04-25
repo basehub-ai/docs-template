@@ -7,11 +7,6 @@
    color: var(--gray-11);
    padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
    font-size: var(--font-size-2);
-   display: none;
-
-   @media screen and (min-width: 1024px) {
-      display: block;
-   }
 
    &:focus,
    &:focus-visible {

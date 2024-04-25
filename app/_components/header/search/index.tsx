@@ -103,7 +103,12 @@ const Search = ({
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Flex asChild align="center" justify="between">
+        <Flex
+          asChild
+          align="center"
+          justify="between"
+          display={{ initial: 'none', xs: 'none', lg: 'flex' }}
+        >
           <button className={s['search-dialog__trigger']}>
             <Flex align="center" justify="between" gap="2">
               <MagnifyingGlassIcon />
