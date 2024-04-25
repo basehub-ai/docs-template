@@ -1,4 +1,5 @@
 'use client'
+
 import * as React from 'react'
 import {
   ArticleMetaFragmentRecursive,
@@ -7,13 +8,14 @@ import {
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
-import { clsx } from 'clsx'
 import { useParams } from 'next/navigation'
 import {
   Box,
+  Code,
   Flex,
   IconButton,
   Link,
+  ScrollArea,
   Text,
   VisuallyHidden,
 } from '@radix-ui/themes'
@@ -33,6 +35,7 @@ export type SidebarProps = {
 
 export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
   const params = useParams()
+  const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
 
   const activeSlugs: string[] = React.useMemo(() => {
     const slugs = params.slug as string[] | undefined
@@ -50,32 +53,66 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
       <Flex
+        width="100svw"
+        display={{ initial: 'flex', md: 'none' }}
         asChild
         position="sticky"
-        ml="-3"
-        direction="column"
-        width="100%"
-        gap="3"
-        overflow="auto"
-        style={{ borderColor: 'var(--gray-5)' }}
-        pb="12"
-        pl="3"
-        pr="3"
-        pt="5"
+        mx={{ initial: '-5', md: '0' }}
+        top="var(--header)"
+        style={{ zIndex: 10 }}
       >
-        <aside className={s.sidebar}>
-          {data.items.map((item) => {
-            return (
-              <SidebarItem
-                data={item}
-                key={item._id}
-                level={level}
-                pathname={`${pathname}/${item._slug}`}
-              />
-            )
-          })}
-        </aside>
+        <button
+          onClick={() => setMobileSidebarOpen((o) => !o)}
+          className={s['sidebar__mobile-trigger']}
+        >
+          <Text weight="medium">
+            {activeSidebarItem?._title ?? 'Untitled article'}
+          </Text>
+          <ChevronRightIcon
+            style={{ transform: mobileSidebarOpen ? 'none' : 'rotate(90deg)' }}
+          />
+        </button>
       </Flex>
+
+      <Box
+        style={{ borderRight: '1px solid var(--gray-5)' }}
+        height="var(--sidebar)"
+        position="sticky"
+        top="var(--header)"
+        display={{
+          initial: mobileSidebarOpen ? 'block' : 'none',
+          md: 'block',
+        }}
+        width={{
+          initial: '100svw',
+          md: '320px',
+        }}
+        ml="-3"
+      >
+        <ScrollArea data-mobile-display={mobileSidebarOpen}>
+          <Flex
+            asChild
+            ml="-3"
+            pb="7"
+            pl="5"
+            pr="3"
+            pt="5"
+            direction="column"
+            gap="3"
+          >
+            <aside>
+              {data.items.map((item) => (
+                <SidebarItem
+                  data={item}
+                  key={item._id}
+                  level={level}
+                  pathname={`${pathname}/${item._slug}`}
+                />
+              ))}
+            </aside>
+          </Flex>
+        </ScrollArea>
+      </Box>
     </SidebarContext.Provider>
   )
 }
@@ -171,7 +208,7 @@ const SidebarItem = ({
 
     if (href)
       return (
-        <Flex asChild px="3" py="1" mx="-3" align="center" position="relative">
+        <Flex asChild px="3" py="2" ml="-3" align="center" position="relative">
           <Link
             className={s.sidebar__item}
             data-active={isActive}
@@ -195,9 +232,9 @@ const SidebarItem = ({
     if (isRootLevel) {
       return (
         <Flex className={s.sidebar__divider} py="2" px="3">
-          <Text mx="-3" asChild className={s['sidebar__title--mono']}>
-            <p>{data.titleSidebarOverride ?? data._title}</p>
-          </Text>
+          <Code variant='ghost' size="1" mx="-3" weight="medium" style={{ textTransform: 'uppercase', fontWeight: 600 }}>
+            {data.titleSidebarOverride ?? data._title}
+          </Code>
         </Flex>
       )
     }
@@ -243,7 +280,11 @@ const SidebarItem = ({
               radius="large"
               color="gray"
               size="1"
-              className={s['sidebar__item--toggle']}
+              style={{
+                position: 'absolute',
+                right: 'var(--space-1)',
+                top: 'var(--space-1)',
+              }}
               onClick={() => {
                 userCollapsedSidebar.current = true
                 toggleCollapsed()
@@ -260,11 +301,9 @@ const SidebarItem = ({
 
       <Box
         py="2"
-        className={clsx(
-          (isCollapsed || data.children.items.length < 1) && '!hidden'
-        )}
+        display={(isCollapsed || !data.children.items.length) ? 'none' : 'block'}
       >
-        <div className={clsx('relative', !isRootLevel && 'pl-5')}>
+        <Box position="relative" pl={!isRootLevel ? '5' : '0'}>
           {!isRootLevel && (
             <Box
               height="100%"
@@ -282,7 +321,7 @@ const SidebarItem = ({
               />
             )
           })}
-        </div>
+        </Box>
       </Box>
     </div>
   )

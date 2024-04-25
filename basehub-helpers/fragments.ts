@@ -74,6 +74,7 @@ export type ArticleMetaFragmentRecursive = fragmentOn.infer<
 export const PageFragment = fragmentOn('PagesItem', {
   _id: true,
   _slug: true,
+  _title: true,
   articles: { items: ArticleMetaFragmentRecursive },
 })
 
@@ -83,9 +84,7 @@ export const pageBySlug = (slug: string | undefined) => {
   return fragmentOn('Pages', {
     __args: {
       first: 1,
-      ...(slug && {
-        filter: { _sys_slug: { eq: slug } },
-      }),
+      ...(slug && { filter: { _sys_slug: { eq: slug } } }),
     },
     items: PageFragment,
   })

@@ -13,24 +13,6 @@
    height: var(--space-7);
    text-overflow: ellipsis;
    white-space: nowrap;
-   letter-spacing: var(--tracking-default);
-  
-   button {
-      &:not(.code-snippet-header__copy) {
-         position: relative;
-         padding-block: var(--space-3);
-         padding-inline: var(--space-2);
-
-         &:first-child {
-            padding-left: var(--space-3);
-         }
-      }
-
-      &:hover,
-      &[data-active="true"] {
-         color: var(--strong);
-      }
-   }
 
    .code-snippet-header__highlighter {
       position: absolute;
@@ -64,25 +46,24 @@
    pre {
       cursor: text;
       overflow-x: auto;
-      letter-spacing: var(--tracking-default);
       line-height: calc(20px * var(--scaling));
       border-radius: var(--radius-3);
       font-size: var(--font-size-2);
       margin-block: var(--space-6);
       padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
-      border: 1px solid var(--gray-4);
+      border: 1px solid var(--gray-6);
       font-size: var(--font-size-1);
       font-weight: 500;
       position: relative;
   
       --shiki-color-text: #000;
       --shiki-background: var(--gray-2);
-      --shiki-token-constant: #55B5DB;
-      --shiki-token-function: #55B5DB;
-      --shiki-token-string-expression: #55B5DB;
-      --shiki-token-string: #edc38d;
+      --shiki-token-constant: var(--accent-indicator);
+      --shiki-token-function: var(--accent-indicator);
+      --shiki-token-string-expression: var(--accent-indicator);
+      --shiki-token-string: var(--accent-indicator);
       --shiki-token-comment: #94a4ad;
-      --shiki-token-keyword: #E6CD69;
+      --shiki-token-keyword: var(--accent-indicator);
       --shiki-token-parameter: #d6deeb;
       --shiki-token-punctuation: #c792e9;
       --shiki-token-link: #79b8ff;

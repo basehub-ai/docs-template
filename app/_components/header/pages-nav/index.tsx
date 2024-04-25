@@ -18,7 +18,7 @@ export const PagesNav = async () => {
         'use server'
 
         return (
-          <Box className={s['pages-nav']} overflowX={{ lg: 'visible' }}>
+          <Box className={s['pages-nav']} overflowX={{ md: 'visible' }}>
             <Flex
               asChild
               justify="between"

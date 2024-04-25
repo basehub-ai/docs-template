@@ -2,24 +2,18 @@ import { Pump } from '@/.basehub/react-pump'
 import { HeaderFragment, PagesNav } from './pages-nav'
 import NextLink from 'next/link'
 import { draftMode } from 'next/headers'
-import {
-  Button,
-  Container,
-  Flex,
-  Link,
-  Text,
-  VisuallyHidden,
-} from '@radix-ui/themes'
+import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
+import { Search } from './search'
+import { Logo } from './logo'
 
 import s from './header.module.scss'
-import Search from './search'
 
 export const Header = () => {
   return (
     <Pump
       queries={[
-        { settings: { logo: { url: true } } },
+        { settings: { logo: { url: true }, logoDark: { url: true } } },
         { header: HeaderFragment },
       ]}
       next={{ revalidate: 30 }}
@@ -27,19 +21,20 @@ export const Header = () => {
     >
       {async ([{ settings }, { header }]) => {
         'use server'
-        const logo = settings.logo.url
+        const logoLight = settings.logo.url
+        const logoDark = settings.logoDark?.url
 
         return (
           <header className={s.header}>
-            <Container size="4" px={{ initial: '5', md: '8' }} height="100%">
+            <Container
+              size="4"
+              px={{ initial: '5', md: '8' }}
+              height="100%"
+              className={s['header__head']}
+              position="relative"
+            >
               <Flex align="center" height="100%" justify="between">
-                <Link asChild>
-                  <NextLink href="/">
-                    <VisuallyHidden>Home</VisuallyHidden>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={logo} alt="logo" className={s['header__logo']} />
-                  </NextLink>
-                </Link>
+                <Logo logoLight={logoLight} logoDark={logoDark} />
                 <Search searchCategories={header.navLinks.items} />
                 <Flex align="center" justify="center">
                   <ThemeSwitcher />

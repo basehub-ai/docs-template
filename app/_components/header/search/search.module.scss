@@ -1,30 +1,9 @@
-.search-dialog__trigger {
-   border: 1px solid var(--gray-5);
-   background: var(--gray-2);
-   width: 100%;
-   max-width: 255px;
-   border-radius: var(--radius-4);
-   color: var(--gray-11);
-   padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
-   font-size: var(--font-size-2);
-
-   &:focus,
-   &:focus-visible {
-      outline: 2px solid var(--focus-8);
-   }
-
-   &:hover {
-      background: var(--gray-3);
-      border-color: var(--gray-6);
-   }
-}
-
 .search-dialog__content {
    height: 500px;
    max-height: 80vh;
    overflow: hidden !important;
    padding: 0 !important;
-   top: -10vh;
+   top: -5vh;
 
    .search-dialog__empty-state {
       overflow: hidden;
@@ -35,22 +14,8 @@
    .search-dialog-content__footer {
       background-color: var(--gray-4);
    }
-
-   .search-dialog__input {
-      background-color: var(--color-background);
-
-      & > svg {
-         position: absolute;
-         top: 50%;
-         transform: translateY(-50%);
-         left: var(--space-3);
-         width: var(--width-md);
-         height: var(--width-md);
-      }
-   }
    
    .search-dialog__results {
-      flex: 1;
       overflow-y: auto;
       background-color: var(--color-background);
       
@@ -58,30 +23,20 @@
          scroll-margin-block: var(--space-2);
       }
 
-      .search-dialog-content__result > a {
+      .search-dialog-content__result-link {
          display: block;
          margin: 0;
          border-width: 1px;
          border-style: solid;
          border-color: transparent;
 
-         &:hover {
-            text-decoration: none;
-         }
-         
-         &[data-selected="false"] {
-            &:hover {
-               border-color: transparent !important;
-               background-color: transparent !important;
-            }
-         }
-
          &[data-selected="true"] {
-            border-color: var(--gray-5) !important;
+            text-decoration: underline;
+            border-color: var(--gray-5);
             background-color: var(--gray-3);
          }
 
-         & > p {
+         p {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

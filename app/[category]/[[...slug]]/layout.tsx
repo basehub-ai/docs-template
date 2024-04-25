@@ -7,7 +7,7 @@ export default async function ArticleLayout({
   params: { category: string; slug: string[] }
 }) {
   return (
-    <Flex asChild minHeight="100vh" width="100%" align="start" gapX="6" py="6">
+    <Flex asChild minHeight="100vh" width="100%" align="start" justify="between" gapX="6" py="6">
       <main>{children}</main>
     </Flex>
   )

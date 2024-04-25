@@ -33,7 +33,7 @@ export const CodeSnippetGroup = ({
 export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
   return (
     <div className={s['code-snippet']}>
-      <Flex asChild align="center" justify="between" p="3">
+      <Flex asChild align="center" justify="between" p="2">
         <header className={s['code-snippet-header']}>
           {props.fileName || 'Untitled'}
           <CopyButton snippet={props.code.code} />

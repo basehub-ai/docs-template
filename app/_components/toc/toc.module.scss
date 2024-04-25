@@ -1,18 +1,10 @@
 .toc {
-   position: sticky;
-   top: 128px;
-   width: calc(190px * var(--scaling));
-   display: none;
-
-   @media screen and (min-width: 1024px) {
-      display: block;
-   }
-
    ol {
       border-left: 1px solid var(--gray-4);
       color: var(--normal);
       position: relative;
       padding-bottom: var(--space-1);
+      padding-left: 0;
 
       li {
          position: relative;
@@ -20,6 +12,7 @@
 
          p {
             display: flex;
+            margin: 0;
          }
 
          a {
@@ -30,14 +23,13 @@
             width: 100%;
             text-overflow: ellipsis;
 
+
             &:hover,
             &[data-active="true"] {
-               color: var(--strong);
-               
-               &:after {
-                  background-color: var(--accent-indicator);
-               }
+              color: var(--strong) !important;
+            }
 
+            &[data-active="true"] {
                &::before {
                   content: '';
                   border-radius: 0;
@@ -52,12 +44,7 @@
             }
          }
 
-         &:hover,
          &:has(a[data-active="true"]) {
-            & > p > a {
-               color: var(--strong) !important;
-            }
-
             &:before {
                background-color: var(--accent-indicator);
                opacity: 0.16;
@@ -75,12 +62,6 @@
          }
 
          li {
-            &:after,
-            &:before {
-               display: none;
-               bottom: var(--space-1);
-            }
-
             a {
                padding-bottom: var(--space-1);
                padding-top: var(--space-1);
@@ -110,8 +91,6 @@
    background-color: var(--gray-2);
    color: var(--gray-10);
    transition: opacity 0.2s;
-   letter-spacing: 0.0185em;
-   letter-spacing: var(--tracking-default);
    cursor: pointer;
    font-weight: 500;
    padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);

@@ -8,6 +8,7 @@ import {
   Card,
   Dialog,
   Flex,
+  IconButton,
   Kbd,
   Link,
   Select,
@@ -35,7 +36,7 @@ const SEARCH_RESULTS = [
   'Routing',
 ]
 
-const Search = ({
+export const Search = ({
   searchCategories,
 }: {
   searchCategories: HeaderFragment['navLinks']['items']
@@ -102,24 +103,35 @@ const Search = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
+      {/* mobile */}
       <Dialog.Trigger>
-        <Flex
-          asChild
-          align="center"
-          justify="between"
-          display={{ initial: 'none', xs: 'none', lg: 'flex' }}
-        >
-          <button className={s['search-dialog__trigger']}>
-            <Flex align="center" justify="between" gap="2">
-              <MagnifyingGlassIcon />
-              Search
-            </Flex>
-            <Flex align="center" justify="between" gap="1">
-              <Kbd>⌘</Kbd>
-              <Kbd>k</Kbd>
-            </Flex>
-          </button>
-        </Flex>
+        <Box display={{ md: 'none' }}>
+          <IconButton variant="soft">
+            <MagnifyingGlassIcon />
+          </IconButton>
+        </Box>
+      </Dialog.Trigger>
+
+      {/* >= lg */}
+      <Dialog.Trigger>
+        <Box display={{ initial: 'none', lg: 'block' }}>
+          <TextField.Root
+            placeholder="Search"
+            size="2"
+            radius="large"
+            onClick={() => setOpen(true)}
+          >
+            <TextField.Slot>
+              <MagnifyingGlassIcon color="currentColor" />
+            </TextField.Slot>
+            <TextField.Slot>
+              <Flex align="center" justify="between" gap="1">
+                <Kbd>⌘</Kbd>
+                <Kbd>k</Kbd>
+              </Flex>
+            </TextField.Slot>
+          </TextField.Root>
+        </Box>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
@@ -129,7 +141,6 @@ const Search = ({
             mx="2"
             mt="2"
             size="3"
-            className={s['search-dialog__input']}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
               if (!['ArrowDown', 'ArrowUp'].includes(e.key)) return
@@ -159,6 +170,9 @@ const Search = ({
           <Box
             className={s['search-dialog__results']}
             ref={searchResultsRef}
+            flexGrow="1"
+            flexShrink="1"
+            flexBasis="0%"
             p="2"
           >
             {!results.length ? (
@@ -191,6 +205,7 @@ const Search = ({
                             setSelectedResultIndex(index)
                           }}
                           tabIndex={-1}
+                          className={s['search-dialog-content__result-link']}
                           href="#"
                         >
                           <Text size="2" weight="medium">
@@ -239,5 +254,3 @@ const Search = ({
     </Dialog.Root>
   )
 }
-
-export default Search

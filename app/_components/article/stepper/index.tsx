@@ -5,6 +5,8 @@ import { StepController } from './step-controller'
 import { Body } from '..'
 import { Box, Heading } from '@radix-ui/themes'
 
+import s from './stepper.module.scss'
+
 export const StepperComponent = async ({
   _id,
   stepperContent,
@@ -12,7 +14,11 @@ export const StepperComponent = async ({
   let checkpoints = 0
 
   return (
-    <Box data-stepper-id={_id} pl={{ initial: '6', lg: '0' }}>
+    <Box
+      data-stepper-id={_id}
+      pl={{ initial: '6', md: '0' }}
+      className={s.stepper}
+    >
       <Body
         components={{
           h3: ({ children, ...rest }) => {

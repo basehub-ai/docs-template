@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   text-rendering: geometricprecision;
   -webkit-text-size-adjust: 100%;
@@ -9,23 +5,26 @@
   -moz-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --light: var(--gray-10);
   --strong: var(--gray-12);
   --normal: var(--gray-11);
-  --dark: var(--gray-1);
-  
-  --tracking-default: -0.26px;
-  --tracking-tighter-1: -0.3px;
-  --tracking-tighter-3: -0.52px;
   
   .radix-themes {
-    --header: calc(92px * var(--scaling));
+    --header: calc(96px * var(--scaling));
     --header-head: calc(52px * var(--scaling));
     --header-pages-nav: calc(40px * var(--scaling));
-    --sidebar: calc(100vh - var(--header));
+    --sidebar: calc(100svh - var(--header));
     --default-font-family: var(--font-geist-sans);
     --container-4: 1280px;
     --color-background: var(--gray-1);
+    --code-font-family: 'Geist Mono';
+
+    @media screen and (min-width: 1024px) {
+      --header: calc(92px * var(--scaling));
+    }
+  }
+
+  body {
+    margin: 0;
   }
 }
 
@@ -34,6 +33,7 @@ html.dark body .radix-themes {
 }
 
 html.dark body {
+
   div[data-rmiz-modal-overlay="visible"] {
     background: var(--gray-2);
   }
