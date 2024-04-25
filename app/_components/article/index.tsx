@@ -29,8 +29,15 @@ import { Toc } from '../toc'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
+import { Breadcrumb } from './breadcrumb'
 
-export const Article = ({ id }: { id: string }) => {
+export const Article = ({
+  id,
+  breadcrumb,
+}: {
+  id: string
+  breadcrumb: Breadcrumb
+}) => {
   return (
     <Pump
       queries={[
@@ -57,6 +64,9 @@ export const Article = ({ id }: { id: string }) => {
             <Flex asChild justify="center">
               <article>
                 <Box className={s.body}>
+                  <Box mb="4">
+                  <Breadcrumb breadcrumb={breadcrumb} />
+                  </Box>
                   <RadixHeading
                     as="h1"
                     size="8"
@@ -161,7 +171,11 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
               <CodeSnippet code={{ ...rest }} />
               <CopyButton
                 snippet={rest.code}
-                style={{ position: 'absolute', right: 'var(--space-3)', top: 'var(--space-3)' }}
+                style={{
+                  position: 'absolute',
+                  right: 'var(--space-3)',
+                  top: 'var(--space-3)',
+                }}
               />
             </Box>
           )

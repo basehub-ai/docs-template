@@ -14,7 +14,7 @@ export default function Layout({
 }) {
   return (
     <Container size="4" px={{ initial: '5', md: '8' }}>
-      <Flex>
+      <Flex direction={{ initial: 'column', md: 'row' }}>
         <Pump
           queries={[{ pages: SidebarFragment }]}
           next={{ revalidate: 30 }}

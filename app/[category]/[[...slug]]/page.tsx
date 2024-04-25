@@ -7,7 +7,7 @@ import {
 import { Pump } from '@/.basehub/react-pump'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
+import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 
@@ -94,8 +94,29 @@ export default function ArticlePage({
         })
 
         if (!activeSidebarItem) notFound()
+        const { titles, slugs } = getBreadcrumb({
+          sidebar: page.articles,
+          activeSidebarItem,
+        })
 
-        return <Article id={activeSidebarItem._id} />
+        const breadcrumb = [
+          {
+            title:
+              data.pages.items.find((item) => item._slug === params.category)
+                ?._title ?? 'Unntitled page',
+            slug: params.category,
+          },
+          ...titles.map((item, index) => ({
+            title: item,
+            slug: slugs[index] ?? '#',
+          })),
+          {
+            title: activeSidebarItem._title,
+            slug: activeSidebarItem._slug,
+          },
+        ]
+
+        return <Article id={activeSidebarItem._id} breadcrumb={breadcrumb} />
       }}
     </Pump>
   )

@@ -27,7 +27,7 @@ export const CodeGroupHeader = () => {
   if (!activeSnippet) return null
 
   return (
-    <Flex asChild align="center" justify="between" pr="3">
+    <Flex asChild align="center" justify="between" pr="2">
       <header className={s['code-snippet-header']}>
         {snippets.length > 1 ? (
           <Tabs.Root defaultValue={snippets?.[0]?._id}>

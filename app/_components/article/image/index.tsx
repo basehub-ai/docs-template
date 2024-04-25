@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import NextImage from 'next/image'
+import Image from 'next/image'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
@@ -21,11 +21,12 @@ export const ImageWithZoom = ({
   return (
     <Zoom>
       <picture>
-        <NextImage
+        <Image
           src={src}
           width={width}
-          alt={alt ?? ''}
           height={height}
+          alt={alt ?? ''}
+          sizes="(min-width: 1024px) 1024px, 100vw"
         />
       </picture>
       {caption && <p data-type="caption">{caption}</p>}

@@ -5,6 +5,33 @@ import {
   SidebarArticleFragmentRecursive,
 } from './fragments'
 
+export const getBreadcrumb = ({
+  sidebar,
+  activeSidebarItem,
+}: {
+  sidebar: SidebarProps['data'] | PageFragment['articles']
+  activeSidebarItem:
+    | SidebarArticleFragmentRecursive
+    | ArticleMetaFragmentRecursive
+}) => {
+  const breadcrumb = sidebar.items.reduce<{
+    titles: string[]
+    slugs: string[]
+  }>(
+    (acc, item) => {
+      processArticle(item, (article, meta) => {
+        if (article._slug === activeSidebarItem._slug) {
+          acc.titles = meta.titlesPath
+          acc.slugs = meta.path
+        }
+      })
+      return acc
+    },
+    { titles: [], slugs: [] }
+  )
+  return breadcrumb
+}
+
 export function getActiveSidebarItem({
   sidebar,
   activeSlugs,
@@ -52,11 +79,11 @@ export function processArticle(
   article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
   callback: (
     article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
-    meta: { level: number; path: string[]; index: number }
+    meta: Meta
   ) => void,
-  meta?: { level: number; path: string[]; index: number }
+  meta?: Meta
 ) {
-  meta = meta || { level: 0, path: [], index: 0 }
+  meta = meta || { level: 0, path: [], titlesPath: [], index: 0 }
   callback(article, meta)
   // recursively process children
   if (article.children.items && article.children.items.length > 0) {
@@ -64,8 +91,16 @@ export function processArticle(
       processArticle(child, callback, {
         level: meta.level + 1,
         path: [...meta.path, article._slug],
+        titlesPath: [...meta.titlesPath, article._title],
         index,
       })
     })
   }
+}
+
+type Meta = {
+  level: number
+  path: string[]
+  titlesPath: string[]
+  index: number
 }

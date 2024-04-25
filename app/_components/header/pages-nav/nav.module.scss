@@ -1,8 +1,8 @@
 .pages-nav {
-  border-block-width: 1px;
-  border-block-color: var(--gray-5);
+  border-block: 1px solid var(--gray-5);
   background-color: var(--gray-3);
   position: relative;
+  height: var(--header-pages-nav);
 
   .nav {
     & > a {
@@ -22,11 +22,11 @@
     color: var(--gray);
     text-decoration: none;
   }
-}
 
-.nav__link[data-active='true'] {
-  color: var(--gray);
-  position: relative;
+  &[data-active='true'] {
+    color: var(--gray);
+    position: relative;
+  }
 }
 
 .active-indicator {

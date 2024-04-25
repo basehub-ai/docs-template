@@ -101,77 +101,85 @@ export const Toc = ({ blocks, children }: TocProps) => {
   }, [handleScroll])
 
   return (
-    <aside ref={tocRef} className={s.toc}>
-      {Boolean(children) && (
-        <>
-          <Text asChild size="2" weight="medium" mb="1">
-            <p>On this page</p>
-          </Text>
-          <RichText
-            blocks={blocks}
-            components={{
-              ol: ({ children, ...props }) => (
-                <Box asChild position="relative">
-                  <Text size="2" asChild>
-                    <ol {...props}>{children}</ol>
-                  </Text>
-                </Box>
-              ),
-              li: ({ children }) => (
-                <Box asChild pl="3">
-                  <Text asChild size="2">
-                    <li>{children}</li>
-                  </Text>
-                </Box>
-              ),
-              a: ({ href, children }) => {
-                if (!children) return <></>
-                const childrenAsString = children.toString()
+    <Box
+      asChild
+      position="sticky"
+      top="128px"
+      width="calc(190px * var(--scaling))"
+      display={{ initial: 'none', md: 'block' }}
+    >
+      <aside ref={tocRef} className={s.toc}>
+        {Boolean(children) && (
+          <>
+            <Text asChild size="2" weight="medium" mb="1">
+              <p>On this page</p>
+            </Text>
+            <RichText
+              blocks={blocks}
+              components={{
+                ol: ({ children, ...props }) => (
+                  <Box asChild position="relative">
+                    <Text size="2" asChild>
+                      <ol {...props}>{children}</ol>
+                    </Text>
+                  </Box>
+                ),
+                li: ({ children }) => (
+                  <Box asChild pl="3">
+                    <Text asChild size="2">
+                      <li>{children}</li>
+                    </Text>
+                  </Box>
+                ),
+                a: ({ href, children }) => {
+                  if (!children) return <></>
+                  const childrenAsString = children.toString()
 
-                return (
-                  <Link asChild style={{ color: 'var(--gray)' }}>
-                    <NextLink
-                      href={href}
-                      data-active={href === `#${currentSectionId}`}
-                      onClick={() => {
-                        setHighlightedSection(href.split('#')[1] as string)
-                        disabled.current = true
-                        setTimeout(() => (disabled.current = false), 400)
-                      }}
-                    >
-                      <span>
-                        {childrenAsString.length < 35
-                          ? childrenAsString
-                          : childrenAsString.slice(0, 35) + '...'}
-                      </span>
-                    </NextLink>
-                  </Link>
-                )
-              },
+                  return (
+                    <Link asChild style={{ color: 'var(--gray)' }}>
+                      <NextLink
+                        href={href}
+                        data-active={href === `#${currentSectionId}`}
+                        onClick={() => {
+                          setHighlightedSection(href.split('#')[1] as string)
+                          disabled.current = true
+                          setTimeout(() => (disabled.current = false), 400)
+                        }}
+                      >
+                        <span>
+                          {childrenAsString.length < 35
+                            ? childrenAsString
+                            : childrenAsString.slice(0, 35) + '...'}
+                        </span>
+                      </NextLink>
+                    </Link>
+                  )
+                },
+              }}
+            >
+              {children}
+            </RichText>
+          </>
+        )}
+
+        <Flex asChild align="center" gap="2">
+          <Button
+            mt="5"
+            color="gray"
+            ref={backToTopButton}
+            style={{ opacity: 0, pointerEvents: 'none' }}
+            className={s['back-to-top']}
+            onClick={() => {
+              document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
             }}
           >
-            {children}
-          </RichText>
-        </>
-      )}
-
-      <Flex asChild align="center" gap="2">
-        <Button
-          mt="5"
-          color="gray"
-          ref={backToTopButton}
-          style={{ opacity: 0, pointerEvents: 'none' }}
-          className={s['back-to-top']}
-          onClick={() => {
-            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
-        >
-          Back to top
-          <Flex align="center" justify="center">
-            <ChevronUpIcon width={10} height={10} />
-          </Flex>
-        </Button>
-      </Flex>
-    </aside>
+            Back to top
+            <Flex align="center" justify="center">
+              <ChevronUpIcon width={10} height={10} />
+            </Flex>
+          </Button>
+        </Flex>
+      </aside>
+    </Box>
   )
 }

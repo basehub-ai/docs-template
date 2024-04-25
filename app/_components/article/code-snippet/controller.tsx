@@ -111,9 +111,9 @@ export const CopyButton = ({
     <IconButton
       style={style}
       size="1"
-      variant='ghost'
-      className={s['code-snippet-header__copy']}
-      color='gray'
+      variant="surface"
+      radius="large"
+      color="gray"
       onClick={() => {
         setCopied(true)
         navigator.clipboard.writeText(snippet)

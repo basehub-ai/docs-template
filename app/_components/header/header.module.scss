@@ -5,21 +5,18 @@
    height: var(--header);
    background-color: var(--color-background);
 
-   & > div:first-child {
+   .header__head {
       height: var(--header-head);
-   }
-   & > div:nth-child(2) {
-      height: var(--header-pages-nav);
    }
 
    .header__logo {
       height: var(--space-5);
-      margin-inline: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
    }
 
    .header__main-cta {
-      letter-spacing: -0.52px;
-
       &:hover {
          text-decoration: none;
       }

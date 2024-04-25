@@ -29,7 +29,7 @@
    }
 
    .footer__copyright {
-      color: var(--light);
+      color: var(--gray-10);
    }
 
    .footer__link {
@@ -46,8 +46,7 @@
       border-radius: var(--radius-6);
       color: var(--strong);
       padding: var(--space-1) var(--space-3);
-      letter-spacing: var(--tracking-tighter-3);
-      
+
       & > span {
          text-shadow: 0px 0px 1px rgba(228, 115, 32, 0.48);
       }
