@@ -40,7 +40,17 @@ export default function Layout({
             )
           }}
         </Pump>
-        {children}
+        <Flex
+          asChild
+          minHeight="100vh"
+          width="100%"
+          align="start"
+          justify="between"
+          gapX="6"
+          py="6"
+        >
+          <main>{children}</main>
+        </Flex>
       </Flex>
     </Container>
   )

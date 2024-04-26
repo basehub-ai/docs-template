@@ -43,7 +43,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
     return slugs
   }, [params.slug])
 
-  const activeSidebarItem = React.useMemo(() => {
+  const { item: activeSidebarItem } = React.useMemo(() => {
     return getActiveSidebarItem({
       sidebar: data,
       activeSlugs,
@@ -232,7 +232,13 @@ const SidebarItem = ({
     if (isRootLevel) {
       return (
         <Flex className={s.sidebar__divider} py="2" px="3">
-          <Code variant='ghost' size="1" mx="-3" weight="medium" style={{ textTransform: 'uppercase', fontWeight: 600 }}>
+          <Code
+            variant="ghost"
+            size="1"
+            mx="-3"
+            weight="medium"
+            style={{ textTransform: 'uppercase', fontWeight: 600 }}
+          >
             {data.titleSidebarOverride ?? data._title}
           </Code>
         </Flex>
@@ -301,7 +307,7 @@ const SidebarItem = ({
 
       <Box
         py="2"
-        display={(isCollapsed || !data.children.items.length) ? 'none' : 'block'}
+        display={isCollapsed || !data.children.items.length ? 'none' : 'block'}
       >
         <Box position="relative" pl={!isRootLevel ? '5' : '0'}>
           {!isRootLevel && (

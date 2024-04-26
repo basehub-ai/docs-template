@@ -17,10 +17,10 @@ import {
   TextField,
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
-
-import s from './search.module.scss'
 import { usePointerIdle } from '@/hooks/use-pointer-idle'
 import { HeaderFragment } from '../pages-nav'
+
+import s from './search.module.scss'
 
 const SEARCH_RESULTS = [
   'Getting started',
@@ -58,7 +58,6 @@ export const Search = ({
     }
 
     document.addEventListener('keydown', handleKeyDown)
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }

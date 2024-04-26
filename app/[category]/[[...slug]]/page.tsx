@@ -12,36 +12,37 @@ import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 
 export const generateStaticParams = async (): Promise<
-  Array<{ params: { slug: string[] } }>
+  Array<{ params: { category: string; slug: string[] } }>
 > => {
   const data = await basehub({ cache: 'no-store' }).query({
     pages: { items: PageFragment },
   })
-  const result: Array<{ params: { slug: string[] } }> = []
+  const result: Array<{ params: { category: string; slug: string[] } }> = []
 
   /**
    * Recursive function to process every level of nesting
    */
   function processArticle(
     path: string[],
-    article: ArticleMetaFragmentRecursive
+    article: ArticleMetaFragmentRecursive,
+    category: string
   ) {
     const updatedPath = [...path, article._slug]
     if (article.body?.__typename) {
       // has body, therefore is linkable and should be added to result
-      result.push({ params: { slug: updatedPath } })
+      result.push({ params: { category, slug: updatedPath } })
     }
     // recursively process children
     if (article.children.items && article.children.items.length > 0) {
       article.children.items.forEach((child) => {
-        processArticle(updatedPath, child)
+        processArticle(updatedPath, child, category)
       })
     }
   }
 
   data.pages.items.map((page) => {
     page.articles.items.forEach((article) => {
-      processArticle([page._slug], article)
+      processArticle([], article, page._slug)
     })
   })
 
@@ -51,17 +52,21 @@ export const generateStaticParams = async (): Promise<
 export const generateMetadata = async ({
   params,
 }: {
-  params: { slug: string[] | undefined }
+  params: { category: string; slug: string[] | undefined }
 }): Promise<Metadata> => {
-  const activePageSlug = params.slug?.[0]
-  const data = await basehub().query({ pages: pageBySlug(activePageSlug) })
+  const data = await basehub({
+    next: { revalidate: 30 },
+    draft: draftMode().isEnabled,
+  }).query({
+    pages: pageBySlug(params.category),
+  })
 
   const page = data.pages.items[0]
   if (!page) return {}
 
-  const activeSidebarItem = getActiveSidebarItem({
+  const { item: activeSidebarItem } = getActiveSidebarItem({
     sidebar: page.articles,
-    activeSlugs: params.slug?.slice(1) ?? [],
+    activeSlugs: params.slug ?? [],
   })
   if (!activeSidebarItem) return notFound()
 
@@ -71,7 +76,7 @@ export const generateMetadata = async ({
 export default function ArticlePage({
   params,
 }: {
-  params: { slug: string[] | undefined; category: string }
+  params: { category: string; slug: string[] | undefined }
 }) {
   const activeSlugs = params.slug ?? []
 
@@ -85,10 +90,9 @@ export default function ArticlePage({
         'use server'
 
         const page = data.pages.items[0]
-
         if (!page) notFound()
 
-        const activeSidebarItem = getActiveSidebarItem({
+        const { item: activeSidebarItem } = getActiveSidebarItem({
           sidebar: page.articles,
           activeSlugs,
         })
@@ -101,10 +105,8 @@ export default function ArticlePage({
 
         const breadcrumb = [
           {
-            title:
-              data.pages.items.find((item) => item._slug === params.category)
-                ?._title ?? 'Unntitled page',
-            slug: params.category,
+            title: page._title,
+            slug: page._slug,
           },
           ...titles.map((item, index) => ({
             title: item,

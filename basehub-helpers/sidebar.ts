@@ -38,7 +38,10 @@ export function getActiveSidebarItem({
 }: {
   sidebar: SidebarProps['data'] | PageFragment['articles']
   activeSlugs: string[]
-}): SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive | null {
+}): {
+  item: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive | null
+  path: string[]
+} {
   let current:
     | SidebarArticleFragmentRecursive
     | ArticleMetaFragmentRecursive
@@ -58,18 +61,23 @@ export function getActiveSidebarItem({
     currentItems = item.children.items
   }
 
+  let fallbackPath: string[] = []
   const shouldFallbackToFirstValidItem = activeSlugs.length === 0
   if (!current && shouldFallbackToFirstValidItem) {
     sidebar.items.forEach((item) => {
-      processArticle(item, (article) => {
+      processArticle(item, (article, { path }) => {
         if (!firstValidItem && article.body?.__typename) {
           firstValidItem = article
+          fallbackPath = path
         }
       })
     })
   }
 
-  return current ?? firstValidItem
+  return {
+    item: current ?? firstValidItem,
+    path: current ? activeSlugs : fallbackPath,
+  }
 }
 
 /**
@@ -78,8 +86,8 @@ export function getActiveSidebarItem({
 export function processArticle(
   article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
   callback: (
-    article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
-    meta: Meta
+    _article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
+    _meta: Meta
   ) => void,
   meta?: Meta
 ) {

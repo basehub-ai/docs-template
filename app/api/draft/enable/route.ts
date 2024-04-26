@@ -1,5 +1,4 @@
-// import { basehub } from '@/.basehub'
-// import { PageFragment } from '@/basehub-helpers/fragments'
+import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -21,15 +20,31 @@ export async function GET(request: Request) {
     const parsedNext = new URL(next, request.url)
     redirectTo = parsedNext.pathname + parsedNext.search + parsedNext.hash
   } else if (articleId) {
-    // we'll need to get the sidebar so we resolve the article path
-    // const data = await basehub({ cache: 'no-store' }).query({
-    //   pages: {
-    //     items: PageFragment,
-    //   },
-    // })
-    // we'll need to iterate recursively, building each path (as we do in generateStaticParams by the way) and use the path of the requested article.
-    // for (const page of data.pages.items) {
-    // }
+    const data = await basehub({ draft: true }).query({
+      _componentInstances: {
+        article: {
+          __args: { first: 1, filter: { _sys_id: { eq: articleId } } },
+          items: {
+            _slugPath: true,
+          },
+        },
+      },
+    })
+
+    const article = data._componentInstances.article.items[0]
+    if (article) {
+      // _slugPath will have something like root/pages/<category>/articles/<page>/children/<page>/children/<page>...
+      // remove root/pages and then filter out every other part
+      redirectTo =
+        '/' +
+        article._slugPath
+          .replace('root/pages/', '')
+          .split('/')
+          .filter((_part, index) => {
+            return index % 2 === 0
+          })
+          .join('/')
+    }
   }
 
   redirect(redirectTo)
