@@ -11,6 +11,8 @@ import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 
+export const dynamic = 'force-static'
+
 export const generateStaticParams = async (): Promise<
   Array<{ params: { category: string; slug: string[] } }>
 > => {
@@ -57,9 +59,7 @@ export const generateMetadata = async ({
   const data = await basehub({
     next: { revalidate: 30 },
     draft: draftMode().isEnabled,
-  }).query({
-    pages: pageBySlug(params.category),
-  })
+  }).query({ pages: pageBySlug(params.category) })
 
   const page = data.pages.items[0]
   if (!page) return {}

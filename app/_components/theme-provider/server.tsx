@@ -29,9 +29,7 @@ export const ThemeProvider = async ({
   const data = await basehub({
     next: { revalidate: 30 },
     draft: draftMode().isEnabled,
-  }).query({
-    settings: ThemeSettingsFragment,
-  })
+  }).query({ settings: ThemeSettingsFragment })
 
   return (
     <NextThemesThemeProvider attribute="class">
