@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "basehub dev & next dev",
-    "build": "basehub && next build",
+    "build": "basehub && next build && pnpm pagefind",
+    "pagefind": "pagefind --site .next --output-path .next/static/chunks/app/pagefind",
     "start": "next start",
     "lint": "next lint"
   },
@@ -22,6 +23,7 @@
     "hast-util-to-jsx-runtime": "^2.3.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
+    "pagefind": "^1.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-medium-image-zoom": "^5.2.0",
