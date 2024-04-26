@@ -161,7 +161,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         code: ({ isInline, ...rest }) => {
           if (isInline)
             return (
-              <Code data-type="inline-code" variant="outline">
+              <Code data-type="inline-code" variant="soft">
                 {rest.children}
               </Code>
             )

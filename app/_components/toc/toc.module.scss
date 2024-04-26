@@ -23,10 +23,15 @@
             width: 100%;
             text-overflow: ellipsis;
 
-
             &:hover,
             &[data-active="true"] {
-              color: var(--strong) !important;
+               color: var(--strong) !important;
+            }
+            
+            &[data-active="true"] {
+               &:after {
+                  background-color: var(--accent-indicator);
+               }
             }
 
             &[data-active="true"] {
@@ -41,13 +46,6 @@
                   height: var(--space-5);
                   background-color: var(--accent-indicator);
                }
-            }
-         }
-
-         &:has(a[data-active="true"]) {
-            &:before {
-               background-color: var(--accent-indicator);
-               opacity: 0.16;
             }
          }
       }

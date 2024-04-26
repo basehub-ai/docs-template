@@ -98,7 +98,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
             pr="3"
             pt="5"
             direction="column"
-            gap="3"
+            gap="4"
           >
             <aside>
               {data.items.map((item) => (

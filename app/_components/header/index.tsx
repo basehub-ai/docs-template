@@ -5,7 +5,7 @@ import { draftMode } from 'next/headers'
 import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
 import { Search } from './search'
-import { Logo } from './logo'
+import { Logo } from '../logo'
 
 import s from './header.module.scss'
 
@@ -22,7 +22,7 @@ export const Header = () => {
       {async ([{ settings }, { header }]) => {
         'use server'
         const logoLight = settings.logo.url
-        const logoDark = settings.logoDark?.url
+        const logoDark = settings.logoDark.url
 
         return (
           <header className={s.header}>

@@ -9,13 +9,6 @@
       height: var(--header-head);
    }
 
-   .header__logo {
-      height: var(--space-5);
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-   }
-
    .header__main-cta {
       &:hover {
          text-decoration: none;

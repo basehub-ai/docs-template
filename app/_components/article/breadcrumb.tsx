@@ -2,19 +2,38 @@
 
 import * as React from 'react'
 import NextLink from 'next/link'
-import { Link, Text } from '@radix-ui/themes'
+import { Flex, Link } from '@radix-ui/themes'
+import { SlashIcon } from '@radix-ui/react-icons'
 
 export type Breadcrumb = { title: string; slug: string }[]
 
 export const Breadcrumb = ({ breadcrumb }: { breadcrumb: Breadcrumb }) => {
-  return breadcrumb.map((segment, index) => (
-    <React.Fragment key={index}>
-      <Link asChild color="gray" size="2">
-        <NextLink href={'segment'}>{segment.title}</NextLink>
-      </Link>
-      <Text size="2" weight="medium" color="gray">
-        {index < breadcrumb.length - 1 && ' / '}
-      </Text>
-    </React.Fragment>
-  ))
+  return (
+    <Flex align="center">
+      {breadcrumb.map((segment, index) => {
+        const href =
+          index === 0
+            ? '/'
+            : `/${breadcrumb
+                .slice(0, index + 1)
+                .map((segment) => segment.slug)
+                .join('/')}`
+
+        return (
+          <React.Fragment key={index}>
+            <Link
+              asChild
+              color="gray"
+              size="2"
+              ml={index > 0 ? '1' : '0'}
+              mr={index < breadcrumb.length - 1 ? '1' : '0'}
+            >
+              <NextLink href={href}>{segment.title}</NextLink>
+            </Link>
+            {index < breadcrumb.length - 1 && <SlashIcon color="gray" />}
+          </React.Fragment>
+        )
+      })}
+    </Flex>
+  )
 }

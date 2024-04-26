@@ -1,0 +1,17 @@
+.logo {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+.logo--sm {
+   height: var(--space-4);
+}
+
+.logo--md {
+   height: var(--space-5);
+}
+
+.logo--lg {
+   height: var(--space-6);
+}
