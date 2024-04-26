@@ -4,7 +4,7 @@ import * as React from 'react'
 import NextLink from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { Link, Box, Button, Flex, Text } from '@radix-ui/themes'
+import { Link, Box, Button, Text } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
@@ -106,7 +106,7 @@ export const Toc = ({ blocks, children }: TocProps) => {
       position="sticky"
       top="128px"
       width="calc(190px * var(--scaling))"
-      display={{ initial: 'none', md: 'block' }}
+      display={{ initial: 'none', lg: 'block' }}
     >
       <aside ref={tocRef} className={s.toc}>
         {Boolean(children) && (
@@ -162,23 +162,20 @@ export const Toc = ({ blocks, children }: TocProps) => {
           </>
         )}
 
-        <Flex asChild align="center" gap="2">
-          <Button
-            mt="5"
-            color="gray"
-            ref={backToTopButton}
-            style={{ opacity: 0, pointerEvents: 'none' }}
-            className={s['back-to-top']}
-            onClick={() => {
-              document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-          >
-            Back to top
-            <Flex align="center" justify="center">
-              <ChevronUpIcon width={10} height={10} />
-            </Flex>
-          </Button>
-        </Flex>
+        <Button
+          mt="5"
+          color="gray"
+          ref={backToTopButton}
+          style={{ opacity: 0, pointerEvents: 'none' }}
+          radius='large'
+          variant='soft'
+          onClick={() => {
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
+          Back to top
+          <ChevronUpIcon width={10} height={10} />
+        </Button>
       </aside>
     </Box>
   )

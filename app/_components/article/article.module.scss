@@ -1,14 +1,13 @@
 .body {
-  max-width: calc(716px * var(--scaling));
   width: 100%;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
+    max-width: calc(716px * var(--scaling));
     margin: 0 auto;
     padding-left: var(--space-9);
   }
 
-  @media screen and (min-width: 1024px) {
-    margin: 0 auto;
+  @media screen and (min-width: 1280px) {
     padding-right: var(--space-9);
   }
 

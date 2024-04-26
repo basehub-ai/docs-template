@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import NextLink from 'next/link'
-import { Flex, Link } from '@radix-ui/themes'
+import { Flex, Link, Text } from '@radix-ui/themes'
 import { SlashIcon } from '@radix-ui/react-icons'
 
 export type Breadcrumb = { title: string; slug: string }[]
@@ -18,6 +18,14 @@ export const Breadcrumb = ({ breadcrumb }: { breadcrumb: Breadcrumb }) => {
                 .slice(0, index + 1)
                 .map((segment) => segment.slug)
                 .join('/')}`
+
+        if (index === breadcrumb.length - 1) {
+          return (
+            <Text size="2" ml="1" weight="medium" key={index}>
+              {segment.title}
+            </Text>
+          )
+        }
 
         return (
           <React.Fragment key={index}>

@@ -2,7 +2,7 @@ import { Pump } from '@/.basehub/react-pump'
 import { HeaderFragment, PagesNav } from './pages-nav'
 import NextLink from 'next/link'
 import { draftMode } from 'next/headers'
-import { Button, Container, Flex, Link, Text } from '@radix-ui/themes'
+import { Button, Container, Flex, Grid, Link, Text } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
 import { Search } from './search'
 import { Logo } from '../logo'
@@ -33,10 +33,12 @@ export const Header = () => {
               className={s['header__head']}
               position="relative"
             >
-              <Flex align="center" height="100%" justify="between">
+              <Grid columns="3" align="center" height="100%" justify="between">
                 <Logo logoLight={logoLight} logoDark={logoDark} />
-                <Search searchCategories={header.navLinks.items} />
-                <Flex align="center" justify="center">
+                <Flex maxWidth="300px" mx="auto">
+                  <Search searchCategories={header.navLinks.items} />
+                </Flex>
+                <Flex align="center" justify="end">
                   <ThemeSwitcher />
                   <Button
                     asChild
@@ -54,7 +56,7 @@ export const Header = () => {
                     </Link>
                   </Button>
                 </Flex>
-              </Flex>
+              </Grid>
             </Container>
             <PagesNav />
           </header>

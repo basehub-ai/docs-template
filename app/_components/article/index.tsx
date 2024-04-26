@@ -61,7 +61,7 @@ export const Article = ({
 
         return (
           <>
-            <Flex asChild justify="center">
+            <Flex asChild justify="center" mx="auto">
               <article>
                 <Box className={s.body}>
                   <Box mb="4">

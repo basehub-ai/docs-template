@@ -20,7 +20,7 @@ export const getBreadcrumb = ({
   }>(
     (acc, item) => {
       processArticle(item, (article, meta) => {
-        if (article._slug === activeSidebarItem._slug) {
+        if (article._id === activeSidebarItem._id) {
           acc.titles = meta.titlesPath
           acc.slugs = meta.path
         }

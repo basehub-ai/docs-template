@@ -1,6 +1,6 @@
 'use client'
 
-import { Link, VisuallyHidden } from '@radix-ui/themes'
+import { Flex, Link, VisuallyHidden } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { useTheme } from 'next-themes'
 import clsx from 'clsx'
@@ -24,28 +24,31 @@ export const Logo = ({
   })
 
   return (
-    <Link asChild>
-      <NextLink href="/">
-        <VisuallyHidden>Home</VisuallyHidden>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoLight}
-          alt="logo"
-          className={clsx(s.logo, resolvedSizeClassName)}
-          style={{
-            visibility: resolvedTheme === 'dark' ? 'hidden' : 'visible',
-          }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoDark}
-          alt="logo"
-          className={clsx(s.logo, resolvedSizeClassName)}
-          style={{
-            visibility: resolvedTheme === 'dark' ? 'visible' : 'hidden',
-          }}
-        />
-      </NextLink>
-    </Link>
+    <Flex position="relative" className={resolvedSizeClassName}>
+      <Link asChild>
+        <NextLink href="/">
+          <VisuallyHidden>Home</VisuallyHidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={logoLight}
+            alt="logo"
+            className={clsx(s.logo, resolvedSizeClassName)}
+            style={{
+              position: 'absolute',
+              visibility: resolvedTheme === 'dark' ? 'hidden' : 'visible',
+            }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={logoDark}
+            alt="logo"
+            className={clsx(s.logo, resolvedSizeClassName)}
+            style={{
+              visibility: resolvedTheme === 'dark' ? 'visible' : 'hidden',
+            }}
+          />
+        </NextLink>
+      </Link>
+    </Flex>
   )
 }

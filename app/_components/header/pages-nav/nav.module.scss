@@ -1,31 +1,39 @@
 .pages-nav {
   border-block: 1px solid var(--gray-5);
   background-color: var(--gray-3);
-  position: relative;
   height: var(--header-pages-nav);
-
-  .nav {
-    & > a {
-      padding: var(--space-2);
-  
-      &:first-child {
-        margin-left: calc(var(--space-2) * -1);
-      }
-    }
-  }
 }
 
 .nav__link {
-  font-weight: 500;
+  --padding: var(--space-2);
+  padding: var(--padding);
 
-  &:hover {
-    color: var(--gray);
+  &:first-child {
+    margin-left: calc(var(--padding) * -1);
+  }
+
+  &[data-active='false'] {
+    color: var(--normal) !important;
+  }
+
+  &:hover,
+  &[data-active='true'] {
+    color: var(--gray) !important;
     text-decoration: none;
   }
 
   &[data-active='true'] {
-    color: var(--gray);
     position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: calc(100% - var(--padding) * 2);
+      left: var(--padding);
+      height: 2px;
+      background-color: var(--accent-indicator);
+      bottom: -1px;
+    }
   }
 }
 

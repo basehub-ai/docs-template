@@ -104,7 +104,7 @@ export const Search = ({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       {/* mobile */}
       <Dialog.Trigger>
-        <Box display={{ md: 'none' }}>
+        <Box display={{ sm: 'none' }}>
           <IconButton variant="soft">
             <MagnifyingGlassIcon />
           </IconButton>
@@ -113,7 +113,7 @@ export const Search = ({
 
       {/* >= lg */}
       <Dialog.Trigger>
-        <Box display={{ initial: 'none', lg: 'block' }}>
+        <Box display={{ initial: 'none', sm: 'block' }}>
           <TextField.Root
             placeholder="Search"
             size="2"

@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Flex, Link, Text } from '@radix-ui/themes'
+import { Flex, Link } from '@radix-ui/themes'
 import { usePathname } from 'next/navigation'
 import NextLink from 'next/link'
 
@@ -20,19 +20,17 @@ export const NavLink = React.forwardRef<
     pathname === '/' ? isFirstPageLink : pathname.startsWith(href)
 
   return (
-    <Flex height="100%" align="center" asChild>
-      <Link asChild color="gray">
-        <Text size="2" asChild wrap="nowrap">
-          <NextLink
-            {...rest}
-            ref={ref}
-            href={href}
-            className={s.nav__link}
-            data-active={isActive}
-          >
-            {children}
-          </NextLink>
-        </Text>
+    <Flex height="100%" align="center" asChild px="2">
+      <Link asChild>
+        <NextLink
+          {...rest}
+          ref={ref}
+          href={href}
+          className={s.nav__link}
+          data-active={isActive}
+        >
+          {children}
+        </NextLink>
       </Link>
     </Flex>
   )
