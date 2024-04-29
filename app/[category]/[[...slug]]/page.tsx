@@ -12,13 +12,15 @@ import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { siteOrigin } from '@/constants/routing'
 
+export const dynamic = 'force-static'
+
 export const generateStaticParams = async (): Promise<
-  Array<{ params: { category: string; slug: string[] } }>
+  Array<{ category: string; slug: string[] }>
 > => {
   const data = await basehub({ cache: 'no-store' }).query({
     pages: { items: PageFragment },
   })
-  const result: Array<{ params: { category: string; slug: string[] } }> = []
+  const result: Array<{ category: string; slug: string[] }> = []
 
   /**
    * Recursive function to process every level of nesting
@@ -31,7 +33,7 @@ export const generateStaticParams = async (): Promise<
     const updatedPath = [...path, article._slug]
     if (article.body?.__typename) {
       // has body, therefore is linkable and should be added to result
-      result.push({ params: { category, slug: updatedPath } })
+      result.push({ category, slug: updatedPath })
     }
     // recursively process children
     if (article.children.items && article.children.items.length > 0) {
