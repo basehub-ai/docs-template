@@ -5,12 +5,10 @@ export const ContentOGWrapperResponse = async ({
   title,
   subtitle,
   logo,
-  accentColor,
 }: {
   title: string
   subtitle: string
   logo: { url: string; alt: string | null }
-  accentColor: string
 }) => {
   // fonts
   const geist400 = fetch(
@@ -25,8 +23,6 @@ export const ContentOGWrapperResponse = async ({
     (
       <div
         style={{
-          backgroundColor: 'black',
-          backgroundSize: '150px 150px',
           height: '100%',
           width: '100%',
           display: 'flex',
@@ -35,83 +31,62 @@ export const ContentOGWrapperResponse = async ({
           justifyContent: 'center',
           flexDirection: 'column',
           flexWrap: 'nowrap',
+          backgroundColor: 'white',
+          backgroundSize: '100px 100px',
         }}
       >
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: 450,
-            marginLeft: 60,
-            marginRight: 60,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <img
-              style={{
-                width: 254,
-                height: 69,
-                objectFit: 'cover',
-                display: 'flex',
-              }}
-              src={logo.url}
-              alt={logo.alt ?? 'logo'}
-            />
-            <p
-              style={{
-                fontSize: 48,
-                fontFamily: 'Geist 400',
-                color: accentColor,
-                lineHeight: 1.5,
-              }}
-            >
-              Docs
-            </p>
-          </div>
-
-          <div
-            style={{
-              width: '100%',
-              height: 450,
-              display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-              paddingRight: 100,
-            }}
-          >
-            <h1
-              style={{
-                fontSize: 60,
-                fontFamily: 'Geist 500',
-                color: 'white',
-                lineHeight: 1,
-                marginBottom: 12,
-              }}
-            >
-              {truncateString(title, 35)}
-            </h1>
-            <p
-              style={{
-                fontSize: 32,
-                fontFamily: 'Geist 400',
-                color: '#909090',
-                lineHeight: 1.5,
-              }}
-            >
-              {truncateString(subtitle, 200)}
-            </p>
-          </div>
+          <img style={{ width: 220 }} src={logo.url} alt={logo.alt ?? ''} />
         </div>
+        <span
+          style={{
+            fontSize: 40,
+            fontWeight: 500,
+            fontStyle: 'normal',
+            color: 'black',
+            backgroundColor: '#EAEAEA',
+            border: '3px solid #E0E0E0',
+            borderRadius: 8,
+            marginTop: 12,
+            padding: '0 12px',
+            lineHeight: 1.1,
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          Docs
+        </span>
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 48,
+            fontStyle: 'normal',
+            color: 'black',
+            marginTop: 30,
+            lineHeight: 1.2,
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          <b>{truncateString(title, 35)}</b>
+        </div>
+        <p
+          style={{
+            display: 'flex',
+            fontSize: 32,
+            fontStyle: 'normal',
+            color: '#909090',
+            marginTop: 8,
+            lineHeight: 1.2,
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {truncateString(subtitle, 200)}
+        </p>
       </div>
     ),
     {

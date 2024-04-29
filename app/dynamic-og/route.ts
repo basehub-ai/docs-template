@@ -9,7 +9,6 @@ import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
-
   const categorySlug = searchParams.get('category-slug')
   const activeSlugs = searchParams.get('active-slugs')
 
@@ -34,6 +33,5 @@ export const GET = async (request: Request) => {
     title,
     subtitle: activePage.excerpt ?? '',
     logo: data.settings.logo,
-    accentColor: data.settings.theme.accentColor,
   })
 }
