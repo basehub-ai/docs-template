@@ -11,6 +11,7 @@ import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { useParams } from 'next/navigation'
 import {
   Box,
+  Button,
   Code,
   Flex,
   IconButton,
@@ -52,30 +53,47 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
-      <Flex
-        width="100svw"
-        display={{ initial: 'flex', md: 'none' }}
-        asChild
+      <Box
         position="sticky"
-        mx={{ initial: '-5', md: '0' }}
+        ml={{ initial: '-5', md: '0' }}
         top="var(--header)"
-        style={{ zIndex: 10 }}
+        className={s['sidebar__mobile-toggle']}
+        width="100svw"
+        display={{ initial: 'block', md: 'none' }}
       >
-        <button
-          onClick={() => setMobileSidebarOpen((o) => !o)}
-          className={s['sidebar__mobile-trigger']}
+        <Flex
+          display={{ initial: 'flex', md: 'none' }}
+          justify="between"
+          px="5"
+          width="100%"
+          asChild
         >
-          <Text weight="medium">
-            {activeSidebarItem?._title ?? 'Untitled article'}
-          </Text>
-          <ChevronRightIcon
-            style={{ transform: mobileSidebarOpen ? 'none' : 'rotate(90deg)' }}
-          />
-        </button>
-      </Flex>
+          <Button
+            color="gray"
+            variant="soft"
+            radius="none"
+            size="3"
+            onClick={() => setMobileSidebarOpen((o) => !o)}
+          >
+            <Text weight="medium">
+              {activeSidebarItem?._title ?? 'Untitled article'}
+            </Text>
+            <Box as="span" ml="auto">
+              <ChevronRightIcon
+                style={{
+                  transform: mobileSidebarOpen ? 'rotate(90deg)' : 'none',
+                }}
+              />
+            </Box>
+          </Button>
+        </Flex>
+      </Box>
 
       <Box
-        style={{ borderRight: '1px solid var(--gray-5)' }}
+        style={{
+          borderRight: '1px solid var(--gray-5)',
+          backgroundColor: 'var(--color-background)',
+        }}
         height="var(--sidebar)"
         position="sticky"
         top="var(--header)"

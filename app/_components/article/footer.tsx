@@ -1,19 +1,28 @@
 import NextLink from 'next/link'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { Box, Card, Flex, Link, Separator, Text } from '@radix-ui/themes'
+import { ArticleFragment } from '@/basehub-helpers/fragments'
 
 export type ArticleFooter = {
+  lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt']
   prevArticle: { title: string; excerpt: string | null; href: string } | null
   nextArticle: { title: string; excerpt: string | null; href: string } | null
 }
 
 export const ArticleFooter = ({
+  lastUpdatedAt,
   prevArticle,
   nextArticle,
 }: ArticleFooter) => {
   return (
-    <Box asChild px="9" mt="8">
+    <Box asChild px={{ initial: '0', md: '9' }} mt="8">
       <footer>
+        {lastUpdatedAt && (
+          <Text size="2" weight="medium">
+            Last updated on {new Date(lastUpdatedAt).toLocaleDateString()}
+          </Text>
+        )}
+
         {prevArticle && (
           <Card asChild variant="surface">
             <Link asChild size="2">

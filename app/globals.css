@@ -21,6 +21,11 @@
 
   body {
     margin: 0;
+
+    button:focus,
+    button:active {
+      outline: none !important;
+    }
   }
 }
 

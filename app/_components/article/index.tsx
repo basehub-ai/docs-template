@@ -85,8 +85,8 @@ export const Article = ({
                     {article.body.json.content}
                   </Body>
                 </Box>
-
                 <ArticleFooter
+                  lastUpdatedAt={article._sys.lastModifiedAt}
                   prevArticle={prevArticle}
                   nextArticle={nextArticle}
                 />

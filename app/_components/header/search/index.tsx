@@ -111,7 +111,7 @@ export const Search = ({
         </Box>
       </Dialog.Trigger>
 
-      {/* >= lg */}
+      {/* >= md */}
       <Dialog.Trigger>
         <Box display={{ initial: 'none', sm: 'block' }}>
           <TextField.Root

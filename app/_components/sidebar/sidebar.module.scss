@@ -52,3 +52,9 @@
    border-bottom-style: solid;
    border-color: var(--gray-5);
 }
+
+.sidebar__mobile-toggle {
+   background-color: var(--color-background);
+   z-index: 10;
+   border-bottom: 1px solid var(--gray-5);
+ }

@@ -21,7 +21,7 @@ export const ArticleBreadcrumb = ({ breadcrumb }: { breadcrumb: ArticleBreadcrum
 
         if (index === breadcrumb.length - 1) {
           return (
-            <Text size="2" ml="1" weight="medium" key={index}>
+            <Text size="2" ml="1" weight="medium" key={index} wrap="nowrap">
               {segment.title}
             </Text>
           )
@@ -35,6 +35,7 @@ export const ArticleBreadcrumb = ({ breadcrumb }: { breadcrumb: ArticleBreadcrum
               size="2"
               ml={index > 0 ? '1' : '0'}
               mr={index < breadcrumb.length - 1 ? '1' : '0'}
+              wrap="nowrap"
             >
               <NextLink href={href}>{segment.title}</NextLink>
             </Link>
