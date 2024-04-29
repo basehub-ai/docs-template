@@ -128,112 +128,13 @@
     text-align: left;
     
     p {
-      font-size: var(--font-size-1);
+      font-size: var(--font-size-2);
       line-height: 1.2;
     }
-  }
-
-  div[data-type="accordion-root"] {
-    margin-block: var(--space-6);
-
-    div[data-type="accordion-item"] {
-      padding: 0;
-      border-radius: var(--radius-5);
-      border: 1px solid var(--gray-5);
-      background-color: var(--gray-1);
-      margin: 0 0 var(--space-3) 0;
-
-      p {
-        font-size: var(--font-size-2);
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    h3[data-type="accordion-header"] {
-      margin: 0;
-      color: var(--strong);
+    
+    a {
       font-size: var(--font-size-2);
-      font-weight: 500;
-      line-height: 28px;
-    }
-
-    button[data-type="accordion-trigger"] {
-      width: 100%;
-      padding: var(--space-3);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: calc(var(--radius-5) - 1px);
-      background-color: var(--gray-2);
-      border: none;
-
-      &[data-state="open"] {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-        background-color: var(--color-background);
-      }
-
-      &:hover {
-        span:has(svg) {
-          border-color: var(--gray-8);
-        }
-      }
-
-      span:has(svg) {
-        flex-shrink: 0;
-        width: calc(20px * var(--scaling));
-        height: calc(20px * var(--scaling));
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: var(--space-1);
-        border: 1px solid var(--gray-6);
-        background-color: var(--gray-2);
-
-        svg {
-          transition: transform 0.2s ease-out;
-        }
-      }
-
-      &[data-state="open"] {
-        span:has(svg) {
-          svg {
-            transform: rotate(90deg);
-          }
-        }
-      }
-    }
-
-    div[data-type="accordion-content"] {
-      padding: 0 var(--space-3) var(--space-3);
-      margin: 0 var(--space-2) var(--space-2);
-      border-radius: 0px 0px var(--radius-1) var(--radius-1);
-      border-bottom: 1px solid var(--gray-3);
-      position: relative;
-      background: linear-gradient(180deg, transparent 3.75%, var(--gray-2) 100%);
-
-      &:after {
-        bottom: 0;
-        content: '';
-        position: absolute;
-        right: 0;
-        height: 100%;
-        width: 1px;
-        background-image: linear-gradient(0deg, var(--gray-3) 0%, transparent 100%);
-      }
-
-      &:before {
-        bottom: 0;
-        content: '';
-        position: absolute;
-        left: 0;
-        height: 100%;
-        width: 1px;
-        background-image: linear-gradient(0deg, var(--gray-3) 0%, transparent 100%);
-      }
+      line-height: 1.2;
     }
   }
 }

@@ -13,15 +13,6 @@
    height: var(--space-7);
    text-overflow: ellipsis;
    white-space: nowrap;
-
-   .code-snippet-header__highlighter {
-      position: absolute;
-      bottom: -1px;
-      height: 1px;
-      border-radius: var(--radius-6);
-      transition: transform 0.2s ease-out, left 0.2s ease-out;
-      background-color: var(--accent-indicator);
-   }
 }
 
 .code-snippet {

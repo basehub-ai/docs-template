@@ -37,7 +37,6 @@ export const CodeGroupHeader = () => {
                   value={snippet._id}
                   key={snippet._id}
                   onClick={() => selectSnippet(snippet)}
-                  data-active={activeSnippet._id === snippet._id}
                 >
                   {snippet.fileName || 'Untitled'}
                 </Tabs.Trigger>

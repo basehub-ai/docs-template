@@ -6,7 +6,12 @@ import {
   ArticleFragment,
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
-import { Flex, Link, Heading as RadixHeading } from '@radix-ui/themes'
+import {
+  Blockquote,
+  Flex,
+  Link,
+  Heading as RadixHeading,
+} from '@radix-ui/themes'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Code, Table, Text } from '@radix-ui/themes'
@@ -141,7 +146,10 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             {props.children}
           </Heading>
         ),
-        table: (props) => <Table.Root {...props} size="1" variant="surface" />,
+        blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
+        table: (props) => (
+          <Table.Root {...props} size="2" variant="surface" layout="fixed" />
+        ),
         tbody: (props) => <Table.Body {...props} />,
         tr: ({ children }) => <Table.Row>{children}</Table.Row>,
         th: ({ children, rowspan, colspan }) => (
