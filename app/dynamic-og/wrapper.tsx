@@ -131,7 +131,7 @@ export const ContentOGWrapperResponse = async ({
   )
 }
 
-export function truncateString(str: string, maxLength: number) {
+function truncateString(str: string, maxLength: number) {
   if (str.length > maxLength) {
     return str.slice(0, maxLength) + '...'
   } else {
