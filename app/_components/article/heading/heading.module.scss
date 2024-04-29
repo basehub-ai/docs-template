@@ -1,10 +1,14 @@
 .heading {
    position: relative;
-   scroll-margin-top: calc(var(--header) + var(--space-6));
+   scroll-margin-top: calc(var(--header) + var(--space-8));
    color: var(--strong);
    line-height: 1.375;
    font-weight: 600;
    position: relative;
+   
+   @media screen and (min-width: 768px) {
+      scroll-margin-top: calc(var(--header) + var(--space-6));
+   }
 
    b {
      font-weight: 600;

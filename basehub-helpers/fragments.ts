@@ -21,6 +21,7 @@ export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
   _sys: {
     lastModifiedAt: true,
   },
+  excerpt: true,
   titleSidebarOverride: true,
   body: {
     __typename: true,
@@ -75,6 +76,7 @@ export const PageFragment = fragmentOn('PagesItem', {
   _id: true,
   _slug: true,
   _title: true,
+  _sys: { lastModifiedAt: true },
   articles: { items: ArticleMetaFragmentRecursive },
 })
 
@@ -99,6 +101,8 @@ const SidebarArticleFragment = fragmentOn('ArticleComponent', {
   _slug: true,
   __typename: true,
   _title: true,
+  _sys: { lastModifiedAt: true },
+  excerpt: true,
   titleSidebarOverride: true,
   body: { __typename: true },
 })

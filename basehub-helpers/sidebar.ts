@@ -32,6 +32,10 @@ export const getBreadcrumb = ({
   return breadcrumb
 }
 
+export type SidebarItem =
+  | SidebarArticleFragmentRecursive
+  | ArticleMetaFragmentRecursive
+
 export function getActiveSidebarItem({
   sidebar,
   activeSlugs,
@@ -39,25 +43,27 @@ export function getActiveSidebarItem({
   sidebar: SidebarProps['data'] | PageFragment['articles']
   activeSlugs: string[]
 }): {
-  item: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive | null
+  previous: SidebarItem | null
+  item: SidebarItem | null
+  next: SidebarItem | null
   path: string[]
 } {
-  let current:
-    | SidebarArticleFragmentRecursive
-    | ArticleMetaFragmentRecursive
-    | null = null
+  let previous: SidebarItem | null = null
+  let current: SidebarItem | null = null
+  let next: SidebarItem | null = null
   let currentItems = sidebar.items
-  let firstValidItem:
-    | SidebarArticleFragmentRecursive
-    | ArticleMetaFragmentRecursive
-    | null = null
+  let firstValidItem: SidebarItem | null = null
+  let firstValidNext: SidebarItem | null = null
 
   for (const slug of activeSlugs) {
-    const item = currentItems.find((item) => {
+    const index = currentItems.findIndex((item) => {
       return item._slug === slug
     })
+    const item = currentItems[index]
     if (!item) continue
+    previous = currentItems[index - 1] ?? previous
     current = item
+    next = currentItems[index + 1] ?? null
     currentItems = item.children.items
   }
 
@@ -66,6 +72,9 @@ export function getActiveSidebarItem({
   if (!current && shouldFallbackToFirstValidItem) {
     sidebar.items.forEach((item) => {
       processArticle(item, (article, { path }) => {
+        if (firstValidItem && !firstValidNext) {
+          firstValidNext = article
+        }
         if (!firstValidItem && article.body?.__typename) {
           firstValidItem = article
           fallbackPath = path
@@ -75,7 +84,9 @@ export function getActiveSidebarItem({
   }
 
   return {
+    previous,
     item: current ?? firstValidItem,
+    next: next ?? firstValidNext,
     path: current ? activeSlugs : fallbackPath,
   }
 }

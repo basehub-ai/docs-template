@@ -5,9 +5,9 @@ import NextLink from 'next/link'
 import { Flex, Link, Text } from '@radix-ui/themes'
 import { SlashIcon } from '@radix-ui/react-icons'
 
-export type Breadcrumb = { title: string; slug: string }[]
+export type ArticleBreadcrumb = { title: string; slug: string }[]
 
-export const Breadcrumb = ({ breadcrumb }: { breadcrumb: Breadcrumb }) => {
+export const ArticleBreadcrumb = ({ breadcrumb }: { breadcrumb: ArticleBreadcrumb }) => {
   return (
     <Flex align="center">
       {breadcrumb.map((segment, index) => {

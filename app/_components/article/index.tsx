@@ -26,17 +26,22 @@ import { Video } from './video'
 import { Image } from './image/handler'
 import { CopyButton } from './code-snippet/controller'
 import { Toc } from '../toc'
+import { ArticleBreadcrumb } from './breadcrumb'
+import { ArticleFooter } from './footer'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
-import { Breadcrumb } from './breadcrumb'
 
 export const Article = ({
   id,
   breadcrumb,
+  prevArticle,
+  nextArticle,
 }: {
   id: string
-  breadcrumb: Breadcrumb
+  breadcrumb: ArticleBreadcrumb
+  prevArticle: ArticleFooter['prevArticle']
+  nextArticle: ArticleFooter['nextArticle']
 }) => {
   return (
     <Pump
@@ -61,11 +66,11 @@ export const Article = ({
 
         return (
           <>
-            <Flex asChild justify="center" mx="auto">
+            <Flex asChild justify="center" mx="auto" direction="column">
               <article>
                 <Box className={s.body}>
                   <Box mb="4">
-                  <Breadcrumb breadcrumb={breadcrumb} />
+                    <ArticleBreadcrumb breadcrumb={breadcrumb} />
                   </Box>
                   <RadixHeading
                     as="h1"
@@ -80,8 +85,14 @@ export const Article = ({
                     {article.body.json.content}
                   </Body>
                 </Box>
+
+                <ArticleFooter
+                  prevArticle={prevArticle}
+                  nextArticle={nextArticle}
+                />
               </article>
             </Flex>
+
             <Toc>{article.body.json.toc}</Toc>
           </>
         )

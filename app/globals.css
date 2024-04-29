@@ -9,7 +9,7 @@
   --normal: var(--gray-11);
   
   .radix-themes {
-    --header: calc(96px * var(--scaling));
+    --header: calc(92px * var(--scaling));
     --header-head: calc(52px * var(--scaling));
     --header-pages-nav: calc(40px * var(--scaling));
     --sidebar: calc(100svh - var(--header));
@@ -17,10 +17,6 @@
     --container-4: 1280px;
     --color-background: var(--gray-1);
     --code-font-family: 'Geist Mono';
-
-    @media screen and (min-width: 1024px) {
-      --header: calc(92px * var(--scaling));
-    }
   }
 
   body {

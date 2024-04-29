@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
+import { siteOrigin } from '@/constants/routing'
 
 export const generateStaticParams = async (): Promise<
   Array<{ params: { category: string; slug: string[] } }>
@@ -59,18 +60,78 @@ export const generateMetadata = async ({
     draft: draftMode().isEnabled,
   }).query({
     pages: pageBySlug(params.category),
+    settings: {
+      metadata: {
+        pageTitleTemplate: true,
+        sitename: true,
+        favicon: { url: true },
+      },
+    },
   })
 
-  const page = data.pages.items[0]
-  if (!page) return {}
+  const category = data.pages.items[0]
+  if (!category) return {}
 
   const { item: activeSidebarItem } = getActiveSidebarItem({
-    sidebar: page.articles,
+    sidebar: category.articles,
     activeSlugs: params.slug ?? [],
   })
   if (!activeSidebarItem) return notFound()
 
-  return { title: activeSidebarItem._title }
+  const title = {
+    absolute: `${category._title} / ${activeSidebarItem.titleSidebarOverride ?? activeSidebarItem._title} ${data.settings.metadata.pageTitleTemplate}`,
+  }
+  const excerpt = activeSidebarItem.excerpt
+  const description = !excerpt
+    ? undefined
+    : excerpt.length > 150
+      ? excerpt.slice(0, 150) + '...'
+      : excerpt
+  const siteName = data.settings.metadata.sitename
+  const categorySlug = params.category
+  const activeSlugs = params.slug ?? []
+  const lastModified =
+    new Date(activeSidebarItem._sys.lastModifiedAt).getTime() +
+    new Date(category._sys.lastModifiedAt).getTime()
+
+  const images = [
+    {
+      url:
+        siteOrigin +
+        `/dynamic-og?category-slug=${categorySlug}&active-slugs=${activeSlugs.join(
+          ','
+        )}&last-modified=${lastModified}`,
+      width: 1200,
+      height: 630,
+    },
+  ]
+
+  return {
+    title,
+    description,
+    icons: {
+      icon: data.settings.metadata.favicon.url,
+      shortcut: data.settings.metadata.favicon.url,
+      apple: data.settings.metadata.favicon.url,
+    },
+    openGraph: {
+      title,
+      description,
+      siteName,
+      locale: 'en-US',
+      type: 'website',
+      url: siteOrigin + `/docs/${params.slug?.join('/') ?? ''}`,
+      images,
+    },
+  }
+}
+
+export function truncateString(str: string, maxLength: number) {
+  if (str.length > maxLength) {
+    return str.slice(0, maxLength) + '...'
+  } else {
+    return str
+  }
 }
 
 export default function ArticlePage({
@@ -92,7 +153,11 @@ export default function ArticlePage({
         const page = data.pages.items[0]
         if (!page) notFound()
 
-        const { item: activeSidebarItem } = getActiveSidebarItem({
+        const {
+          next,
+          previous,
+          item: activeSidebarItem,
+        } = getActiveSidebarItem({
           sidebar: page.articles,
           activeSlugs,
         })
@@ -118,7 +183,31 @@ export default function ArticlePage({
           },
         ]
 
-        return <Article id={activeSidebarItem._id} breadcrumb={breadcrumb} />
+        return (
+          <Article
+            id={activeSidebarItem._id}
+            breadcrumb={breadcrumb}
+            prevArticle={
+              previous
+                ? {
+                    title: previous.titleSidebarOverride ?? previous._title,
+                    excerpt: previous.excerpt,
+                    href:
+                      page._slug + '/' + slugs.join('/') + '/' + previous._slug,
+                  }
+                : null
+            }
+            nextArticle={
+              next
+                ? {
+                    title: next.titleSidebarOverride ?? next._title,
+                    excerpt: next?.excerpt,
+                    href: page._slug + '/' + slugs.join('/') + '/' + next._slug,
+                  }
+                : null
+            }
+          />
+        )
       }}
     </Pump>
   )

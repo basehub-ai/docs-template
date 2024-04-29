@@ -11,6 +11,12 @@
     padding-right: var(--space-9);
   }
 
+  hr {
+    border-color: var(--gray-6);
+    border-bottom-width: 0;
+    border-style: solid;
+  }
+
   & > p {
     color: var(--gray-11);
     font-size: var(--font-size-3);
@@ -43,7 +49,7 @@
   picture {
     background-color: var(--gray-2);
     padding: var(--space-1);
-    display: block;
+    display: flex;
     max-width: max-content;
     margin-block: var(--space-6);
     border-radius: var(--radius-3);

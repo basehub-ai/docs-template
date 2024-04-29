@@ -104,7 +104,7 @@ export const Toc = ({ blocks, children }: TocProps) => {
     <Box
       asChild
       position="sticky"
-      top="128px"
+      top="calc(var(--header) + var(--space-6))"
       width="calc(190px * var(--scaling))"
       display={{ initial: 'none', lg: 'block' }}
     >
@@ -174,7 +174,7 @@ export const Toc = ({ blocks, children }: TocProps) => {
           }}
         >
           Back to top
-          <ChevronUpIcon width={10} height={10} />
+          <ChevronUpIcon width={12} height={12} />
         </Button>
       </aside>
     </Box>
