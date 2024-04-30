@@ -1,4 +1,7 @@
 .toc {
+   top: calc(var(--header) + var(--space-6));
+   min-width: calc(190px * var(--scaling));
+
    ol {
       border-left: 1px solid var(--gray-4);
       color: var(--normal);
@@ -41,7 +44,6 @@
                   width: 1px;
                   position: absolute;
                   z-index: 0;
-                  top: var(--space-1);
                   left: -1px;
                   height: var(--space-5);
                   background-color: var(--accent-indicator);

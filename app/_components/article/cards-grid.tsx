@@ -2,27 +2,22 @@ import { fragmentOn } from '@/.basehub'
 import { Card, Grid, Heading, Text } from '@radix-ui/themes'
 import Link from 'next/link'
 
-export const CardsGridComponent = ({ _title, cards }: CardsGridFragment) => {
+export const CardsGridComponent = ({ cards }: CardsGridFragment) => {
   return (
-    <div data-type="cards-grid">
-      <Heading as="h2" mb="5">
-        {_title}
-      </Heading>
-      <Grid columns={{ xs: '1', sm: '2' }} gap="4">
-        {cards.items.map((card) => (
-          <Card key={card._id} size="2" asChild>
-            <Link href={card.href ?? '#'}>
-              <Heading style={{ fontWeight: 600 }} size="3" as="h6">
-                {card._title}
-              </Heading>
-              <Text color="gray" size="2" mt="1" as="p">
-                {card.description}
-              </Text>
-            </Link>
-          </Card>
-        ))}
-      </Grid>
-    </div>
+    <Grid columns={{ xs: '1', sm: '2' }} gap="4">
+      {cards.items.map((card) => (
+        <Card key={card._id} size="2" asChild>
+          <Link href={card.href ?? '#'}>
+            <Heading style={{ fontWeight: 600 }} size="3" as="h6">
+              {card._title}
+            </Heading>
+            <Text color="gray" size="2" mt="1" as="p">
+              {card.description}
+            </Text>
+          </Link>
+        </Card>
+      ))}
+    </Grid>
   )
 }
 

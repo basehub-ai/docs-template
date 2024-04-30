@@ -15,7 +15,7 @@ export type TocProps = RichTextProps & {
   children: any
 }
 
-export const Toc = ({ blocks, children }: TocProps) => {
+export const Toc = ({ blocks, children = [] }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
   const tocRef = React.useRef<HTMLElement>(null)
@@ -101,15 +101,9 @@ export const Toc = ({ blocks, children }: TocProps) => {
   }, [handleScroll])
 
   return (
-    <Box
-      asChild
-      position="sticky"
-      top="calc(var(--header) + var(--space-6))"
-      width="calc(190px * var(--scaling))"
-      display={{ initial: 'none', lg: 'block' }}
-    >
+    <Box asChild position="sticky" display={{ initial: 'none', lg: 'block' }}>
       <aside ref={tocRef} className={s.toc}>
-        {Boolean(children) && (
+        {Boolean(children.length) && (
           <>
             <Text asChild size="2" weight="medium" mb="1">
               <p>On this page</p>
@@ -167,8 +161,8 @@ export const Toc = ({ blocks, children }: TocProps) => {
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}
-          radius='large'
-          variant='soft'
+          radius="large"
+          variant="soft"
           onClick={() => {
             document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
           }}

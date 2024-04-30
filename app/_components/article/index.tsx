@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 
 import {
@@ -11,6 +10,7 @@ import {
   Flex,
   Link,
   Heading as RadixHeading,
+  Separator,
 } from '@radix-ui/themes'
 import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
@@ -21,6 +21,7 @@ import { CalloutComponent } from './callout'
 import { StepperComponent } from './stepper'
 import { CardsGridComponent } from './cards-grid'
 import { AccordionComponent } from './accordion'
+import { notFound } from 'next/navigation'
 import { Heading } from './heading'
 import {
   CodeSnippet,
@@ -36,16 +37,15 @@ import { ArticleFooter } from './footer'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
+import { ArticleIndex } from './article-index'
 
 export const Article = ({
   id,
   breadcrumb,
-  prevArticle,
   nextArticle,
 }: {
   id: string
   breadcrumb: ArticleBreadcrumb
-  prevArticle: ArticleFooter['prevArticle']
   nextArticle: ArticleFooter['nextArticle']
 }) => {
   return (
@@ -67,12 +67,22 @@ export const Article = ({
         'use server'
 
         const article = data._componentInstances.article.items[0]
-        if (!article?.body?.json) return notFound()
+        if (!article) return notFound()
+
+        const innerArticlesWithContent = article.children.items.filter(
+          (item) => item.body
+        )
 
         return (
           <>
-            <Flex asChild justify="center" mx="auto" direction="column">
-              <article>
+            <Flex
+              asChild
+              justify="between"
+              mx="auto"
+              direction="column"
+              width="100%"
+            >
+              <article className={s.article}>
                 <Box className={s.body}>
                   <Box mb="4">
                     <ArticleBreadcrumb breadcrumb={breadcrumb} />
@@ -86,19 +96,34 @@ export const Article = ({
                   >
                     {article._title}
                   </RadixHeading>
-                  <Body blocks={article.body.json.blocks}>
-                    {article.body.json.content}
-                  </Body>
+                  {article.excerpt && (
+                    <>
+                      <Text size="2">{article.excerpt}</Text>
+                      <Separator size="4" />
+                    </>
+                  )}
+                  {article.body ? (
+                    <Body blocks={article.body.json.blocks}>
+                      {article.body.json.content}
+                    </Body>
+                  ) : innerArticlesWithContent.length ? (
+                    <ArticleIndex articles={innerArticlesWithContent} />
+                  ) : (
+                    <Text size="3" color="gray">
+                      This article has no content yet.
+                    </Text>
+                  )}
                 </Box>
                 <ArticleFooter
-                  lastUpdatedAt={article._sys.lastModifiedAt}
-                  prevArticle={prevArticle}
+                  lastUpdatedAt={
+                    article.body ? article._sys.lastModifiedAt : null
+                  }
                   nextArticle={nextArticle}
                 />
               </article>
             </Flex>
 
-            <Toc>{article.body.json.toc}</Toc>
+            <Toc>{article?.body?.json.toc ?? []}</Toc>
           </>
         )
       }}

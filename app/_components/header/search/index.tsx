@@ -41,6 +41,7 @@ export const Search = ({
 }: {
   searchCategories: HeaderFragment['navLinks']['items']
 }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
   const searchResultsRef = React.useRef<HTMLDivElement>(null)
   const pointerIdle = usePointerIdle(1000)
   const [open, setOpen] = React.useState(false)
@@ -58,6 +59,24 @@ export const Search = ({
     }
 
     document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === 'Enter' &&
+        document.activeElement === inputRef.current
+      ) {
+        event.preventDefault()
+        setOpen(true)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
@@ -101,9 +120,12 @@ export const Search = ({
     selectedCat?.label ?? selectedCat?.page?._title ?? 'Untitled Category'
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={setOpen}
+    >
       {/* mobile */}
-      <Dialog.Trigger>
+      <Dialog.Trigger tabIndex={-1}>
         <Box display={{ sm: 'none' }}>
           <IconButton variant="soft">
             <MagnifyingGlassIcon />
@@ -115,10 +137,13 @@ export const Search = ({
       <Dialog.Trigger>
         <Box display={{ initial: 'none', sm: 'block' }}>
           <TextField.Root
+            readOnly
             placeholder="Search"
             size="2"
             radius="large"
+            ref={inputRef}
             onClick={() => setOpen(true)}
+            className={s['search-trigger']}
           >
             <TextField.Slot>
               <MagnifyingGlassIcon color="currentColor" />

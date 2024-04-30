@@ -1,10 +1,19 @@
 'use client'
 
+import { Button, Flex, Separator, Text } from '@radix-ui/themes'
+
 export const DraftModeHeader = () => {
   return (
-    <div>
-      <span>You are in draft mode.</span>{' '}
-      <button
+    <Flex wrap="nowrap" align="center">
+      <Separator orientation="vertical" mr="3" />
+      <Text as="span" size="2" color="gray" mr="3">
+        You are in draft mode
+      </Text>
+      &nbsp;
+      <Button
+        size="1"
+        radius="large"
+        variant="surface"
         onClick={async () => {
           const res = await fetch('/api/draft/disable', { method: 'POST' })
           if (res.status === 200) {
@@ -13,8 +22,7 @@ export const DraftModeHeader = () => {
         }}
       >
         Exit
-      </button>
-      .
-    </div>
+      </Button>
+    </Flex>
   )
 }

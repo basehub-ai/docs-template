@@ -74,7 +74,9 @@ export const generateMetadata = async ({
   const category = data.pages.items[0]
   if (!category) return {}
 
-  const { item: activeSidebarItem } = getActiveSidebarItem({
+  const {
+    current: { article: activeSidebarItem },
+  } = getActiveSidebarItem({
     sidebar: category.articles,
     activeSlugs: params.slug ?? [],
   })
@@ -146,9 +148,8 @@ export default function ArticlePage({
         if (!page) notFound()
 
         const {
+          current: { article: activeSidebarItem },
           next,
-          previous,
-          item: activeSidebarItem,
         } = getActiveSidebarItem({
           sidebar: page.articles,
           activeSlugs,
@@ -179,22 +180,13 @@ export default function ArticlePage({
           <Article
             id={activeSidebarItem._id}
             breadcrumb={breadcrumb}
-            prevArticle={
-              previous
-                ? {
-                    title: previous.titleSidebarOverride ?? previous._title,
-                    excerpt: previous.excerpt,
-                    href:
-                      page._slug + '/' + slugs.join('/') + '/' + previous._slug,
-                  }
-                : null
-            }
             nextArticle={
-              next
+              next.article
                 ? {
-                    title: next.titleSidebarOverride ?? next._title,
-                    excerpt: next?.excerpt,
-                    href: page._slug + '/' + slugs.join('/') + '/' + next._slug,
+                    title:
+                      next.article.titleSidebarOverride ?? next.article._title,
+                    excerpt: next?.article.excerpt,
+                    href: '/' + params.category + '/' + next.path.join('/'),
                   }
                 : null
             }

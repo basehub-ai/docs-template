@@ -9,6 +9,11 @@
       text-decoration: none;
    }
 
+   &:focus,
+   &:focus-visible {
+      outline-offset: -2px;
+   }
+
    &[data-active='true'] {
       background-color: var(--gray-3);
       color: var(--gray-12);
@@ -39,6 +44,12 @@
    }
 }
 
+.sidebar-item__collapse {
+   position: absolute;
+   right: var(--space-1);
+   top: var(--space-1);
+}
+
 .sidebar__descendants-line {
    left: 0;
    top: 0;
@@ -55,6 +66,6 @@
 
 .sidebar__mobile-toggle {
    background-color: var(--color-background);
-   z-index: 10;
+   z-index: 40;
    border-bottom: 1px solid var(--gray-5);
- }
+}

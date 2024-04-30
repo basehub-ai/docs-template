@@ -43,29 +43,46 @@ export function getActiveSidebarItem({
   sidebar: SidebarProps['data'] | PageFragment['articles']
   activeSlugs: string[]
 }): {
-  previous: SidebarItem | null
-  item: SidebarItem | null
-  next: SidebarItem | null
-  path: string[]
+  current: {
+    article: SidebarItem | null
+    path: string[]
+  }
+  next: {
+    article: SidebarItem | null
+    path: string[]
+  }
 } {
-  let previous: SidebarItem | null = null
   let current: SidebarItem | null = null
   let next: SidebarItem | null = null
   let currentItems = sidebar.items
   let firstValidItem: SidebarItem | null = null
   let firstValidNext: SidebarItem | null = null
 
-  for (const slug of activeSlugs) {
-    const index = currentItems.findIndex((item) => {
-      return item._slug === slug
-    })
+  activeSlugs.forEach((slug, i) => {
+    const index = currentItems.findIndex((item) => item._slug === slug)
     const item = currentItems[index]
-    if (!item) continue
-    previous = currentItems[index - 1] ?? previous
+    if (!item) return
     current = item
-    next = currentItems[index + 1] ?? null
-    currentItems = item.children.items
-  }
+
+    const firstChild = item.children.items[0]
+    if (firstChild && i === activeSlugs.length - 1) {
+      next = firstChild
+      currentItems = item.children.items.filter(item => item.body)
+      return
+    }
+
+    const nextSibling = currentItems[index + 1]
+    if (nextSibling) {
+      const nextSiblingFirstChild = nextSibling.children.items[0]
+      if (nextSiblingFirstChild) {
+        next = nextSiblingFirstChild
+      } else {
+        next = nextSibling
+      }
+      currentItems = item.children.items.filter(item => item.body)
+      return
+    }
+  })
 
   let fallbackPath: string[] = []
   const shouldFallbackToFirstValidItem = activeSlugs.length === 0
@@ -83,11 +100,29 @@ export function getActiveSidebarItem({
     })
   }
 
+  const findPathToThisArticle = (article: SidebarItem) => {
+    let path: string[] = []
+    sidebar.items.forEach((item) => {
+      processArticle(item, (a, { path: p }) => {
+        if (a._id === article._id) {
+          path = p
+        }
+      })
+    })
+    return [...path, article._slug]
+  }
+
+  const resolvedNext = next ?? firstValidNext
+
   return {
-    previous,
-    item: current ?? firstValidItem,
-    next: next ?? firstValidNext,
-    path: current ? activeSlugs : fallbackPath,
+    current: {
+      article: current ?? firstValidItem,
+      path: current ? activeSlugs : fallbackPath,
+    },
+    next: {
+      article: resolvedNext,
+      path: !resolvedNext ? [] : findPathToThisArticle(resolvedNext),
+    },
   }
 }
 

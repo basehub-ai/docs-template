@@ -24,18 +24,18 @@ export default function Layout({
             'use server'
 
             if (!data.pages.items.length) notFound()
-            const page = data.pages.items.find(
+            const category = data.pages.items.find(
               (page) => params.category === page._slug
             )
             const firstPage = data.pages.items[0]
             if (!firstPage) notFound()
-            if (!page) redirect(firstPage._slug)
+            if (!category) redirect(firstPage._slug)
 
             return (
               <Sidebar
-                data={page.articles}
+                data={category.articles}
                 level={0}
-                pathname={`/${page._slug}`}
+                category={`/${category._slug}`}
               />
             )
           }}

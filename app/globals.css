@@ -21,10 +21,12 @@
 
   body {
     margin: 0;
+  }
 
-    button:focus,
-    button:active {
-      outline: none !important;
+  @media (max-width: 1023px) {
+    a:active,
+    a:focus {
+      outline: none;
     }
   }
 }

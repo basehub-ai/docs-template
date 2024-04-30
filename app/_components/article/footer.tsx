@@ -1,50 +1,34 @@
 import NextLink from 'next/link'
-import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
-import { Box, Card, Flex, Link, Separator, Text } from '@radix-ui/themes'
+import { ChevronRightIcon } from '@radix-ui/react-icons'
+import {
+  Box,
+  Card,
+  Container,
+  Flex,
+  Link,
+  Separator,
+  Text,
+} from '@radix-ui/themes'
 import { ArticleFragment } from '@/basehub-helpers/fragments'
 
+import s from './article.module.scss'
+
 export type ArticleFooter = {
-  lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt']
-  prevArticle: { title: string; excerpt: string | null; href: string } | null
+  lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
   nextArticle: { title: string; excerpt: string | null; href: string } | null
 }
 
 export const ArticleFooter = ({
   lastUpdatedAt,
-  prevArticle,
   nextArticle,
 }: ArticleFooter) => {
   return (
-    <Box asChild px={{ initial: '0', md: '9' }} mt="8">
-      <footer>
+    <Container asChild px={{ initial: '0', md: '9' }} mt="8" width="100%" flexGrow="0">
+      <footer className={s['article-footer']}>
         {lastUpdatedAt && (
-          <Text size="2" weight="medium">
+          <Text size="2" weight="medium" color="gray" mb="2">
             Last updated on {new Date(lastUpdatedAt).toLocaleDateString()}
           </Text>
-        )}
-
-        {prevArticle && (
-          <Card asChild variant="surface">
-            <Link asChild size="2">
-              <NextLink href={prevArticle.href ?? '#'}>
-                <Flex align="center">
-                  <Flex mr="auto" align="center">
-                    <ChevronLeftIcon color="gray" width={12} height={12} />
-                    <Text size="1" mr="2" color="gray">
-                      Previous
-                    </Text>
-                    <Separator orientation="vertical" />
-                  </Flex>
-                  <Text size="3" weight="medium">
-                    {prevArticle.title}
-                  </Text>
-                  {prevArticle.excerpt && (
-                    <Text size="2">{prevArticle.excerpt}</Text>
-                  )}
-                </Flex>
-              </NextLink>
-            </Link>
-          </Card>
         )}
 
         {nextArticle && (
@@ -73,6 +57,6 @@ export const ArticleFooter = ({
           </Card>
         )}
       </footer>
-    </Box>
+    </Container>
   )
 }

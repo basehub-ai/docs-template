@@ -34,6 +34,7 @@
 
    .footer__link {
       color: var(--gray-10);
+      display: inline-flex;
 
       &:hover {
          color: var(--strong);

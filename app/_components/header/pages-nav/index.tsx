@@ -26,9 +26,16 @@ export const PagesNav = async () => {
               gap="7"
               height="100%"
             >
-              <Container height="100%" px={{ initial: '5', md: '8' }}>
-                <Nav navLinks={data.header.navLinks} />
-                {draftMode().isEnabled && <DraftModeHeader />}
+              <Container
+                height="100%"
+                px={{ initial: '5', md: '8' }}
+                overflowX="auto"
+                overflowY="clip"
+              >
+                <Flex align="center" justify="between" height="100%">
+                  <Nav navLinks={data.header.navLinks} />
+                  {draftMode().isEnabled && <DraftModeHeader />}
+                </Flex>
               </Container>
             </Flex>
           </Box>

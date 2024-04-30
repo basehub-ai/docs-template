@@ -49,6 +49,15 @@ export type ArticleBodyFragment = fragmentOn.infer<typeof ArticleBodyFragment>
 
 export const ArticleFragment = fragmentOn('ArticleComponent', {
   ...ArticleMetaFragment,
+  children: {
+    items: {
+      _title: true,
+      _slug: true,
+      _id: true,
+      excerpt: true,
+      body: { __typename: true },
+    },
+  },
   body: {
     ...ArticleMetaFragment.body,
     readingTime: true,

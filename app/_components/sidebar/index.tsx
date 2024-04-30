@@ -8,7 +8,7 @@ import {
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import {
   IconButton,
   Link,
   ScrollArea,
+  Separator,
   Text,
   VisuallyHidden,
 } from '@radix-ui/themes'
@@ -24,19 +25,20 @@ import { ChevronRightIcon } from '@radix-ui/react-icons'
 
 import s from './sidebar.module.scss'
 
-/* -------------------------------------------------------------------------------------------------
- * Root
- * -----------------------------------------------------------------------------------------------*/
-
 export type SidebarProps = {
   data: SidebarFragment['items'][number]['articles']
   level: number
-  pathname: string
+  category: string
 }
 
-export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
+export const Sidebar = ({ data, level, category }: SidebarProps) => {
+  const pathname = usePathname()
   const params = useParams()
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setMobileSidebarOpen(false)
+  }, [pathname])
 
   const activeSlugs: string[] = React.useMemo(() => {
     const slugs = params.slug as string[] | undefined
@@ -44,12 +46,18 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
     return slugs
   }, [params.slug])
 
-  const { item: activeSidebarItem } = React.useMemo(() => {
+  const {
+    current: { article: activeSidebarItem },
+  } = React.useMemo(() => {
     return getActiveSidebarItem({
       sidebar: data,
       activeSlugs,
     })
   }, [activeSlugs, data])
+
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [mobileSidebarOpen])
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
@@ -57,6 +65,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
         position="sticky"
         ml={{ initial: '-5', md: '0' }}
         top="var(--header)"
+        overflowX="clip"
         className={s['sidebar__mobile-toggle']}
         width="100svw"
         display={{ initial: 'block', md: 'none' }}
@@ -64,6 +73,7 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
         <Flex
           display={{ initial: 'flex', md: 'none' }}
           justify="between"
+          overflowX="auto"
           px="5"
           width="100%"
           asChild
@@ -78,13 +88,13 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
             <Text weight="medium">
               {activeSidebarItem?._title ?? 'Untitled article'}
             </Text>
-            <Box as="span" ml="auto">
+            <Flex as="span" ml="auto">
               <ChevronRightIcon
                 style={{
                   transform: mobileSidebarOpen ? 'rotate(90deg)' : 'none',
                 }}
               />
-            </Box>
+            </Flex>
           </Button>
         </Flex>
       </Box>
@@ -94,15 +104,15 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
           borderRight: '1px solid var(--gray-5)',
           backgroundColor: 'var(--color-background)',
         }}
-        height="var(--sidebar)"
-        position="sticky"
-        top="var(--header)"
+        height={{ initial: 'auto', md: 'var(--sidebar)' }}
+        position={{ initial: 'relative', md: 'sticky' }}
+        top={{ initial: 'unset', md: 'var(--header)' }}
         display={{
           initial: mobileSidebarOpen ? 'block' : 'none',
           md: 'block',
         }}
         width={{
-          initial: '100svw',
+          initial: '97svw',
           md: '320px',
         }}
         ml="-3"
@@ -124,12 +134,18 @@ export const Sidebar = ({ data, level, pathname }: SidebarProps) => {
                   data={item}
                   key={item._id}
                   level={level}
-                  pathname={`${pathname}/${item._slug}`}
+                  pathname={`${category}/${item._slug}`}
                 />
               ))}
             </aside>
           </Flex>
         </ScrollArea>
+      </Box>
+
+      <Box
+        display={{ initial: mobileSidebarOpen ? 'block' : 'none', md: 'none' }}
+      >
+        <Separator size="4" />
       </Box>
     </SidebarContext.Provider>
   )
@@ -283,6 +299,9 @@ const SidebarItem = ({
     isActive,
   ])
 
+  // filter the empty pages to prevent linking to a 404
+  if (level > 0 && !data.body) return
+
   return (
     <div>
       <Box position="relative">
@@ -304,11 +323,7 @@ const SidebarItem = ({
               radius="large"
               color="gray"
               size="1"
-              style={{
-                position: 'absolute',
-                right: 'var(--space-1)',
-                top: 'var(--space-1)',
-              }}
+              className={s['sidebar-item__collapse']}
               onClick={() => {
                 userCollapsedSidebar.current = true
                 toggleCollapsed()
@@ -317,7 +332,11 @@ const SidebarItem = ({
               <VisuallyHidden>
                 {isCollapsed ? 'Expand' : 'Collapse'}
               </VisuallyHidden>
-              <ChevronRightIcon />
+              <ChevronRightIcon
+                style={{
+                  transform: !isCollapsed ? 'rotate(90deg)' : 'none',
+                }}
+              />
             </IconButton>
           </Flex>
         )}
