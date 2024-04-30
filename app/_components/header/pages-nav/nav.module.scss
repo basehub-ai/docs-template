@@ -22,6 +22,11 @@
     text-decoration: none;
   }
 
+  &:focus,
+  &:focus-visible {
+    outline-offset: -2px !important;
+  }
+
   &[data-active='true'] {
     position: relative;
 

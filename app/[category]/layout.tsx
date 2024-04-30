@@ -27,9 +27,9 @@ export default function Layout({
             const category = data.pages.items.find(
               (page) => params.category === page._slug
             )
-            const firstPage = data.pages.items[0]
-            if (!firstPage) notFound()
-            if (!category) redirect(firstPage._slug)
+            const firstCategory = data.pages.items[0]
+            if (!firstCategory) notFound()
+            if (!category) redirect(firstCategory._slug)
 
             return (
               <Sidebar

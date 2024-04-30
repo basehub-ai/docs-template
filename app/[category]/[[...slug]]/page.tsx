@@ -75,7 +75,7 @@ export const generateMetadata = async ({
   if (!category) return {}
 
   const {
-    current: { article: activeSidebarItem },
+    current: { article: activeSidebarItem, path },
   } = getActiveSidebarItem({
     sidebar: category.articles,
     activeSlugs: params.slug ?? [],
@@ -93,7 +93,9 @@ export const generateMetadata = async ({
       : excerpt
   const siteName = data.settings.metadata.sitename
   const categorySlug = params.category
-  const activeSlugs = params.slug?.length ? params.slug.join(',') : params.slug
+  const activeSlugs = params.slug?.length
+    ? params.slug
+    : [category._slug, path, activeSidebarItem._slug]
   const lastModified =
     new Date(activeSidebarItem._sys.lastModifiedAt).getTime() +
     new Date(category._sys.lastModifiedAt).getTime()
@@ -102,7 +104,7 @@ export const generateMetadata = async ({
     {
       url:
         siteOrigin +
-        `/dynamic-og?category-slug=${categorySlug}&active-slugs=${activeSlugs}&last-modified=${lastModified}`,
+        `/dynamic-og?category-slug=${categorySlug}&active-slugs=${activeSlugs.join(',')}&last-modified=${lastModified}`,
       width: 1200,
       height: 630,
     },

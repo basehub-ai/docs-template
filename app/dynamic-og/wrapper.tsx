@@ -42,20 +42,20 @@ export const ContentOGWrapperResponse = async ({
             justifyContent: 'center',
           }}
         >
-          <img style={{ width: 220 }} src={logo.url} alt={logo.alt ?? ''} />
+          <img style={{ width: 320 }} src={logo.url} alt={logo.alt ?? ''} />
         </div>
         <span
           style={{
-            fontSize: 40,
+            fontSize: 48,
             fontWeight: 500,
             fontStyle: 'normal',
             color: 'black',
             backgroundColor: '#EAEAEA',
             border: '3px solid #E0E0E0',
-            borderRadius: 8,
-            marginTop: 12,
+            borderRadius: 16,
+            marginTop: 32,
             padding: '0 12px',
-            lineHeight: 1.1,
+            lineHeight: 1.3,
             whiteSpace: 'pre-wrap',
           }}
         >
@@ -64,10 +64,11 @@ export const ContentOGWrapperResponse = async ({
         <div
           style={{
             display: 'flex',
-            fontSize: 48,
+            fontSize: 56,
             fontStyle: 'normal',
             color: 'black',
-            marginTop: 30,
+            marginTop: 40,
+            fontWeight: 700,
             lineHeight: 1.2,
             whiteSpace: 'pre-wrap',
           }}
@@ -77,10 +78,10 @@ export const ContentOGWrapperResponse = async ({
         <p
           style={{
             display: 'flex',
-            fontSize: 32,
+            fontSize: 40,
             fontStyle: 'normal',
             color: '#909090',
-            marginTop: 8,
+            marginTop: 16,
             lineHeight: 1.2,
             whiteSpace: 'pre-wrap',
           }}

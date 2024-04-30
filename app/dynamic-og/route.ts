@@ -10,7 +10,7 @@ import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
   const categorySlug = searchParams.get('category-slug')
-  const activeSlugs = searchParams.get('active-slugs') ?? ''
+  const activeSlugs = searchParams.get('active-slugs')
 
   if (!categorySlug || !activeSlugs) return notFound()
 
