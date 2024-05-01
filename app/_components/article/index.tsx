@@ -34,10 +34,10 @@ import { CopyButton } from './code-snippet/controller'
 import { Toc } from '../toc'
 import { ArticleBreadcrumb } from './breadcrumb'
 import { ArticleFooter } from './footer'
+import { ArticleIndex } from './article-index'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
-import { ArticleIndex } from './article-index'
 
 export const Article = ({
   id,

@@ -16,7 +16,7 @@ export const StepperComponent = async ({
   return (
     <Box
       data-stepper-id={_id}
-      pl={{ initial: '6', md: '0' }}
+      pl={{ initial: '6', md: '7' }}
       className={s.stepper}
     >
       <Body

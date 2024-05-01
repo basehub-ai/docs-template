@@ -35,6 +35,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   const pathname = usePathname()
   const params = useParams()
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
+  const [scrollPosition, setScrollPosition] = React.useState(0)
+  const [pageHeight, setPageHeight] = React.useState(0)
 
   React.useEffect(() => {
     setMobileSidebarOpen(false)
@@ -56,15 +58,45 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   }, [activeSlugs, data])
 
   React.useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [mobileSidebarOpen])
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setPageHeight(document.body.scrollHeight)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const toggleSidebar = () => {
+    if (!mobileSidebarOpen) {
+      setScrollPosition(window.scrollY)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      const newPageHeight = document.body.scrollHeight
+      const heightDifference = newPageHeight - pageHeight
+      const adjustedScrollPosition = scrollPosition - heightDifference
+      window.scrollTo({ top: adjustedScrollPosition, behavior: 'instant' })
+    }
+    setMobileSidebarOpen((prevState) => !prevState)
+  }
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
       <Box
-        position="sticky"
+        position="fixed"
         ml={{ initial: '-5', md: '0' }}
-        top="var(--header)"
         overflowX="clip"
         className={s['sidebar__mobile-toggle']}
         width="100svw"
@@ -83,7 +115,7 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
             variant="soft"
             radius="none"
             size="3"
-            onClick={() => setMobileSidebarOpen((o) => !o)}
+            onClick={toggleSidebar}
           >
             <Text weight="medium">
               {activeSidebarItem?._title ?? 'Untitled article'}
@@ -111,10 +143,7 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
           initial: mobileSidebarOpen ? 'block' : 'none',
           md: 'block',
         }}
-        width={{
-          initial: '97svw',
-          md: '320px',
-        }}
+        width={{ initial: '97svw', md: '320px' }}
         ml="-3"
       >
         <ScrollArea data-mobile-display={mobileSidebarOpen}>

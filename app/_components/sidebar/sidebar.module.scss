@@ -67,5 +67,7 @@
 .sidebar__mobile-toggle {
    background-color: var(--color-background);
    z-index: 40;
+   height: var(--header-mobile-sidebar-trigger);
    border-bottom: 1px solid var(--gray-5);
+   top: var(--header-only);
 }

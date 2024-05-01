@@ -2,7 +2,6 @@
 
 import { Flex, Link, VisuallyHidden } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import { useTheme } from 'next-themes'
 import clsx from 'clsx'
 
 import s from './logo.module.scss'
@@ -16,7 +15,6 @@ export const Logo = ({
   logoDark: string
   size?: 'sm' | 'md' | 'lg'
 }) => {
-  const { resolvedTheme } = useTheme()
   const resolvedSizeClassName = clsx({
     [s['logo--sm'] as string]: size === 'sm',
     [s['logo--md'] as string]: size === 'md',
@@ -30,22 +28,18 @@ export const Logo = ({
           <VisuallyHidden>Home</VisuallyHidden>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            data-light-only
             src={logoLight}
             alt="logo"
             className={clsx(s.logo, resolvedSizeClassName)}
-            style={{
-              position: 'absolute',
-              visibility: resolvedTheme === 'dark' ? 'hidden' : 'visible',
-            }}
+            style={{ position: 'absolute' }}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            data-dark-only
             src={logoDark}
             alt="logo"
             className={clsx(s.logo, resolvedSizeClassName)}
-            style={{
-              visibility: resolvedTheme === 'dark' ? 'visible' : 'hidden',
-            }}
           />
         </NextLink>
       </Link>

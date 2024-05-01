@@ -6,6 +6,7 @@ import { ContentOGWrapperResponse } from './wrapper'
 import { notFound } from 'next/navigation'
 import { pageBySlug } from '@/basehub-helpers/fragments'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
+import { ThemeProps } from '@radix-ui/themes'
 
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
@@ -35,5 +36,6 @@ export const GET = async (request: Request) => {
     title,
     subtitle: activePage.excerpt ?? '',
     logo: data.settings.logo,
+    accentColor: data.settings.theme.accentColor as ThemeProps['accentColor'],
   })
 }

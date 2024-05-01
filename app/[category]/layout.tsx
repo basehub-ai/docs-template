@@ -1,7 +1,7 @@
 import { Pump } from '@/.basehub/react-pump'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { draftMode } from 'next/headers'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
 
@@ -13,7 +13,7 @@ export default function Layout({
   params: { category: string }
 }) {
   return (
-    <Container size="4" px={{ initial: '5', md: '8' }}>
+    <Container size="4" px={{ initial: '5', md: '8' }} mt="var(--header)">
       <Flex direction={{ initial: 'column', md: 'row' }}>
         <Pump
           queries={[{ pages: SidebarFragment }]}
@@ -27,9 +27,7 @@ export default function Layout({
             const category = data.pages.items.find(
               (page) => params.category === page._slug
             )
-            const firstCategory = data.pages.items[0]
-            if (!firstCategory) notFound()
-            if (!category) redirect(firstCategory._slug)
+            if (!category) notFound()
 
             return (
               <Sidebar

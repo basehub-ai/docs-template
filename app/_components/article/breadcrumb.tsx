@@ -13,7 +13,7 @@ export const ArticleBreadcrumb = ({
   breadcrumb: ArticleBreadcrumb
 }) => {
   return (
-    <Flex align="center" wrap="wrap">
+    <Flex align="center" wrap="wrap" gap="1">
       {breadcrumb.map((segment, index) => {
         const href =
           index === 0
@@ -25,7 +25,7 @@ export const ArticleBreadcrumb = ({
 
         if (index === breadcrumb.length - 1) {
           return (
-            <Text size="2" ml="1" weight="medium" key={index} wrap="nowrap">
+            <Text size="2" weight="medium" key={index} wrap="nowrap">
               {segment.title}
             </Text>
           )
@@ -33,14 +33,7 @@ export const ArticleBreadcrumb = ({
 
         return (
           <React.Fragment key={index}>
-            <Link
-              asChild
-              color="gray"
-              size="2"
-              ml={index > 0 ? '1' : '0'}
-              mr={index < breadcrumb.length - 1 ? '1' : '0'}
-              wrap="nowrap"
-            >
+            <Link asChild color="gray" size="2" wrap="nowrap">
               <NextLink href={href}>{segment.title}</NextLink>
             </Link>
             {index < breadcrumb.length - 1 && (

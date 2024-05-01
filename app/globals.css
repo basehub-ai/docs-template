@@ -9,14 +9,21 @@
   --normal: var(--gray-11);
   
   .radix-themes {
-    --header: calc(92px * var(--scaling));
+    --header: calc((var(--header-head) + var(--header-pages-nav) + var(--header-mobile-sidebar-trigger)) * var(--scaling));
+    --header-only: calc((var(--header-head) + var(--header-pages-nav)) * var(--scaling));
     --header-head: calc(52px * var(--scaling));
     --header-pages-nav: calc(40px * var(--scaling));
+    --header-mobile-sidebar-trigger: calc(40px * var(--scaling));
     --sidebar: calc(100svh - var(--header));
-    --default-font-family: var(--font-geist-sans);
     --container-4: 1280px;
     --color-background: var(--gray-1);
-    --code-font-family: 'Geist Mono';
+    --default-font-family: var(--font-geist-sans);
+    --code-font-family: var(--font-geist-mono);
+
+    @media (min-width: 1024px) {
+      --header: calc((var(--header-head) + var(--header-pages-nav)) * var(--scaling));
+      --header-mobile-sidebar-trigger: 0;
+    }
   }
 
   body {
@@ -35,7 +42,16 @@ html.dark body .radix-themes {
   --color-background: #09090B;
 }
 
+html.light body {
+  img[data-dark-only] {
+    visibility: hidden;
+  }
+}
+
 html.dark body {
+  img[data-light-only] {
+    visibility: hidden;
+  }
 
   div[data-rmiz-modal-overlay="visible"] {
     background: var(--gray-2);

@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
+import { Theme, ThemeProps } from '@radix-ui/themes'
 import { ImageResponse } from 'next/og'
 
 export const ContentOGWrapperResponse = async ({
   title,
   subtitle,
   logo,
+  accentColor,
 }: {
   title: string
   subtitle: string
   logo: { url: string; alt: string | null }
+  accentColor: ThemeProps['accentColor']
 }) => {
   // fonts
   const geist400 = fetch(
@@ -21,74 +24,124 @@ export const ContentOGWrapperResponse = async ({
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          textAlign: 'center',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          flexWrap: 'nowrap',
-          backgroundColor: 'white',
-          backgroundSize: '100px 100px',
-        }}
-      >
+      <Theme accentColor={accentColor}>
         <div
           style={{
+            height: '100%',
+            width: '100%',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            backgroundColor: 'white',
+            backgroundSize: '100px 100px',
           }}
         >
-          <img style={{ width: 320 }} src={logo.url} alt={logo.alt ?? ''} />
+          <div
+            style={{
+              padding: '30px 80px',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid rgba(224, 224, 224, 0.10)',
+              backgroundImage:
+                'linear-gradient(90deg, rgba(252, 252, 252, 0.80) 0%, #FCFCFC 50%, rgba(252, 252, 252, 0.70) 100%)',
+            }}
+          >
+            <span
+              style={{
+                color: '#838383',
+                fontFamily: 'Geist',
+                fontSize: 24,
+                fontWeight: 600,
+                lineHeight: '115%',
+                letterSpacing: 2.4,
+                textTransform: 'uppercase',
+              }}
+            >
+              Docs
+            </span>
+            <img
+              style={{ width: 148 }}
+              src={logo.url}
+              alt={logo.alt ?? 'logo'}
+            />
+          </div>
+
+          <hr
+            style={{
+              height: 1,
+              backgroundImage:
+                'linear-gradient(90deg, transparent 0%, var(--focus-8) 50%, transparent 100%)',
+              width: '100%',
+            }}
+          />
+
+          <div style={{ display: 'flex' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                flexDirection: 'column',
+                marginTop: 90,
+                padding: '0 0 136px 80px',
+                width: '100%',
+              }}
+            >
+              <h1
+                style={{
+                  color: '#202020',
+                  fontFamily: 'Geist',
+                  fontSize: 64,
+                  fontWeight: 500,
+                  lineHeight: '115%',
+                  letterSpacing: '-2.56px',
+                  textAlign: 'left',
+                }}
+              >
+                {truncateString(title, 35)}
+              </h1>
+              <p
+                style={{
+                  color: '#646464',
+                  fontFamily: 'Geist',
+                  fontSize: 32,
+                  fontWeight: 400,
+                  lineHeight: '140%',
+                  letterSpacing: '-1.28px',
+                  maxWidth: '90%',
+                  marginTop: 16,
+                  marginBottom: 136,
+                }}
+              >
+                {truncateString(subtitle, 200)}
+              </p>
+              <hr
+                style={{
+                  height: 1,
+                  backgroundImage:
+                    'linear-gradient(180deg, #FFF 0%, var(--focus-6) 34%, transparent 100%)',
+                  width: '110%',
+                }}
+              />
+            </div>
+            <hr
+              style={{
+                backgroundImage: `linear-gradient(180deg, #FFF 0%, var(--focus-6) 34%, transparent 100%)`,
+                width: '75%',
+                position: 'relative',
+                backgroundColor: 'green',
+                height: '100%',
+                top: 290,
+                left: 200,
+                transform: 'rotateZ(90deg)',
+              }}
+            />
+          </div>
         </div>
-        <span
-          style={{
-            fontSize: 48,
-            fontWeight: 500,
-            fontStyle: 'normal',
-            color: 'black',
-            backgroundColor: '#EAEAEA',
-            border: '3px solid #E0E0E0',
-            borderRadius: 16,
-            marginTop: 32,
-            padding: '0 12px',
-            lineHeight: 1.3,
-            whiteSpace: 'pre-wrap',
-          }}
-        >
-          Docs
-        </span>
-        <div
-          style={{
-            display: 'flex',
-            fontSize: 56,
-            fontStyle: 'normal',
-            color: 'black',
-            marginTop: 40,
-            fontWeight: 700,
-            lineHeight: 1.2,
-            whiteSpace: 'pre-wrap',
-          }}
-        >
-          <b>{truncateString(title, 35)}</b>
-        </div>
-        <p
-          style={{
-            display: 'flex',
-            fontSize: 40,
-            fontStyle: 'normal',
-            color: '#909090',
-            marginTop: 16,
-            lineHeight: 1.2,
-            whiteSpace: 'pre-wrap',
-          }}
-        >
-          {truncateString(subtitle, 200)}
-        </p>
-      </div>
+      </Theme>
     ),
     {
       width: 1200,
