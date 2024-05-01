@@ -164,18 +164,12 @@ export default function ArticlePage({
         })
 
         const breadcrumb = [
-          {
-            title: page._title,
-            slug: page._slug,
-          },
+          { title: page._title, slug: page._slug },
           ...titles.map((item, index) => ({
             title: item,
             slug: slugs[index] ?? '#',
           })),
-          {
-            title: activeSidebarItem._title,
-            slug: activeSidebarItem._slug,
-          },
+          { title: activeSidebarItem._title, slug: activeSidebarItem._slug },
         ]
 
         return (
