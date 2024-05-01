@@ -75,36 +75,27 @@ export const generateMetadata = async ({
   if (!category) return {}
 
   const {
-    current: { article: activeSidebarItem, path },
+    current: { article },
   } = getActiveSidebarItem({
     sidebar: category.articles,
     activeSlugs: params.slug ?? [],
   })
-  if (!activeSidebarItem) return notFound()
+  if (!article) return notFound()
+  const { _id, _title, titleSidebarOverride, excerpt } = article
 
   const title = {
-    absolute: `${category._title} / ${activeSidebarItem.titleSidebarOverride ?? activeSidebarItem._title} ${data.settings.metadata.pageTitleTemplate}`,
+    absolute: `${category._title} / ${titleSidebarOverride ?? _title} ${data.settings.metadata.pageTitleTemplate}`,
   }
-  const excerpt = activeSidebarItem.excerpt
   const description = !excerpt
     ? undefined
     : excerpt.length > 150
       ? excerpt.slice(0, 150) + '...'
       : excerpt
   const siteName = data.settings.metadata.sitename
-  const categorySlug = params.category
-  const activeSlugs = params.slug?.length
-    ? params.slug
-    : [category._slug, path, activeSidebarItem._slug]
-  const lastModified =
-    new Date(activeSidebarItem._sys.lastModifiedAt).getTime() +
-    new Date(category._sys.lastModifiedAt).getTime()
 
   const images = [
     {
-      url:
-        siteOrigin +
-        `/dynamic-og?category-slug=${categorySlug}&active-slugs=${activeSlugs.join(',')}&last-modified=${lastModified}`,
+      url: siteOrigin + `/dynamic-og?article=${_id}`,
       width: 1200,
       height: 630,
     },

@@ -4,38 +4,45 @@ export const revalidate = 60
 import { basehub } from '@/.basehub'
 import { ContentOGWrapperResponse } from './wrapper'
 import { notFound } from 'next/navigation'
-import { pageBySlug } from '@/basehub-helpers/fragments'
-import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
+import { ArticlePlainTextFragment } from '@/basehub-helpers/fragments'
 import { ThemeProps } from '@radix-ui/themes'
 
 export const GET = async (request: Request) => {
   const searchParams = new URL(request.url).searchParams
-  const categorySlug = searchParams.get('category-slug')
-  const activeSlugs = searchParams.get('active-slugs')
+  const articleId = searchParams.get('article')
 
-  if (!categorySlug || !activeSlugs) return notFound()
-
+  if (!articleId) return notFound()
   const data = await basehub({ next: { tags: ['basehub'] } }).query({
-    pages: pageBySlug(categorySlug),
-    settings: { theme: { accentColor: true }, logo: { url: true, alt: true } },
+    _componentInstances: {
+      article: {
+        __args: { first: 1, filter: { _sys_id: { eq: articleId } } },
+        items: ArticlePlainTextFragment,
+      },
+    },
+    settings: {
+      theme: { accentColor: true, appearance: true },
+      logo: { url: true, alt: true },
+      logoDark: { url: true, alt: true },
+    },
   })
 
-  const category = data.pages.items[0]
-  if (!category) notFound()
-  const {
-    current: { article: activePage },
-  } = getActiveSidebarItem({
-    sidebar: category.articles,
-    activeSlugs: activeSlugs.split(',') || [],
-  })
+  const [article] = data._componentInstances.article.items
+  if (!article) return notFound()
 
-  if (!category || !activePage) return notFound()
+  const title = article.titleSidebarOverride ?? article._title
+  if (!article.body) return notFound()
+  const articleSubtitle = article.excerpt ?? article.body?.plainText ?? ''
+  const subtitle =
+    articleSubtitle.length > 170
+      ? articleSubtitle.slice(0, 170) + '...'
+      : articleSubtitle
+  const theme = data.settings.theme.appearance as 'light' | 'dark' | 'system'
 
-  const title = activePage.titleSidebarOverride ?? activePage._title
   return await ContentOGWrapperResponse({
     title,
-    subtitle: activePage.excerpt ?? '',
-    logo: data.settings.logo,
+    subtitle,
+    logo: theme === 'dark' ? data.settings.logoDark : data.settings.logo,
     accentColor: data.settings.theme.accentColor as ThemeProps['accentColor'],
+    theme,
   })
 }

@@ -65,6 +65,11 @@ export const ArticleFragment = fragmentOn('ArticleComponent', {
   },
 })
 
+export const ArticlePlainTextFragment = fragmentOn('ArticleComponent', {
+  ...ArticleMetaFragment,
+  body: { plainText: true },
+})
+
 export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>
 
 export const ArticleMetaFragmentRecursive = fragmentOnRecursiveCollection(
