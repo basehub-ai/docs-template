@@ -35,8 +35,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   const pathname = usePathname()
   const params = useParams()
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
-  const [scrollPosition, setScrollPosition] = React.useState(0)
-  const [pageHeight, setPageHeight] = React.useState(0)
+  const scrollPosition = React.useRef(0)
+  const pageHeight = React.useRef(0)
 
   React.useEffect(() => {
     setMobileSidebarOpen(false)
@@ -59,7 +59,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setScrollPosition(window.scrollY)
+      console.log('scroll', window.scrollY)
+      scrollPosition.current = window.scrollY
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -70,26 +71,29 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
 
   React.useEffect(() => {
     const handleResize = () => {
-      setPageHeight(document.body.scrollHeight)
+      if (mobileSidebarOpen) return
+      pageHeight.current = document.body.scrollHeight
     }
 
     window.addEventListener('resize', handleResize)
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [mobileSidebarOpen])
 
   const toggleSidebar = () => {
     if (!mobileSidebarOpen) {
-      setScrollPosition(window.scrollY)
+      scrollPosition.current = window.scrollY
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       const newPageHeight = document.body.scrollHeight
-      const heightDifference = newPageHeight - pageHeight
-      const adjustedScrollPosition = scrollPosition - heightDifference
+      const heightDifference = newPageHeight - pageHeight.current
+      const adjustedScrollPosition = scrollPosition.current - heightDifference
       window.scrollTo({ top: adjustedScrollPosition, behavior: 'instant' })
     }
     setMobileSidebarOpen((prevState) => !prevState)
+    pageHeight.current = document.body.scrollHeight
   }
 
   return (
