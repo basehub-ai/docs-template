@@ -35,13 +35,17 @@
    }
 
    pre {
+      &:focus {
+         outline-color: var(--focus-9);
+      }
+
       cursor: text;
       overflow-x: auto;
       line-height: calc(20px * var(--scaling));
       border-radius: var(--radius-3);
       font-size: var(--font-size-2);
       margin-block: var(--space-6);
-      padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+      padding: var(--space-3) var(--space-8) var(--space-3) var(--space-4);
       border: 1px solid var(--gray-6);
       font-size: var(--font-size-1);
       font-weight: 500;
@@ -49,9 +53,9 @@
   
       --shiki-color-text: #000;
       --shiki-background: var(--gray-2);
-      --shiki-token-constant: var(--accent-indicator);
-      --shiki-token-function: var(--accent-indicator);
-      --shiki-token-string-expression: var(--accent-indicator);
+      --shiki-token-constant: var(--gray-12);
+      --shiki-token-function: var(--gray-11);
+      --shiki-token-string-expression: var(--gray-11);
       --shiki-token-string: var(--accent-indicator);
       --shiki-token-comment: #94a4ad;
       --shiki-token-keyword: var(--accent-indicator);
