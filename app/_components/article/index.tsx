@@ -34,6 +34,7 @@ import { Toc } from '../toc'
 import { ArticleBreadcrumb } from './breadcrumb'
 import { ArticleFooter } from './footer'
 import { ArticleIndex } from './article-index'
+import { flattenRichTextNodes } from '../toc/utils'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
@@ -70,6 +71,13 @@ export const Article = ({
 
         const innerArticlesWithContent = article.children.items.filter(
           (item) => item.body
+        )
+
+        const flattenedToc = flattenRichTextNodes(article?.body?.json.toc ?? [])
+        const tocIsEmpty = !flattenedToc.some(
+          (node) =>
+            node.type === 'text' &&
+            node.marks?.some((mark) => mark.type === 'link')
         )
 
         return (
@@ -122,7 +130,7 @@ export const Article = ({
               </article>
             </Flex>
 
-            <Toc>{article?.body?.json.toc ?? []}</Toc>
+            <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
           </>
         )
       }}

@@ -40,6 +40,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
 
   React.useEffect(() => {
     setMobileSidebarOpen(false)
+    if (!document) return
+    document.documentElement.scrollTo({ top: 0, behavior: 'instant' })
   }, [pathname])
 
   const activeSlugs: string[] = React.useMemo(() => {
@@ -59,7 +61,6 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      console.log('scroll', window.scrollY)
       scrollPosition.current = window.scrollY
     }
 

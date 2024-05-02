@@ -67,21 +67,18 @@ export function getActiveSidebarItem({
     const firstChild = item.children.items[0]
     if (firstChild && i === activeSlugs.length - 1) {
       next = firstChild
-      currentItems = item.children.items.filter(item => item.body)
-      return
-    }
+    } else {
+      const nextSibling = currentItems[index + 1]
+      const nextSiblingFirstChild = nextSibling?.children.items[0]
 
-    const nextSibling = currentItems[index + 1]
-    if (nextSibling) {
-      const nextSiblingFirstChild = nextSibling.children.items[0]
       if (nextSiblingFirstChild) {
         next = nextSiblingFirstChild
-      } else {
+      } else if (nextSibling) {
         next = nextSibling
       }
-      currentItems = item.children.items.filter(item => item.body)
-      return
     }
+
+    currentItems = item.children.items.filter((item) => item.body)
   })
 
   let fallbackPath: string[] = []
