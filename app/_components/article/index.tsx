@@ -1,9 +1,6 @@
 import { draftMode } from 'next/headers'
 
-import {
-  ArticleBodyFragment,
-  ArticleFragment,
-} from '@/basehub-helpers/fragments'
+import { ArticleFragment } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
 import {
   Blockquote,
@@ -17,14 +14,16 @@ import { Pump } from '@/.basehub/react-pump'
 import { Box, Code, Table, Text } from '@radix-ui/themes'
 
 import { HeadingWithIconMark } from './heading-with-icon'
-import { CalloutComponent } from './callout'
-import { StepperComponent } from './stepper'
-import { CardsGridComponent } from './cards-grid'
-import { AccordionComponent } from './accordion'
+import { CalloutComponent, CalloutFragment } from './callout'
+import { StepperComponent, StepperFragment } from './stepper'
+import { CardsGridComponent, CardsGridFragment } from './cards-grid'
+import { AccordionComponent, AccordionGroupFragment } from './accordion'
 import { notFound } from 'next/navigation'
 import { Heading } from './heading'
 import {
+  CodeGroupFragment,
   CodeSnippet,
+  CodeSnippetFragmentRecursive,
   CodeSnippetGroup,
   CodeSnippetSingle,
 } from './code-snippet'
@@ -36,6 +35,7 @@ import { ArticleBreadcrumb } from './breadcrumb'
 import { ArticleFooter } from './footer'
 import { ArticleIndex } from './article-index'
 import { flattenRichTextNodes } from '../toc/utils'
+import { fragmentOn } from '@/.basehub'
 
 import headingStyles from './heading/heading.module.scss'
 import s from './article.module.scss'
@@ -240,3 +240,19 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
     </RichText>
   )
 }
+
+export const ArticleBodyFragment = fragmentOn('BodyRichText', {
+  content: true,
+  toc: true,
+  blocks: {
+    __typename: true,
+    on_CalloutComponent: CalloutFragment,
+    on_CardsGridComponent: CardsGridFragment,
+    on_AccordionGroupComponent: AccordionGroupFragment,
+    on_StepperComponent: StepperFragment,
+    on_CodeGroupComponent: CodeGroupFragment,
+    on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
+  },
+})
+
+export type ArticleBodyFragment = fragmentOn.infer<typeof ArticleBodyFragment>

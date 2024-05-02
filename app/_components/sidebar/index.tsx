@@ -97,6 +97,17 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     pageHeight.current = document.body.scrollHeight
   }
 
+  React.useEffect(() => {
+    const el = document.querySelector(`.${s.sidebar__item}[data-active="true"]`)
+    if (el) {
+      el.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      })
+    }
+  }, [])
+
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
       <Box
@@ -334,7 +345,7 @@ const SidebarItem = ({
   ])
 
   // filter the empty pages to prevent linking to a 404
-  if (level > 0 && !data.body) return
+  if (level > 0 && !data.body) return null
 
   return (
     <div>
