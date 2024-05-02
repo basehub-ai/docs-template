@@ -7,7 +7,6 @@ import {
   CodeGroupFragment,
   CodeSnippetFragmentRecursive,
 } from '@/app/_components/article/code-snippet'
-import { HeadingWithIconFragment } from '@/app/_components/article/heading-with-icon'
 import { StepperFragment } from '@/app/_components/article/stepper'
 
 /* -------------------------------------------------------------------------------------------------
@@ -36,7 +35,6 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
   blocks: {
     __typename: true,
     on_CalloutComponent: CalloutFragment,
-    on_HeadingWithIconComponent: HeadingWithIconFragment,
     on_CardsGridComponent: CardsGridFragment,
     on_AccordionGroupComponent: AccordionGroupFragment,
     on_StepperComponent: StepperFragment,
