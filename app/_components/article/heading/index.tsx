@@ -22,7 +22,6 @@ export const Heading = ({ children, as, id, href }: HeadingProps) => {
       as={as}
       id={id}
       className={s.heading}
-      color="gray"
       size={size}
       mb="3"
       mt={marginTop}
