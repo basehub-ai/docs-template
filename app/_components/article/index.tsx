@@ -1,6 +1,9 @@
 import { draftMode } from 'next/headers'
 
-import { ArticleBodyFragment, ArticleFragment } from '@/basehub-helpers/fragments'
+import {
+  ArticleBodyFragment,
+  ArticleFragment,
+} from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
 import {
   Blockquote,
