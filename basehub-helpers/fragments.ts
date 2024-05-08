@@ -1,5 +1,4 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
-// import { ArticleBodyFragment } from '@/app/_components/article'
 import { AccordionGroupFragment } from '@/app/_components/article/accordion'
 import { CalloutFragment } from '@/app/_components/article/callout'
 import { CardsGridFragment } from '@/app/_components/article/cards-grid'

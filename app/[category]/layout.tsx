@@ -13,7 +13,11 @@ export default function Layout({
   params: { category: string }
 }) {
   return (
-    <Container size="4" px={{ initial: '5', md: '8' }} mt="var(--header)">
+    <Container
+      size="4"
+      px={{ initial: '5', md: '8' }}
+      mt={{ initial: 'var(--header)', md: '0' }}
+    >
       <Flex direction={{ initial: 'column', md: 'row' }}>
         <Pump
           queries={[{ pages: SidebarFragment }]}
@@ -40,12 +44,12 @@ export default function Layout({
         </Pump>
         <Flex
           asChild
-          minHeight="100vh"
           width="100%"
           align="start"
           justify="between"
           gapX="6"
-          py="6"
+          pt="6"
+          pb="9"
         >
           <main>{children}</main>
         </Flex>

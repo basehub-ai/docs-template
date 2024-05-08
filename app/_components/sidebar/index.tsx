@@ -38,10 +38,11 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   const scrollPosition = React.useRef(0)
   const pageHeight = React.useRef(0)
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     setMobileSidebarOpen(false)
-    if (!document) return
-    document.documentElement.scrollTo({ top: 0, behavior: 'instant' })
+    if (window.innerWidth <= 1024 && !window.location.hash) {
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+    }
   }, [pathname])
 
   const activeSlugs: string[] = React.useMemo(() => {
@@ -59,7 +60,7 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     })
   }, [activeSlugs, data])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const handleScroll = () => {
       scrollPosition.current = window.scrollY
     }
@@ -70,7 +71,7 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     }
   }, [])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const handleResize = () => {
       if (mobileSidebarOpen) return
       pageHeight.current = document.body.scrollHeight
@@ -96,6 +97,17 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     setMobileSidebarOpen((prevState) => !prevState)
     pageHeight.current = document.body.scrollHeight
   }
+
+  React.useLayoutEffect(() => {
+    const el = document.querySelector(`.${s.sidebar__item}[data-active="true"]`)
+    if (el) {
+      el.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      })
+    }
+  }, [])
 
   return (
     <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
@@ -334,7 +346,7 @@ const SidebarItem = ({
   ])
 
   // filter the empty pages to prevent linking to a 404
-  if (level > 0 && !data.body) return
+  if (level > 0 && !data.body) return null
 
   return (
     <div>

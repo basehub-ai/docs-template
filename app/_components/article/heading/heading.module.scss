@@ -1,6 +1,6 @@
 .heading {
    position: relative;
-   scroll-margin-top: calc(var(--header) + var(--space-8));
+   scroll-margin-top: calc(var(--header) + var(--space-5));
    color: var(--strong);
    line-height: 1.375;
    font-weight: 600;
@@ -16,6 +16,7 @@
 
    a {
       text-decoration: none;
+      color: var(--gray-12);
 
       & > svg {
          vertical-align: middle;

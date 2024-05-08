@@ -15,16 +15,12 @@
     padding-right: var(--space-9);
   }
 
-  hr {
-    border-color: var(--gray-6);
-    border-bottom-width: 0;
-    border-style: solid;
-  }
-
   & > p {
-    color: var(--gray-11);
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-5);
+    &:not([role="excerpt"]) {
+      color: var(--gray-11);
+      font-size: var(--font-size-3);
+      line-height: var(--line-height-5);
+    }
   }
 
   code[data-type="inline-code"] {

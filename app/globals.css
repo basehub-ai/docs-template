@@ -42,10 +42,15 @@ html.dark body .radix-themes {
   --color-background: #09090B;
 }
 
+html.dark {
+  background-color: #09090B;
+}
+
 html.light body {
   img[data-dark-only] {
     visibility: hidden;
   }
+  background-color: var(--gray-1);
 }
 
 html.dark body {

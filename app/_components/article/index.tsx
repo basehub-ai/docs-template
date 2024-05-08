@@ -88,6 +88,7 @@ export const Article = ({
               mx="auto"
               direction="column"
               width="100%"
+              height="100%"
             >
               <article className={s.article}>
                 <Box className={s.body}>
@@ -99,15 +100,14 @@ export const Article = ({
                     size="8"
                     className={headingStyles.heading}
                     mt="0"
-                    mb="5"
+                    mb={article.excerpt ? '1' : '9'}
                   >
                     {article._title}
                   </RadixHeading>
                   {article.excerpt && (
-                    <>
-                      <Text size="2">{article.excerpt}</Text>
-                      <Separator size="4" />
-                    </>
+                    <Text size="5" color="gray" mb="9" as="p" role="excerpt">
+                      {article.excerpt}
+                    </Text>
                   )}
                   {article.body ? (
                     <Body blocks={article.body.json.blocks}>
@@ -116,7 +116,7 @@ export const Article = ({
                   ) : innerArticlesWithContent.length ? (
                     <ArticleIndex articles={innerArticlesWithContent} />
                   ) : (
-                    <Text size="3" color="gray">
+                    <Text size="3" color="gray" weight="medium">
                       This article has no content yet.
                     </Text>
                   )}
@@ -194,6 +194,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             {children}
           </Table.Cell>
         ),
+        hr: () => <Separator size="4" my="7" color='gray' />,
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -211,7 +212,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
         code: ({ isInline, ...rest }) => {
           if (isInline)
             return (
-              <Code data-type="inline-code" variant="soft">
+              <Code data-type="inline-code" variant="outline">
                 {rest.children}
               </Code>
             )

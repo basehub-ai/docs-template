@@ -44,12 +44,7 @@ export const Highlighter = async ({
               type: 'element',
               tagName: 'span',
               properties: { class: 'line-indicator' },
-              children: [
-                {
-                  type: 'text',
-                  value: line.toString(),
-                },
-              ],
+              children: [{ type: 'text', value: line.toString() }],
             },
             ...node.children,
           ]
