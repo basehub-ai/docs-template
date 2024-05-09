@@ -16,8 +16,8 @@ export const NavLink = React.forwardRef<
   } & JSX.IntrinsicElements['a']
 >(({ children, href, isFirstPageLink, ...rest }, ref) => {
   const pathname = usePathname()
-  const isActive =
-    pathname === '/' ? isFirstPageLink : pathname.startsWith(href)
+  const category = pathname.split('/')[1]
+  const isActive = !category ? isFirstPageLink : href.startsWith(`/${category}`)
 
   return (
     <Flex height="100%" align="center" asChild px="2">

@@ -15,13 +15,10 @@ export const ArticleBreadcrumb = ({
   return (
     <Flex align="center" wrap="wrap" gap="1">
       {breadcrumb.map((segment, index) => {
-        const href =
-          index === 0
-            ? '/'
-            : `/${breadcrumb
-                .slice(0, index + 1)
-                .map((segment) => segment.slug)
-                .join('/')}`
+        const href = `/${breadcrumb
+          .slice(0, index + 1)
+          .map((segment) => segment.slug)
+          .join('/')}`
 
         if (index === breadcrumb.length - 1) {
           return (

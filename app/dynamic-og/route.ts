@@ -33,8 +33,8 @@ export const GET = async (request: Request) => {
   if (!article.body) return notFound()
   const articleSubtitle = article.excerpt ?? article.body?.plainText ?? ''
   const subtitle =
-    articleSubtitle.length > 170
-      ? articleSubtitle.slice(0, 170) + '...'
+    articleSubtitle.length > 138
+      ? articleSubtitle.slice(0, 138) + '...'
       : articleSubtitle
   const theme = data.settings.theme.appearance as 'light' | 'dark' | 'system'
 

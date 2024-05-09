@@ -83,59 +83,86 @@ export const Article = ({
 
         return (
           <>
-            <Flex
-              asChild
-              justify="between"
-              mx="auto"
-              direction="column"
-              width="100%"
-              height="100%"
+            <ArticleWrapper
+              title={article._title}
+              excerpt={article.excerpt}
+              lastModifiedAt={article._sys.lastModifiedAt}
+              nextArticle={nextArticle}
+              breadcrumb={breadcrumb}
             >
-              <article className={s.article}>
-                <Box className={s.body}>
-                  <Box mb="4">
-                    <ArticleBreadcrumb breadcrumb={breadcrumb} />
-                  </Box>
-                  <RadixHeading
-                    as="h1"
-                    size="8"
-                    className={headingStyles.heading}
-                    mt="0"
-                    mb={article.excerpt ? '1' : '9'}
-                  >
-                    {article._title}
-                  </RadixHeading>
-                  {article.excerpt && (
-                    <Text size="5" color="gray" mb="9" as="p" role="excerpt">
-                      {article.excerpt}
-                    </Text>
-                  )}
-                  {article.body ? (
-                    <Body blocks={article.body.json.blocks}>
-                      {article.body.json.content}
-                    </Body>
-                  ) : innerArticlesWithContent.length ? (
-                    <ArticleIndex articles={innerArticlesWithContent} />
-                  ) : (
-                    <Text size="3" color="gray" weight="medium">
-                      This article has no content yet.
-                    </Text>
-                  )}
-                </Box>
-                <ArticleFooter
-                  lastUpdatedAt={
-                    article.body ? article._sys.lastModifiedAt : null
-                  }
-                  nextArticle={nextArticle}
-                />
-              </article>
-            </Flex>
+              {article.body ? (
+                <Body blocks={article.body.json.blocks}>
+                  {article.body.json.content}
+                </Body>
+              ) : innerArticlesWithContent.length ? (
+                <ArticleIndex articles={innerArticlesWithContent} />
+              ) : (
+                <Text size="3" color="gray" weight="medium">
+                  This article has no content yet.
+                </Text>
+              )}
+            </ArticleWrapper>
 
             <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
           </>
         )
       }}
     </Pump>
+  )
+}
+
+export const ArticleWrapper = ({
+  title,
+  excerpt,
+  lastModifiedAt,
+  children,
+  breadcrumb,
+  nextArticle,
+}: {
+  title: string
+  excerpt?: string | null
+  lastModifiedAt: string
+  children: React.ReactNode
+  breadcrumb: ArticleBreadcrumb
+  nextArticle: ArticleFooter['nextArticle']
+}) => {
+  return (
+    <Flex
+      asChild
+      justify="between"
+      mx="auto"
+      direction="column"
+      width="100%"
+      height="100%"
+    >
+      <article className={s.article}>
+        <Box className={s.body}>
+          <Box mb="4">
+            <ArticleBreadcrumb breadcrumb={breadcrumb} />
+          </Box>
+          <RadixHeading
+            as="h1"
+            size="8"
+            className={headingStyles.heading}
+            mt="0"
+            mb={excerpt ? '1' : '9'}
+          >
+            {title}
+          </RadixHeading>
+          {excerpt && (
+            <Text size="5" color="gray" mb="9" as="p" role="excerpt">
+              {excerpt}
+            </Text>
+          )}
+          {/* <ArticleIndex articles={innerArticlesWithContent} /> */}
+          {children}
+        </Box>
+        <ArticleFooter
+          lastUpdatedAt={lastModifiedAt}
+          nextArticle={nextArticle}
+        />
+      </article>
+    </Flex>
   )
 }
 
@@ -195,7 +222,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             {children}
           </Table.Cell>
         ),
-        hr: () => <Separator size="4" my="7" color='gray' />,
+        hr: () => <Separator size="4" my="7" color="gray" />,
         StepperComponent,
         AccordionGroupComponent: AccordionComponent,
         CalloutComponent,
@@ -226,8 +253,8 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
                 snippet={rest.code}
                 style={{
                   position: 'absolute',
-                  right: 'var(--space-3)',
-                  top: 'var(--space-3)',
+                  right: '0',
+                  top: 'calc(var(--space-6) * -1)',
                 }}
               />
             </Box>

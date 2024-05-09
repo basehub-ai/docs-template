@@ -110,7 +110,12 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   }, [])
 
   return (
-    <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
+    <SidebarContext.Provider
+      value={{
+        activeSidebarItem: params.slug ? activeSidebarItem : null,
+        activeSlugs,
+      }}
+    >
       <Box
         position="fixed"
         ml={{ initial: '-5', md: '0' }}
