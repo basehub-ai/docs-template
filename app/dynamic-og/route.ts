@@ -13,6 +13,7 @@ export const GET = async (request: Request) => {
   const pageType = searchParams.get('type')
 
   if (!id) return notFound()
+
   const ogData =
     pageType === 'category'
       ? await getCategoryOGData(id)
@@ -43,10 +44,10 @@ const getCategoryOGData = async (categoryId: string) => {
       },
     },
     settings: {
-      theme: { accentColor: true, appearance: true },
+      metadata: { sitename: true },
       logo: { url: true, alt: true },
       logoDark: { url: true, alt: true },
-      metadata: { sitename: true },
+      theme: { accentColor: true, appearance: true },
     },
   })
 
@@ -61,13 +62,7 @@ const getCategoryOGData = async (categoryId: string) => {
     .accentColor as ThemeProps['accentColor']
   const logo = theme === 'dark' ? data.settings.logoDark : data.settings.logo
 
-  return {
-    title,
-    subtitle,
-    theme,
-    logo,
-    accentColor,
-  }
+  return { title, subtitle, theme, logo, accentColor }
 }
 
 const getArticleOGData = async (articleId: string) => {

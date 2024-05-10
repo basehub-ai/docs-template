@@ -127,6 +127,7 @@ const LightThemeOG = ({
               maxWidth: '90%',
               marginTop: 0,
               marginBottom: 80,
+              height: 200,
             }}
           >
             {truncateString(subtitle, 140)}
@@ -250,6 +251,7 @@ const DarkThemeOG = ({
               maxWidth: '90%',
               marginTop: 0,
               marginBottom: 80,
+              height: 200,
             }}
           >
             {truncateString(subtitle, 140)}

@@ -82,7 +82,7 @@ export const generateMetadata = async ({
     const description = siteName + ' documentation / ' + category._title
     const images = [
       {
-        url: siteOrigin + `/dynamic-og?article=${category._id}&type="category"`,
+        url: siteOrigin + `/dynamic-og?article=${category._id}&type=category`,
         width: 1200,
         height: 630,
       },
