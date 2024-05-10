@@ -75,6 +75,38 @@ export const generateMetadata = async ({
 
   const category = data.pages.items[0]
   if (!category) return {}
+  const siteName = data.settings.metadata.sitename
+
+  if (!params.slug?.length) {
+    const title = `${category._title} ${data.settings.metadata.pageTitleTemplate}`
+    const description = siteName + ' documentation / ' + category._title
+    const images = [
+      {
+        url: siteOrigin + `/dynamic-og?article=${category._id}&type="category"`,
+        width: 1200,
+        height: 630,
+      },
+    ]
+
+    return {
+      title,
+      description: siteName + ' documentation / ' + category._title,
+      icons: {
+        icon: data.settings.metadata.favicon.url,
+        shortcut: data.settings.metadata.favicon.url,
+        apple: data.settings.metadata.favicon.url,
+      },
+      openGraph: {
+        title,
+        description,
+        siteName,
+        locale: 'en-US',
+        type: 'website',
+        url: siteOrigin + `/docs/${params.slug?.join('/') ?? ''}`,
+        images,
+      },
+    }
+  }
 
   const {
     current: { article },
@@ -93,7 +125,6 @@ export const generateMetadata = async ({
     : excerpt.length > 150
       ? excerpt.slice(0, 150) + '...'
       : excerpt
-  const siteName = data.settings.metadata.sitename
 
   const images = [
     {

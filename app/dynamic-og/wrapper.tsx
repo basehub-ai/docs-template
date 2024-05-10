@@ -129,7 +129,7 @@ const LightThemeOG = ({
               marginBottom: 80,
             }}
           >
-            {truncateString(subtitle, 200)}
+            {truncateString(subtitle, 140)}
           </p>
           <hr
             style={{
@@ -252,7 +252,7 @@ const DarkThemeOG = ({
               marginBottom: 80,
             }}
           >
-            {truncateString(subtitle, 200)}
+            {truncateString(subtitle, 140)}
           </p>
           <hr
             style={{
