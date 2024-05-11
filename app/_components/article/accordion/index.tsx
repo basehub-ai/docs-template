@@ -9,7 +9,7 @@ import { Body } from '..'
 
 export const AccordionComponent = ({ accordions }: AccordionGroupFragment) => {
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="multiple">
       {accordions.items.map((accordion) => (
         <AccordionItem key={accordion._id} value={accordion._id}>
           <AccordionTrigger>{accordion._title}</AccordionTrigger>

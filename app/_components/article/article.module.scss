@@ -15,16 +15,12 @@
     padding-right: var(--space-9);
   }
 
-  hr {
-    border-color: var(--gray-6);
-    border-bottom-width: 0;
-    border-style: solid;
-  }
-
   & > p {
-    color: var(--gray-11);
-    font-size: var(--font-size-3);
-    line-height: var(--line-height-5);
+    &:not([role="excerpt"]) {
+      color: var(--gray-11);
+      font-size: var(--font-size-3);
+      line-height: var(--line-height-5);
+    }
   }
 
   code[data-type="inline-code"] {
@@ -45,7 +41,8 @@
       &::marker {
         color: var(--gray-11);
       }
-
+      
+      color: var(--gray-11);
       margin-bottom: var(--space-2);
     }
   }
@@ -91,8 +88,7 @@
   p[data-type='caption'] {
     padding-top: var(--space-4);
     padding-bottom: var(--space-2);
-    margin-top: -32px;
-    width: 100%;
+    margin-top: calc(var(--space-7) * -1);
     display: block;
     position: relative;
     text-align: center;

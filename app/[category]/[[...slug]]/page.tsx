@@ -1,4 +1,4 @@
-import { Article } from '@/app/_components/article'
+import { Article, ArticleWrapper } from '@/app/_components/article'
 import {
   ArticleMetaFragmentRecursive,
   PageFragment,
@@ -11,6 +11,8 @@ import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { siteOrigin } from '@/constants/routing'
+import { Toc } from '@/app/_components/toc'
+import { ArticleIndex } from '@/app/_components/article/article-index'
 
 export const dynamic = 'force-static'
 
@@ -73,6 +75,38 @@ export const generateMetadata = async ({
 
   const category = data.pages.items[0]
   if (!category) return {}
+  const siteName = data.settings.metadata.sitename
+
+  if (!params.slug?.length) {
+    const title = `${category._title} ${data.settings.metadata.pageTitleTemplate}`
+    const description = siteName + ' documentation / ' + category._title
+    const images = [
+      {
+        url: siteOrigin + `/dynamic-og?article=${category._id}&type=category`,
+        width: 1200,
+        height: 630,
+      },
+    ]
+
+    return {
+      title,
+      description: siteName + ' documentation / ' + category._title,
+      icons: {
+        icon: data.settings.metadata.favicon.url,
+        shortcut: data.settings.metadata.favicon.url,
+        apple: data.settings.metadata.favicon.url,
+      },
+      openGraph: {
+        title,
+        description,
+        siteName,
+        locale: 'en-US',
+        type: 'website',
+        url: siteOrigin + `/docs/${params.slug?.join('/') ?? ''}`,
+        images,
+      },
+    }
+  }
 
   const {
     current: { article },
@@ -91,7 +125,6 @@ export const generateMetadata = async ({
     : excerpt.length > 150
       ? excerpt.slice(0, 150) + '...'
       : excerpt
-  const siteName = data.settings.metadata.sitename
 
   const images = [
     {
@@ -148,7 +181,29 @@ export default function ArticlePage({
           activeSlugs,
         })
 
+        if (!params.slug?.length) {
+          return (
+            <>
+              <ArticleWrapper
+                title={page._title}
+                lastModifiedAt={page._sys.lastModifiedAt ?? null}
+                nextArticle={{
+                  title:
+                    activeSidebarItem?._title ?? activeSidebarItem?._slug ?? '',
+                  href: '/' + params.category + '/' + activeSidebarItem?._slug,
+                }}
+                breadcrumb={[{ title: page._title, slug: page._slug }]}
+              >
+                <ArticleIndex articles={page.articles.items} />
+              </ArticleWrapper>
+
+              <Toc>{[]}</Toc>
+            </>
+          )
+        }
+
         if (!activeSidebarItem) notFound()
+
         const { titles, slugs } = getBreadcrumb({
           sidebar: page.articles,
           activeSidebarItem,
@@ -163,20 +218,19 @@ export default function ArticlePage({
           { title: activeSidebarItem._title, slug: activeSidebarItem._slug },
         ]
 
+        let nextArticle = null
+        if (next.article) {
+          nextArticle = {
+            title: next.article.titleSidebarOverride ?? next.article._title,
+            href: '/' + params.category + '/' + next.path.join('/'),
+          }
+        }
+
         return (
           <Article
             id={activeSidebarItem._id}
             breadcrumb={breadcrumb}
-            nextArticle={
-              next.article
-                ? {
-                    title:
-                      next.article.titleSidebarOverride ?? next.article._title,
-                    excerpt: next?.article.excerpt,
-                    href: '/' + params.category + '/' + next.path.join('/'),
-                  }
-                : null
-            }
+            nextArticle={nextArticle}
           />
         )
       }}
