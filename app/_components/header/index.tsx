@@ -6,19 +6,18 @@ import {
   Box,
   Button,
   Container,
-  Dialog,
   Flex,
   Grid,
-  IconButton,
-  Kbd,
   Link,
   Text,
-  TextField,
 } from '@radix-ui/themes'
 import { ThemeSwitcher } from '../theme-switcher'
-import { SearchProvider } from './search'
+import {
+  DialogTriggerDesktop,
+  DialogTriggerMobile,
+  SearchProvider,
+} from './search'
 import { Logo } from '../logo'
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 import s from './header.module.scss'
 
@@ -74,11 +73,7 @@ export const Header = () => {
                   <Flex align="center" justify="end">
                     <Logo logoLight={logoLight} logoDark={logoDark} />
                     <Box ml="3">
-                      <Dialog.Trigger>
-                        <IconButton variant="soft">
-                          <MagnifyingGlassIcon />
-                        </IconButton>
-                      </Dialog.Trigger>
+                      <DialogTriggerMobile />
                     </Box>
                   </Flex>
                   <Flex align="center" justify="end">
@@ -111,25 +106,7 @@ export const Header = () => {
                 >
                   <Logo logoLight={logoLight} logoDark={logoDark} />
                   <Flex maxWidth="300px" mx="auto" width="100%">
-                    <Dialog.Trigger style={{ width: '100%' }}>
-                      <TextField.Root
-                        readOnly
-                        placeholder="Search"
-                        size="2"
-                        radius="large"
-                        className={s['search-trigger']}
-                      >
-                        <TextField.Slot>
-                          <MagnifyingGlassIcon color="currentColor" />
-                        </TextField.Slot>
-                        <TextField.Slot>
-                          <Flex align="center" justify="between" gap="1">
-                            <Kbd>⌘</Kbd>
-                            <Kbd>k</Kbd>
-                          </Flex>
-                        </TextField.Slot>
-                      </TextField.Root>
-                    </Dialog.Trigger>
+                    <DialogTriggerDesktop />
                   </Flex>
                   <Flex align="center" justify="end">
                     <ThemeSwitcher />
