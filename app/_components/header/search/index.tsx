@@ -20,6 +20,8 @@ import { HeaderFragment } from '../pages-nav'
 
 import s from './search.module.scss'
 import { clsx } from 'clsx'
+import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
+import { flushSync } from 'react-dom'
 
 export const SearchProvider = ({
   _searchKey,
@@ -72,7 +74,15 @@ export const SearchProvider = ({
         <DialogContent
           searchCategories={searchCategories}
           selectedCategoryId={selectedCategoryId}
-          setSelectedCategoryId={setSelectedCategoryId}
+          onCategoryChange={(id) => {
+            flushSync(() => {
+              setSelectedCategoryId(id)
+            })
+            // flushSync ^ so that we can reset the search with the new filterBy clause being applied
+            if (search.valid) {
+              search.onQueryChange(search.query)
+            }
+          }}
         />
       </SearchBox.Root>
     </Dialog.Root>
@@ -82,13 +92,14 @@ export const SearchProvider = ({
 const DialogContent = ({
   searchCategories,
   selectedCategoryId,
-  setSelectedCategoryId,
+  onCategoryChange,
 }: {
   searchCategories: HeaderFragment['navLinks']['items']
   selectedCategoryId: string
-  setSelectedCategoryId: (_id: string) => void
+  onCategoryChange: (_id: string) => void
 }) => {
   const search = SearchBox.useContext()
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const selectedCategoryLabel =
     searchCategories.find(
@@ -99,7 +110,13 @@ const DialogContent = ({
     <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
       <Flex direction="column" height="100%">
         <SearchBox.Input asChild>
-          <TextField.Root placeholder="Search" mx="2" mt="2" size="3">
+          <TextField.Root
+            ref={inputRef}
+            placeholder="Search"
+            mx="2"
+            mt="2"
+            size="3"
+          >
             <TextField.Slot>
               <MagnifyingGlassIcon color="currentColor" />
             </TextField.Slot>
@@ -166,7 +183,12 @@ const DialogContent = ({
               <Select.Root
                 size="1"
                 defaultValue="all"
-                onValueChange={setSelectedCategoryId}
+                onValueChange={(id) => {
+                  onCategoryChange(id)
+                  setTimeout(() => {
+                    inputRef.current?.focus()
+                  }, 16)
+                }}
                 value={selectedCategoryId}
               >
                 <Select.Trigger radius="large">
@@ -205,19 +227,7 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
         </Text>
       )}
       {hits.map((hit) => {
-        let pathname =
-          // TODO add this function to utils or something as it's being used in the draft enable route.
-
-          // _slugPath will have something like root/pages/<category>/articles/<page>/children/<page>/children/<page>...
-          // remove root/pages and then filter out every other part
-          '/' +
-          hit.document._slugPath
-            ?.replace('root/pages/', '')
-            .split('/')
-            .filter((_part, index) => {
-              return index % 2 === 0
-            })
-            .join('/')
+        let pathname = getAritcleSlugFromSlugPath(hit.document._slugPath ?? '')
 
         // TODO is there an opportunity to build a helper function in our SDK here? looks like a common usecase
         const bodyHighlight = hit.highlights
