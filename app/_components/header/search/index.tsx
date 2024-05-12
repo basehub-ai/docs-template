@@ -31,10 +31,14 @@ export const SearchProvider = ({
   children: React.ReactNode
 }) => {
   const [open, setOpen] = React.useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState('__all__')
 
   const search = useSearch({
     _searchKey,
     queryBy: ['_title', 'body'],
+    ...(selectedCategoryId !== '__all__' && {
+      filterBy: `_idPath:${selectedCategoryId}*`,
+    }),
     saveRecentSearches: {
       key: 'docs-recent-searches',
       getStorage: () => localStorage,
@@ -65,7 +69,11 @@ export const SearchProvider = ({
         }}
         key={open ? 'open' : 'closed'}
       >
-        <DialogContent searchCategories={searchCategories} />
+        <DialogContent
+          searchCategories={searchCategories}
+          selectedCategoryId={selectedCategoryId}
+          setSelectedCategoryId={setSelectedCategoryId}
+        />
       </SearchBox.Root>
     </Dialog.Root>
   )
@@ -73,22 +81,19 @@ export const SearchProvider = ({
 
 const DialogContent = ({
   searchCategories,
+  selectedCategoryId,
+  setSelectedCategoryId,
 }: {
   searchCategories: HeaderFragment['navLinks']['items']
+  selectedCategoryId: string
+  setSelectedCategoryId: (_id: string) => void
 }) => {
   const search = SearchBox.useContext()
 
-  const [selectedSearchCategoryId, setSelectedSearchCategoryId] =
-    React.useState(searchCategories?.[0]?._id ?? '')
-
-  const selectedCategory = searchCategories.find(
-    (category) => category._id === selectedSearchCategoryId
-  )
-
   const selectedCategoryLabel =
-    selectedCategory?.label ??
-    selectedCategory?.page?._title ??
-    'Untitled Category'
+    searchCategories.find(
+      (category) => category.page?._id === selectedCategoryId
+    )?.page?._title ?? 'All'
 
   return (
     <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
@@ -161,17 +166,25 @@ const DialogContent = ({
               <Select.Root
                 size="1"
                 defaultValue="all"
-                onValueChange={setSelectedSearchCategoryId}
+                onValueChange={setSelectedCategoryId}
+                value={selectedCategoryId}
               >
                 <Select.Trigger radius="large">
                   {selectedCategoryLabel}
                 </Select.Trigger>
                 <Select.Content>
-                  {searchCategories.map((category) => (
-                    <Select.Item key={category._id} value={category._id}>
-                      {category.label ?? category.page?._title}
-                    </Select.Item>
-                  ))}
+                  <Select.Item value={'__all__'}>All</Select.Item>
+                  {searchCategories.map((category) => {
+                    if (!category.page) return null
+                    return (
+                      <Select.Item
+                        key={category.page._id}
+                        value={category.page._id}
+                      >
+                        {category.page._title}
+                      </Select.Item>
+                    )
+                  })}
                 </Select.Content>
               </Select.Root>
             </Flex>
