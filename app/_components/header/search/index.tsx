@@ -81,12 +81,14 @@ const DialogContent = ({
   const [selectedSearchCategoryId, setSelectedSearchCategoryId] =
     React.useState(searchCategories?.[0]?._id ?? '')
 
-  const selectedCat = searchCategories.find(
+  const selectedCategory = searchCategories.find(
     (category) => category._id === selectedSearchCategoryId
   )
 
   const selectedCategoryLabel =
-    selectedCat?.label ?? selectedCat?.page?._title ?? 'Untitled Category'
+    selectedCategory?.label ??
+    selectedCategory?.page?._title ??
+    'Untitled Category'
 
   return (
     <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
