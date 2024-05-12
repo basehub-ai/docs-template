@@ -1,187 +1,121 @@
 'use client'
 
 import * as React from 'react'
-
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import { useSearch, SearchBox, Hit } from 'basehub/react-search'
+import { Cross1Icon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import {
   Box,
-  Card,
   Dialog,
   Flex,
   IconButton,
   Kbd,
-  Link,
+  ScrollArea,
   Select,
   Separator,
   Text,
   TextField,
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import { usePointerIdle } from '@/hooks/use-pointer-idle'
 import { HeaderFragment } from '../pages-nav'
 
 import s from './search.module.scss'
+import { clsx } from 'clsx'
+import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
+import { flushSync } from 'react-dom'
 
-const SEARCH_RESULTS = [
-  'Getting started',
-  'Guides',
-  'Components',
-  'API',
-  'Examples',
-  'More info',
-  'Setup',
-  'API Reference',
-  'Tests',
-  'Integrations',
-  'Routing',
-]
-
-export const Search = ({
+export const SearchProvider = ({
+  _searchKey,
   searchCategories,
+  children,
 }: {
+  _searchKey: string | null
   searchCategories: HeaderFragment['navLinks']['items']
+  children: React.ReactNode
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null)
-  const searchResultsRef = React.useRef<HTMLDivElement>(null)
-  const pointerIdle = usePointerIdle(1000)
   const [open, setOpen] = React.useState(false)
-  const [selectedResultIndex, setSelectedResultIndex] = React.useState(0)
-  const [search, setSearch] = React.useState('')
-  const [selectedSearchCategoryId, setSelectedSearchCategoryId] =
-    React.useState(searchCategories?.[0]?._id ?? '')
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState('__all__')
+
+  const search = useSearch({
+    _searchKey,
+    queryBy: ['_title', 'body'],
+    ...(selectedCategoryId !== '__all__' && {
+      filterBy: `_idPath:${selectedCategoryId}*`,
+    }),
+    saveRecentSearches: {
+      key: 'docs-recent-searches',
+      getStorage: () => localStorage,
+    },
+  })
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'k' && event.metaKey) {
-        event.preventDefault()
-        setOpen((o) => !o)
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'Enter' &&
-        document.activeElement === inputRef.current
-      ) {
         event.preventDefault()
         setOpen(true)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
 
-  React.useEffect(() => {
-    if (!searchResultsRef.current) return
-
-    const selectedResultAnchor = searchResultsRef.current.querySelector(
-      `a[data-index="${selectedResultIndex}"]`
-    ) as HTMLElement
-
-    const selectedResultElement = selectedResultAnchor.parentElement
-
-    if (!selectedResultElement) return
-    const containerHeight = searchResultsRef.current.offsetHeight
-    const containerScrollTop = searchResultsRef.current.scrollTop
-    const elementOffsetTop = selectedResultElement.offsetTop
-    const elementOffsetHeight = selectedResultElement.offsetHeight
-    const containerPaddingTop = parseInt(
-      window.getComputedStyle(searchResultsRef.current).paddingTop
-    )
-    const containerPaddingBottom = parseInt(
-      window.getComputedStyle(searchResultsRef.current).paddingBottom
-    )
-
-    if (
-      elementOffsetTop < containerScrollTop + containerPaddingTop ||
-      elementOffsetTop + elementOffsetHeight >
-        containerScrollTop + containerHeight - containerPaddingBottom
-    ) {
-      selectedResultElement.scrollIntoView({ block: 'nearest' })
-    }
-  }, [selectedResultIndex])
-
-  const results = SEARCH_RESULTS.filter((item) => item.includes(search))
-  const selectedCat = searchCategories.find(
-    (category) => category._id === selectedSearchCategoryId
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      {children}
+      <SearchBox.Root
+        search={search}
+        onHitSelect={() => {
+          setOpen(false)
+        }}
+        key={open ? 'open' : 'closed'}
+      >
+        <DialogContent
+          searchCategories={searchCategories}
+          selectedCategoryId={selectedCategoryId}
+          onCategoryChange={(id) => {
+            flushSync(() => {
+              setSelectedCategoryId(id)
+            })
+            // flushSync ^ so that we can reset the search with the new filterBy clause being applied
+            if (search.valid) {
+              search.onQueryChange(search.query)
+            }
+          }}
+        />
+      </SearchBox.Root>
+    </Dialog.Root>
   )
+}
+
+const DialogContent = ({
+  searchCategories,
+  selectedCategoryId,
+  onCategoryChange,
+}: {
+  searchCategories: HeaderFragment['navLinks']['items']
+  selectedCategoryId: string
+  onCategoryChange: (_id: string) => void
+}) => {
+  const search = SearchBox.useContext()
+  const inputRef = React.useRef<HTMLInputElement>(null)
+
   const selectedCategoryLabel =
-    selectedCat?.label ?? selectedCat?.page?._title ?? 'Untitled Category'
+    searchCategories.find(
+      (category) => category.page?._id === selectedCategoryId
+    )?.page?._title ?? 'All'
 
   return (
-    <Dialog.Root
-      open={open}
-      onOpenChange={setOpen}
-    >
-      {/* mobile */}
-      <Dialog.Trigger tabIndex={-1}>
-        <Box display={{ sm: 'none' }}>
-          <IconButton variant="soft">
-            <MagnifyingGlassIcon />
-          </IconButton>
-        </Box>
-      </Dialog.Trigger>
-
-      {/* >= md */}
-      <Dialog.Trigger>
-        <Box display={{ initial: 'none', sm: 'block' }}>
+    <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
+      <Flex direction="column" height="100%">
+        <SearchBox.Input asChild>
           <TextField.Root
-            readOnly
-            placeholder="Search"
-            size="2"
-            radius="large"
             ref={inputRef}
-            onClick={() => setOpen(true)}
-            className={s['search-trigger']}
-          >
-            <TextField.Slot>
-              <MagnifyingGlassIcon color="currentColor" />
-            </TextField.Slot>
-            <TextField.Slot>
-              <Flex align="center" justify="between" gap="1">
-                <Kbd>⌘</Kbd>
-                <Kbd>k</Kbd>
-              </Flex>
-            </TextField.Slot>
-          </TextField.Root>
-        </Box>
-      </Dialog.Trigger>
-
-      <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
-        <Flex direction="column" height="100%">
-          <TextField.Root
             placeholder="Search"
             mx="2"
             mt="2"
             size="3"
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => {
-              if (!['ArrowDown', 'ArrowUp'].includes(e.key)) return
-
-              setSelectedResultIndex((_selectedResultIndex) => {
-                if (
-                  e.key === 'ArrowDown' &&
-                  _selectedResultIndex < SEARCH_RESULTS.length - 1
-                ) {
-                  return _selectedResultIndex + 1
-                } else if (e.key === 'ArrowUp' && _selectedResultIndex > 0) {
-                  return _selectedResultIndex - 1
-                }
-
-                return _selectedResultIndex
-              })
-            }}
           >
             <TextField.Slot>
               <MagnifyingGlassIcon color="currentColor" />
@@ -190,16 +124,17 @@ export const Search = ({
               <Kbd style={{ marginBlock: 'auto' }}>Esc</Kbd>
             </TextField.Slot>
           </TextField.Root>
-          <Separator size="4" mt="2" />
+        </SearchBox.Input>
+        <Separator size="4" mt="2" />
+        <ScrollArea scrollbars="vertical" asChild>
           <Box
             className={s['search-dialog__results']}
-            ref={searchResultsRef}
             flexGrow="1"
             flexShrink="1"
             flexBasis="0%"
-            p="2"
+            px="2"
           >
-            {!results.length ? (
+            <SearchBox.Empty asChild>
               <Flex align="center" px="2" py="1">
                 <Text
                   size="2"
@@ -208,73 +143,212 @@ export const Search = ({
                 >
                   No results for{' '}
                   <Text as="span" weight="bold">
-                    &ldquo;{search}&rdquo;
+                    &ldquo;{search.query}&rdquo;
                   </Text>
                 </Text>
               </Flex>
-            ) : (
-              results.map((item, index) => {
-                return (
-                  <Box
-                    key={index}
-                    className={s['search-dialog-content__result']}
+            </SearchBox.Empty>
+            <SearchBox.Placeholder asChild>
+              {search.recentSearches?.hits?.length ? (
+                <HitList hits={search.recentSearches?.hits ?? []} isRecent />
+              ) : (
+                <Flex align="center" px="2" py="1">
+                  <Text
+                    size="2"
+                    color="gray"
+                    className={s['search-dialog__empty-state']}
                   >
-                    <Card variant="ghost" size="2" asChild>
-                      <Link asChild>
-                        <NextLink
-                          data-index={index}
-                          data-selected={selectedResultIndex === index}
-                          onMouseOver={() => {
-                            if (pointerIdle) return
-                            setSelectedResultIndex(index)
-                          }}
-                          tabIndex={-1}
-                          className={s['search-dialog-content__result-link']}
-                          href="#"
-                        >
-                          <Text size="2" weight="medium">
-                            {item}
-                          </Text>
-                          <Text size="1" as="p" color="gray" mt="1">
-                            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-                            amet.
-                          </Text>
-                        </NextLink>
-                      </Link>
-                    </Card>
-                  </Box>
-                )
-              })
+                    No recent searches.
+                  </Text>
+                </Flex>
+              )}
+            </SearchBox.Placeholder>
+
+            <HitList hits={search.result?.hits ?? []} />
+          </Box>
+        </ScrollArea>
+
+        {searchCategories.length && (
+          <>
+            <Separator size="4" />
+            <Flex
+              className={s['search-dialog-content__footer']}
+              py="1"
+              px="3"
+              align="center"
+            >
+              <Text size="1" weight="medium" mr="1">
+                Show results from:&nbsp;
+              </Text>
+              <Select.Root
+                size="1"
+                defaultValue="all"
+                onValueChange={(id) => {
+                  onCategoryChange(id)
+                  setTimeout(() => {
+                    inputRef.current?.focus()
+                  }, 16)
+                }}
+                value={selectedCategoryId}
+              >
+                <Select.Trigger radius="large">
+                  {selectedCategoryLabel}
+                </Select.Trigger>
+                <Select.Content>
+                  <Select.Item value={'__all__'}>All</Select.Item>
+                  {searchCategories.map((category) => {
+                    if (!category.page) return null
+                    return (
+                      <Select.Item
+                        key={category.page._id}
+                        value={category.page._id}
+                      >
+                        {category.page._title}
+                      </Select.Item>
+                    )
+                  })}
+                </Select.Content>
+              </Select.Root>
+            </Flex>
+          </>
+        )}
+      </Flex>
+    </Dialog.Content>
+  )
+}
+
+const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
+  const search = SearchBox.useContext()
+  return (
+    <SearchBox.HitsList>
+      {isRecent && (
+        <Text weight="medium" color="gray" size="1" ml="3" mb="1" as="p">
+          Recent searches
+        </Text>
+      )}
+      {hits.map((hit) => {
+        let pathname = getAritcleSlugFromSlugPath(hit.document._slugPath ?? '')
+
+        // TODO is there an opportunity to build a helper function in our SDK here? looks like a common usecase
+        const bodyHighlight = hit.highlights
+          .map((h) => {
+            if (h.fieldPath.startsWith('body') === false) return
+            const splitted = h.fieldPath.split('.').slice(0, 2)
+            const fullField = hit._getField(splitted.join('.'))
+            return fullField
+          })
+          .filter(Boolean)[0] as { _id: string | undefined } | undefined
+
+        if (bodyHighlight?._id) {
+          pathname += `#${bodyHighlight._id}`
+        }
+
+        return (
+          <Box
+            key={hit._key}
+            className={clsx(
+              s['search-dialog-content__result'],
+              isRecent && s['search-dialog-content__result-recent']
+            )}
+          >
+            <SearchBox.HitItem hit={hit} href={pathname} asChild>
+              <NextLink
+                href={pathname}
+                className={s['search-dialog-content__result-link']}
+              >
+                <SearchBox.HitSnippet
+                  fieldPath="_title"
+                  components={{
+                    container: ({ children }) => (
+                      <Text size="2" weight="medium" as="p">
+                        {children}
+                      </Text>
+                    ),
+                    ...(isRecent ? { mark: ({ children }) => children } : {}),
+                  }}
+                />
+                <SearchBox.HitSnippet
+                  fieldPath="body"
+                  components={{
+                    container: ({ children }) => (
+                      <Text size="1" mt="1" as="p">
+                        {children}
+                      </Text>
+                    ),
+                    ...(isRecent ? { mark: ({ children }) => children } : {}),
+                  }}
+                />
+              </NextLink>
+            </SearchBox.HitItem>
+            {isRecent && (
+              <IconButton
+                variant="soft"
+                color="gray"
+                onClick={() => {
+                  search.recentSearches?.remove(hit._key)
+                }}
+                className={s['search-dialog-content__remove']}
+                aria-label="Remove recent search"
+              >
+                <Cross1Icon />
+              </IconButton>
             )}
           </Box>
-          {searchCategories.length && (
-            <>
-              <Separator size="4" />
-              <Box className={s['search-dialog-content__footer']} py="1" px="3">
-                <Text size="2" weight="medium" mr="1">
-                  Show results from:&nbsp;
-                </Text>
-                <Select.Root
-                  size="1"
-                  defaultValue="all"
-                  onValueChange={setSelectedSearchCategoryId}
-                >
-                  <Select.Trigger radius="large">
-                    {selectedCategoryLabel}
-                  </Select.Trigger>
-                  <Select.Content>
-                    {searchCategories.map((category) => (
-                      <Select.Item key={category._id} value={category._id}>
-                        {category.label ?? category.page?._title}
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </Box>
-            </>
-          )}
-        </Flex>
-      </Dialog.Content>
-    </Dialog.Root>
+        )
+      })}
+    </SearchBox.HitsList>
+  )
+}
+
+export const DialogTriggerMobile = () => {
+  return (
+    <Dialog.Trigger>
+      <IconButton variant="soft">
+        <MagnifyingGlassIcon />
+      </IconButton>
+    </Dialog.Trigger>
+  )
+}
+
+export const DialogTriggerDesktop = () => {
+  return (
+    <Dialog.Trigger style={{ width: '100%' }}>
+      <button
+        style={{
+          padding: 0,
+          background: 'none',
+          border: 'none',
+        }}
+        tabIndex={-1}
+        onFocus={(e) => {
+          e.preventDefault()
+          e.currentTarget.querySelector('input')?.focus()
+        }}
+      >
+        <TextField.Root
+          readOnly
+          placeholder="Search"
+          size="2"
+          radius="large"
+          className={s['search-trigger']}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              e.currentTarget.closest('button')?.click()
+            }
+          }}
+        >
+          <TextField.Slot>
+            <MagnifyingGlassIcon color="currentColor" />
+          </TextField.Slot>
+          <TextField.Slot>
+            <Flex align="center" justify="between" gap="1">
+              <Kbd>⌘</Kbd>
+              <Kbd>k</Kbd>
+            </Flex>
+          </TextField.Slot>
+        </TextField.Root>
+      </button>
+    </Dialog.Trigger>
   )
 }

@@ -13,7 +13,7 @@ export const ArticleBreadcrumb = ({
   breadcrumb: ArticleBreadcrumb
 }) => {
   return (
-    <Flex align="center" wrap="wrap" gap="1">
+    <Flex align="center" wrap="wrap">
       {breadcrumb.map((segment, index) => {
         const href = `/${breadcrumb
           .slice(0, index + 1)
