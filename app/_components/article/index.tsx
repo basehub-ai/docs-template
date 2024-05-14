@@ -97,7 +97,7 @@ export const Article = ({
               ) : innerArticlesWithContent.length ? (
                 <ArticleIndex articles={innerArticlesWithContent} />
               ) : (
-                <Text size="3" color="gray" weight="medium">
+                <Text size="3" color="gray" style={{ opacity: 0.5 }}>
                   This article has no content yet.
                 </Text>
               )}

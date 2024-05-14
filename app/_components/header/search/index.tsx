@@ -51,7 +51,7 @@ export const SearchProvider = ({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'k' && event.metaKey) {
         event.preventDefault()
-        setOpen(true)
+        setOpen((p) => !p)
       }
     }
 
