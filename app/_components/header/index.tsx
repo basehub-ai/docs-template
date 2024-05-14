@@ -18,6 +18,7 @@ import {
   SearchProvider,
 } from './search'
 import { Logo } from '../logo'
+import { ThemeSettingsFragment } from '../theme-provider/server'
 
 import s from './header.module.scss'
 
@@ -55,7 +56,7 @@ export const Header = () => {
         return (
           <SearchProvider
             _searchKey={_searchKey}
-            searchCategories={header.navLinks.items}
+            searchCategories={header.subNavLinks.items}
           >
             <header className={s.header}>
               <Container
@@ -78,24 +79,11 @@ export const Header = () => {
                       <DialogTriggerMobile />
                     </Box>
                   </Flex>
-                  <Flex align="center" justify="end">
-                    <ThemeSwitcher />
-                    <Button
-                      asChild
-                      ml="5"
-                      radius="large"
-                      className={s['header__main-cta']}
-                      size="2"
-                    >
-                      <Link asChild>
-                        <NextLink href="#">
-                          <Text as="span" weight="medium">
-                            Main CTA
-                          </Text>
-                        </NextLink>
-                      </Link>
-                    </Button>
-                  </Flex>
+
+                  <TopRightNav
+                    appearance={settings.theme.appearance}
+                    topRightLinks={header.topRightLinks}
+                  />
                 </Flex>
 
                 {/* desktop */}
@@ -110,26 +98,11 @@ export const Header = () => {
                   <Flex maxWidth="300px" mx="auto" width="100%">
                     <DialogTriggerDesktop />
                   </Flex>
-                  <Flex align="center" justify="end">
-                    {settings.theme.appearance === 'inherit' && (
-                      <ThemeSwitcher />
-                    )}
-                    <Button
-                      asChild
-                      ml="5"
-                      radius="large"
-                      className={s['header__main-cta']}
-                      size="2"
-                    >
-                      <Link asChild>
-                        <NextLink href="#">
-                          <Text as="span" weight="medium">
-                            Main CTA
-                          </Text>
-                        </NextLink>
-                      </Link>
-                    </Button>
-                  </Flex>
+
+                  <TopRightNav
+                    appearance={settings.theme.appearance}
+                    topRightLinks={header.topRightLinks}
+                  />
                 </Grid>
               </Container>
               <PagesNav />
@@ -138,5 +111,39 @@ export const Header = () => {
         )
       }}
     </Pump>
+  )
+}
+
+const TopRightNav = ({
+  appearance,
+  topRightLinks,
+}: {
+  appearance: ThemeSettingsFragment['appearance']
+  topRightLinks: HeaderFragment['topRightLinks']
+}) => {
+  return (
+    <Flex align="center" justify="end" gap="4">
+      {appearance === 'system' && <ThemeSwitcher />}
+      {topRightLinks.items.map((item, i, { length }) => {
+        const isLast = i === length - 1
+        if (isLast) {
+          return (
+            <Button key={item._id} asChild size="2">
+              <Link asChild>
+                <NextLink href={item.href}>{item.label}</NextLink>
+              </Link>
+            </Button>
+          )
+        }
+
+        return (
+          <Link key={item._id} size="2" color="gray" asChild>
+            <NextLink href={item.href}>
+              <Text as="span">{item.label}</Text>
+            </NextLink>
+          </Link>
+        )
+      })}
+    </Flex>
   )
 }

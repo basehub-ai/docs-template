@@ -161,7 +161,6 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}
-          radius="large"
           variant="soft"
           onClick={() => {
             document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })

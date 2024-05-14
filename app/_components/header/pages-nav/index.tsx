@@ -18,7 +18,14 @@ export type ArticleSlugFragment = fragmentOn.infer<
 >
 
 export const HeaderFragment = fragmentOn('Header', {
-  navLinks: {
+  topRightLinks: {
+    items: {
+      _id: true,
+      label: true,
+      href: true,
+    },
+  },
+  subNavLinks: {
     items: {
       _id: true,
       page: {
@@ -62,7 +69,7 @@ export const PagesNav = async () => {
                 overflowY={{ initial: 'clip', md: 'visible' }}
               >
                 <Flex align="center" justify="between" height="100%">
-                  <Nav navLinks={data.header.navLinks} />
+                  <Nav subNavLinks={data.header.subNavLinks} />
                   {draftMode().isEnabled && <DraftModeHeader />}
                 </Flex>
               </Container>

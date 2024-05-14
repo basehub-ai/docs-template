@@ -11,14 +11,14 @@ export default async function RootPage() {
   }).query({
     pages: SidebarFragment,
     header: {
-      navLinks: {
+      subNavLinks: {
         __args: { first: 1 },
         items: { page: { _slug: true } },
       },
     },
   })
 
-  const firstCategorySlug = header.navLinks.items?.[0]?.page?._slug
+  const firstCategorySlug = header.subNavLinks.items?.[0]?.page?._slug
   if (!firstCategorySlug) return null
 
   const page = pages.items.find((page) => page._slug === firstCategorySlug)

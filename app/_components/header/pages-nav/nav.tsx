@@ -5,13 +5,17 @@ import { Flex, Text } from '@radix-ui/themes'
 import { ArticleSlugFragment, HeaderFragment } from '.'
 import { NavLink } from './nav-link'
 
-export const Nav = ({ navLinks }: HeaderFragment) => {
+export const Nav = ({
+  subNavLinks,
+}: {
+  subNavLinks: HeaderFragment['subNavLinks']
+}) => {
   const navLinksRef = React.useRef<HTMLAnchorElement[]>([])
 
   let firstPageLinkId: string | null = null
 
   const getFirstHref = (
-    navLink: HeaderFragment['navLinks']['items'][number]
+    navLink: HeaderFragment['subNavLinks']['items'][number]
   ) => {
     const navLinkSlug = `/${navLink.page?._slug}`
     const firstChild = navLink.page?.articles.items[0]
@@ -40,7 +44,7 @@ export const Nav = ({ navLinks }: HeaderFragment) => {
   return (
     <Flex asChild align="center" height="100%">
       <nav>
-        {navLinks.items.map((navLink) => {
+        {subNavLinks.items.map((navLink) => {
           const label = navLink.label ?? navLink.page?._title
           const href =
             navLink.href ??

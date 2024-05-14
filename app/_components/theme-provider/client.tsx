@@ -3,11 +3,12 @@
 import { useThemeContext } from '@radix-ui/themes'
 import { ThemeSettingsFragment } from './server'
 import * as React from 'react'
+import { useTheme } from 'next-themes'
 
 export const LiveThemeSwitcher = ({
   theme,
 }: {
-  theme: ThemeSettingsFragment['theme']
+  theme: ThemeSettingsFragment
 }) => {
   const {
     onAccentColorChange,
@@ -16,6 +17,7 @@ export const LiveThemeSwitcher = ({
     onScalingChange,
     onAppearanceChange,
   } = useThemeContext()
+  const { setTheme } = useTheme()
 
   React.useEffect(() => {
     onAccentColorChange(theme.accentColor as any)
@@ -23,6 +25,12 @@ export const LiveThemeSwitcher = ({
     onGrayColorChange(theme.grayScale as any)
     onAppearanceChange(theme.appearance as any)
     onScalingChange(theme.scaling as any)
+    setTheme((p) => {
+      const changed = p !== theme.appearance
+      if (!changed) return p
+      if (!theme.appearance || theme.appearance === 'system') return 'system'
+      return theme.appearance
+    })
   }, [
     theme.accentColor,
     theme.radius,
@@ -34,6 +42,7 @@ export const LiveThemeSwitcher = ({
     onAppearanceChange,
     onRadiusChange,
     onScalingChange,
+    setTheme,
   ])
 
   return null

@@ -112,7 +112,6 @@ export const CopyButton = ({
       style={style}
       size="1"
       variant="surface"
-      radius="large"
       color="gray"
       onClick={() => {
         setCopied(true)

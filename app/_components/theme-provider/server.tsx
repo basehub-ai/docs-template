@@ -7,14 +7,12 @@ import { draftMode } from 'next/headers'
 
 import '@radix-ui/themes/styles.css'
 
-export const ThemeSettingsFragment = fragmentOn('Settings', {
-  theme: {
-    accentColor: true,
-    grayScale: true,
-    appearance: true,
-    radius: true,
-    scaling: true,
-  },
+export const ThemeSettingsFragment = fragmentOn('ThemeComponent', {
+  accentColor: true,
+  grayScale: true,
+  appearance: true,
+  radius: true,
+  scaling: true,
 })
 
 export type ThemeSettingsFragment = fragmentOn.infer<
@@ -29,10 +27,17 @@ export const ThemeProvider = async ({
   const data = await basehub({
     next: { revalidate: 30 },
     draft: draftMode().isEnabled,
-  }).query({ settings: ThemeSettingsFragment })
+  }).query({ settings: { theme: ThemeSettingsFragment } })
 
   return (
-    <NextThemesThemeProvider attribute="class">
+    <NextThemesThemeProvider
+      attribute="class"
+      forcedTheme={
+        data.settings.theme.appearance === 'system'
+          ? undefined
+          : data.settings.theme.appearance ?? undefined
+      }
+    >
       <Theme
         accentColor={
           data.settings.theme.accentColor as ThemeProps['accentColor']
@@ -48,7 +53,7 @@ export const ThemeProvider = async ({
       >
         {children}
         <Pump
-          queries={[{ settings: ThemeSettingsFragment }]}
+          queries={[{ settings: { theme: ThemeSettingsFragment } }]}
           next={{ revalidate: 30 }}
           draft={draftMode().isEnabled}
         >

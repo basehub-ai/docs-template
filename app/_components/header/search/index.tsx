@@ -17,11 +17,11 @@ import {
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { HeaderFragment } from '../pages-nav'
-
-import s from './search.module.scss'
 import { clsx } from 'clsx'
 import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { flushSync } from 'react-dom'
+
+import s from './search.module.scss'
 
 export const SearchProvider = ({
   _searchKey,
@@ -29,7 +29,7 @@ export const SearchProvider = ({
   children,
 }: {
   _searchKey: string | null
-  searchCategories: HeaderFragment['navLinks']['items']
+  searchCategories: HeaderFragment['subNavLinks']['items']
   children: React.ReactNode
 }) => {
   const [open, setOpen] = React.useState(false)
@@ -94,7 +94,7 @@ const DialogContent = ({
   selectedCategoryId,
   onCategoryChange,
 }: {
-  searchCategories: HeaderFragment['navLinks']['items']
+  searchCategories: HeaderFragment['subNavLinks']['items']
   selectedCategoryId: string
   onCategoryChange: (_id: string) => void
 }) => {
@@ -191,9 +191,7 @@ const DialogContent = ({
                 }}
                 value={selectedCategoryId}
               >
-                <Select.Trigger radius="large">
-                  {selectedCategoryLabel}
-                </Select.Trigger>
+                <Select.Trigger>{selectedCategoryLabel}</Select.Trigger>
                 <Select.Content>
                   <Select.Item value={'__all__'}>All</Select.Item>
                   {searchCategories.map((category) => {
@@ -329,7 +327,6 @@ export const DialogTriggerDesktop = () => {
           readOnly
           placeholder="Search"
           size="2"
-          radius="large"
           className={s['search-trigger']}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
