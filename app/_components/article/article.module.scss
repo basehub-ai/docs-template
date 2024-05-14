@@ -1,9 +1,5 @@
 .article {
   min-height: calc(100svh - var(--header) - var(--space-9));
-}
-
-.body {
-  width: 100%;
 
   @media screen and (min-width: 1024px) {
     max-width: calc(716px * var(--scaling));
@@ -14,16 +10,18 @@
   @media screen and (min-width: 1280px) {
     padding-right: var(--space-9);
   }
+}
 
-  & > p {
-    &:not([role="excerpt"]) {
-      color: var(--gray-11);
-      font-size: var(--font-size-3);
-      line-height: var(--line-height-5);
-    }
+.body {
+  width: 100%;
+
+  > p {
+    color: var(--gray-11);
+    font-size: var(--font-size-3);
+    line-height: var(--line-height-5);
   }
 
-  code[data-type="inline-code"] {
+  code[data-type='inline-code'] {
     font-family: var(--font-geist-mono);
   }
 
@@ -41,7 +39,7 @@
       &::marker {
         color: var(--gray-11);
       }
-      
+
       color: var(--gray-11);
       margin-bottom: var(--space-2);
     }
@@ -94,7 +92,7 @@
     button {
       display: none;
     }
-    
+
     &:hover {
       button {
         display: block;
@@ -107,23 +105,28 @@
     border-collapse: separate;
     border-spacing: 0;
     text-align: left;
-    
+
     p {
       font-size: var(--font-size-2);
       line-height: 1.2;
     }
-    
+
     a {
       font-size: var(--font-size-2);
       line-height: 1.2;
     }
   }
+
+  > div,
+  > blockquote {
+    margin-top: var(--space-6);
+
+    &:not(:last-child) {
+      margin-bottom: var(--space-6);
+    }
+  }
 }
 
 .article-footer {
-  @media screen and (min-width: 1024px) {
-    max-width: calc(716px * var(--scaling));
-    margin-inline: auto;
-    width: 100%;
-  }
+  width: 100%;
 }

@@ -136,7 +136,7 @@ export const ArticleWrapper = ({
       height="100%"
     >
       <article className={s.article}>
-        <Box className={s.body}>
+        <Box>
           <Box mb="4">
             <ArticleBreadcrumb breadcrumb={breadcrumb} />
           </Box>
@@ -154,7 +154,7 @@ export const ArticleWrapper = ({
               {excerpt}
             </Text>
           )}
-          {children}
+          <Box className={s.body}>{children}</Box>
         </Box>
         <ArticleFooter
           lastUpdatedAt={lastModifiedAt}

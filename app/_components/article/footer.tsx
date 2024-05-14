@@ -23,13 +23,7 @@ export const ArticleFooter = ({
   nextArticle,
 }: ArticleFooter) => {
   return (
-    <Container
-      asChild
-      px={{ initial: '0', md: '9' }}
-      mt="9"
-      width="100%"
-      flexGrow="0"
-    >
+    <Container asChild mt="9" width="100%" flexGrow="0">
       <footer className={s['article-footer']}>
         {lastUpdatedAt && (
           <Text size="2" weight="medium" color="gray" mb="2">
