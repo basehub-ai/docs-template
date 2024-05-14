@@ -371,7 +371,6 @@ const SidebarItem = ({
             <IconButton
               data-collapsed={isCollapsed}
               variant="surface"
-              radius="large"
               color="gray"
               size="1"
               className={s['sidebar-item__collapse']}

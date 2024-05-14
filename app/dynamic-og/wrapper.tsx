@@ -8,7 +8,7 @@ type OGWrapper = {
   subtitle: string
   logo: { url: string; alt: string | null }
   accentColor: ThemeProps['accentColor']
-  theme: 'light' | 'dark' | 'system'
+  theme: ThemeProps['appearance']
 }
 
 export const ContentOGWrapperResponse = async ({

@@ -145,16 +145,15 @@ export const ArticleWrapper = ({
             size="8"
             className={headingStyles.heading}
             mt="0"
-            mb={excerpt ? '1' : '9'}
+            mb={excerpt ? '1' : '7'}
           >
             {title}
           </RadixHeading>
           {excerpt && (
-            <Text size="5" color="gray" mb="9" as="p" role="excerpt">
+            <Text size="5" color="gray" mb="7" as="p" role="excerpt">
               {excerpt}
             </Text>
           )}
-          {/* <ArticleIndex articles={innerArticlesWithContent} /> */}
           {children}
         </Box>
         <ArticleFooter
@@ -247,14 +246,14 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
             )
 
           return (
-            <Box position="relative">
+            <Box position="relative" data-code-snippet>
               <CodeSnippet code={{ ...rest }} />
               <CopyButton
                 snippet={rest.code}
                 style={{
                   position: 'absolute',
-                  right: '0',
-                  top: 'calc(var(--space-6) * -1)',
+                  right: 'var(--space-2)',
+                  top: 'var(--space-2)',
                 }}
               />
             </Box>

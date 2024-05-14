@@ -53,7 +53,7 @@
     display: flex;
     max-width: max-content;
     margin-block: var(--space-6);
-    border-radius: var(--radius-3);
+    border-radius: var(--radius-4);
     border: 1px solid var(--gray-5);
     z-index: 1;
     position: relative;
@@ -72,19 +72,6 @@
     }
   }
 
-  :modal {
-    outline: none;
-    background-color: var(--gray-6);
-    padding: var(--space-1);
-    display: block;
-    max-width: max-content;
-    margin-bottom: var(--space-6);
-    border-radius: var(--radius-3);
-    border: 1px solid var(--gray-7);
-    z-index: 1;
-    box-shadow: 0px 1px 2px 0px var(--gray-6);
-  }
-
   p[data-type='caption'] {
     padding-top: var(--space-4);
     padding-bottom: var(--space-2);
@@ -93,14 +80,26 @@
     position: relative;
     text-align: center;
     z-index: 0;
-    border-bottom-left-radius: var(--radius-3);
-    border-bottom-right-radius: var(--radius-3);
+    border-bottom-left-radius: var(--radius-4);
+    border-bottom-right-radius: var(--radius-4);
     border: 1px solid var(--gray-5);
-    background: rgba(212, 212, 216, 0.2);
+    background: var(--gray-10);
     color: var(--strong);
     font-size: var(--font-size-2);
     font-weight: 500;
     line-height: var(--space-4);
+  }
+
+  *[data-code-snippet] {
+    button {
+      display: none;
+    }
+    
+    &:hover {
+      button {
+        display: block;
+      }
+    }
   }
 
   table {

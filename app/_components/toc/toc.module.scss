@@ -1,6 +1,7 @@
 .toc {
    top: calc(var(--header) + var(--space-6));
    width: calc(190px * var(--scaling));
+   flex-shrink: 0;
 
    ol {
       border-left: 1px solid var(--gray-4);

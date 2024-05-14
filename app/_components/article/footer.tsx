@@ -44,7 +44,7 @@ export const ArticleFooter = ({
                 <Flex align="center">
                   <Box>
                     <Text size="3" weight="medium">
-                      {nextArticle.title}
+                      {nextArticle.title || 'Untitled article'}
                     </Text>
                   </Box>
                   <Flex ml="auto" align="center">

@@ -13,25 +13,25 @@ export const LiveThemeSwitcher = ({
     onAccentColorChange,
     onRadiusChange,
     onGrayColorChange,
-    onPanelBackgroundChange,
     onScalingChange,
+    onAppearanceChange,
   } = useThemeContext()
 
   React.useEffect(() => {
     onAccentColorChange(theme.accentColor as any)
     onRadiusChange(theme.radius as any)
     onGrayColorChange(theme.grayScale as any)
-    onPanelBackgroundChange(theme.panelBackground as any)
+    onAppearanceChange(theme.appearance as any)
     onScalingChange(theme.scaling as any)
   }, [
     theme.accentColor,
     theme.radius,
     theme.grayScale,
-    theme.panelBackground,
+    theme.appearance,
     theme.scaling,
     onAccentColorChange,
     onGrayColorChange,
-    onPanelBackgroundChange,
+    onAppearanceChange,
     onRadiusChange,
     onScalingChange,
   ])

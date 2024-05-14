@@ -1,6 +1,6 @@
 .sidebar__item {
    line-height: var(--line-height-1);
-   border-radius: var(--radius-3);
+   border-radius: var(--radius-4);
    color: var(--gray-10);
    width: calc(100% + var(--space-3));
    scroll-margin-block: var(--space-3);
@@ -30,7 +30,6 @@
 }
 
 .sidebar__item--indicator {
-   left: var(--space-4);
    top: 0;
    width: 1px;
    height: 100%;
@@ -49,6 +48,7 @@
    position: absolute;
    right: var(--space-1);
    top: var(--space-1);
+   border-radius: var(--radius-3);
 }
 
 .sidebar__descendants-line {

@@ -25,13 +25,15 @@ export const Header = () => {
   return (
     <Pump
       queries={[
-        { settings: { logo: { url: true }, logoDark: { url: true } } },
-        { header: HeaderFragment },
         {
-          _componentInstances: {
-            article: { _searchKey: true },
+          settings: {
+            logo: { url: true },
+            logoDark: { url: true },
+            theme: { appearance: true },
           },
         },
+        { header: HeaderFragment },
+        { _componentInstances: { article: { _searchKey: true } } },
       ]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
@@ -109,7 +111,9 @@ export const Header = () => {
                     <DialogTriggerDesktop />
                   </Flex>
                   <Flex align="center" justify="end">
-                    <ThemeSwitcher />
+                    {settings.theme.appearance === 'inherit' && (
+                      <ThemeSwitcher />
+                    )}
                     <Button
                       asChild
                       ml="5"

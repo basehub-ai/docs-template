@@ -57,7 +57,7 @@ const getCategoryOGData = async (categoryId: string) => {
   const title = category._title
   const subtitle =
     data.settings.metadata.sitename + ' documentation / ' + category._title
-  const theme = data.settings.theme.appearance as 'light' | 'dark' | 'system'
+  const theme = data.settings.theme.appearance as 'light' | 'dark' | 'inherit'
   const accentColor = data.settings.theme
     .accentColor as ThemeProps['accentColor']
   const logo = theme === 'dark' ? data.settings.logoDark : data.settings.logo
@@ -88,13 +88,10 @@ const getArticleOGData = async (articleId: string) => {
 
   const title = article.titleSidebarOverride ?? article._title
   const subtitle = article?.excerpt ?? article?.body?.plainText ?? ''
-  const theme = data.settings.theme.appearance as 'light' | 'dark' | 'system'
+  const theme = data.settings.theme.appearance as 'light' | 'dark' | 'inherit'
   const accentColor = data.settings.theme
     .accentColor as ThemeProps['accentColor']
-  const logo =
-    data.settings.theme.appearance === 'light'
-      ? data.settings.logo
-      : data.settings.logoDark
+  const logo = theme === 'dark' ? data.settings.logoDark : data.settings.logo
 
   return { title, subtitle, theme, logo, accentColor }
 }
