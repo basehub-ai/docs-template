@@ -302,9 +302,7 @@ const SidebarItem = ({
             color="gray"
             asChild
           >
-            <NextLink href={href} prefetch={false}>
-              {title || 'Untitled article'}
-            </NextLink>
+            <NextLink href={href}>{title || 'Untitled article'}</NextLink>
           </Link>
         </Flex>
       )
