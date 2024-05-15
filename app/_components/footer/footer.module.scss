@@ -30,6 +30,13 @@
 
    .footer__copyright {
       color: var(--gray-10);
+      text-align: center;
+      padding: 0 var(--space-6);
+      
+      @media screen and (min-width: 1024px) {
+         padding: 0;
+         text-align: inherit;
+      }
    }
 
    .footer__link {

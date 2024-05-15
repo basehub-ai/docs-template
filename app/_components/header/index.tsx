@@ -1,24 +1,14 @@
 import { Pump } from '@/.basehub/react-pump'
 import { HeaderFragment, PagesNav } from './pages-nav'
-import NextLink from 'next/link'
 import { draftMode } from 'next/headers'
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Link,
-  Text,
-} from '@radix-ui/themes'
-import { ThemeSwitcher } from '../theme-switcher'
+import { Box, Container, Flex, Grid } from '@radix-ui/themes'
 import {
   DialogTriggerDesktop,
   DialogTriggerMobile,
   SearchProvider,
 } from './search'
 import { Logo } from '../logo'
-import { ThemeSettingsFragment } from '../theme-provider/server'
+import { TopRightNavDesktop, TopRightNavMobile } from './header-nav'
 
 import s from './header.module.scss'
 
@@ -73,14 +63,12 @@ export const Header = () => {
                   justify="between"
                   display={{ initial: 'flex', md: 'none' }}
                 >
-                  <Flex align="center" justify="end">
+                  <Flex align="center" justify="end" gapX="3">
                     <Logo logoLight={logoLight} logoDark={logoDark} />
-                    <Box ml="3">
-                      <DialogTriggerMobile />
-                    </Box>
+                    <DialogTriggerMobile />
                   </Flex>
 
-                  <TopRightNav
+                  <TopRightNavMobile
                     appearance={settings.theme.appearance}
                     topRightLinks={header.topRightLinks}
                   />
@@ -88,18 +76,27 @@ export const Header = () => {
 
                 {/* desktop */}
                 <Grid
-                  columns="3"
+                  columns={{ initial: 'auto 1fr auto', lg: '3' }}
+                  gapX="5"
                   align="center"
                   height="100%"
                   justify="between"
                   display={{ initial: 'none', md: 'grid' }}
                 >
                   <Logo logoLight={logoLight} logoDark={logoDark} />
-                  <Flex maxWidth="300px" mx="auto" width="100%">
-                    <DialogTriggerDesktop />
-                  </Flex>
+                  <Box>
+                    <Flex
+                      maxWidth="300px"
+                      mr={{ lg: 'auto' }}
+                      ml={{ lg: 'auto' }}
+                      width="100%"
+                      justify="start"
+                    >
+                      <DialogTriggerDesktop />
+                    </Flex>
+                  </Box>
 
-                  <TopRightNav
+                  <TopRightNavDesktop
                     appearance={settings.theme.appearance}
                     topRightLinks={header.topRightLinks}
                   />
@@ -111,39 +108,5 @@ export const Header = () => {
         )
       }}
     </Pump>
-  )
-}
-
-const TopRightNav = ({
-  appearance,
-  topRightLinks,
-}: {
-  appearance: ThemeSettingsFragment['appearance']
-  topRightLinks: HeaderFragment['topRightLinks']
-}) => {
-  return (
-    <Flex align="center" justify="end" gap="4">
-      {appearance === 'system' && <ThemeSwitcher />}
-      {topRightLinks.items.map((item, i, { length }) => {
-        const isLast = i === length - 1
-        if (isLast) {
-          return (
-            <Button key={item._id} asChild size="2">
-              <Link asChild>
-                <NextLink href={item.href}>{item.label}</NextLink>
-              </Link>
-            </Button>
-          )
-        }
-
-        return (
-          <Link key={item._id} size="2" color="gray" asChild>
-            <NextLink href={item.href}>
-              <Text as="span">{item.label}</Text>
-            </NextLink>
-          </Link>
-        )
-      })}
-    </Flex>
   )
 }

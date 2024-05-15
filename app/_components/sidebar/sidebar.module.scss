@@ -1,3 +1,17 @@
+.sidebar {
+  background-color: var(--color-background);
+  z-index: 50;
+  box-shadow: var(--shadow-3);
+  border-radius: 0 0 var(--radius-4) var(--radius-4);
+  
+  @media screen and (min-width: 1024px) {
+    z-index: unset;
+    box-shadow: none;
+    border-radius: 0;
+    border-right: 1px solid var(--gray-5);
+  }
+}
+
 .sidebar__item {
   line-height: var(--line-height-1);
   border-radius: max(var(--radius-4), var(--radius-full));
@@ -70,5 +84,5 @@
   z-index: 40;
   height: var(--header-mobile-sidebar-trigger);
   border-bottom: 1px solid var(--gray-5);
-  top: var(--header-only);
+  top: calc(var(--header-only) - 1px);
 }

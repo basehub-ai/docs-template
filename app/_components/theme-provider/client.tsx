@@ -28,7 +28,7 @@ export const LiveThemeSwitcher = ({
     setTheme((p) => {
       const changed = p !== theme.appearance
       if (!changed) return p
-      if (!theme.appearance || theme.appearance === 'system') return 'system'
+      if (!theme.appearance || theme.appearance === 'inherit') return 'system'
       return theme.appearance
     })
   }, [
