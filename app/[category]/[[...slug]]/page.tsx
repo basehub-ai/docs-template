@@ -10,7 +10,6 @@ import { notFound } from 'next/navigation'
 import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
 import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
-import { siteOrigin } from '@/constants/routing'
 import { Toc } from '@/app/_components/toc'
 import { ArticleIndex } from '@/app/_components/article/article-index'
 
@@ -80,9 +79,10 @@ export const generateMetadata = async ({
   if (!params.slug?.length) {
     const title = `${category._title} ${data.settings.metadata.pageTitleTemplate}`
     const description = siteName + ' documentation / ' + category._title
+    console.log(process.env)
     const images = [
       {
-        url: siteOrigin + `/dynamic-og?article=${category._id}&type=category`,
+        url: `/dynamic-og?article=${category._id}&type=category`,
         width: 1200,
         height: 630,
       },
@@ -102,7 +102,7 @@ export const generateMetadata = async ({
         siteName,
         locale: 'en-US',
         type: 'website',
-        url: siteOrigin + `/docs/${params.slug?.join('/') ?? ''}`,
+        url: `/docs/${params.slug?.join('/') ?? ''}`,
         images,
       },
     }
@@ -128,7 +128,7 @@ export const generateMetadata = async ({
 
   const images = [
     {
-      url: siteOrigin + `/dynamic-og?article=${_id}`,
+      url: `/dynamic-og?article=${_id}`,
       width: 1200,
       height: 630,
     },
@@ -148,7 +148,7 @@ export const generateMetadata = async ({
       siteName,
       locale: 'en-US',
       type: 'website',
-      url: siteOrigin + `/docs/${params.slug?.join('/') ?? ''}`,
+      url: `/docs/${params.slug?.join('/') ?? ''}`,
       images,
     },
   }
