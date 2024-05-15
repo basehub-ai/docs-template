@@ -107,7 +107,10 @@ const DialogContent = ({
     )?.page?._title ?? 'All'
 
   return (
-    <Dialog.Content maxWidth="550px" className={s['search-dialog__content']}>
+    <Dialog.Content
+      maxWidth="min(100vw - var(--space-6), 550px)"
+      className={s['search-dialog__content']}
+    >
       <Flex direction="column" height="100%">
         <SearchBox.Input asChild>
           <TextField.Root
@@ -177,7 +180,7 @@ const DialogContent = ({
               px="3"
               align="center"
             >
-              <Text size="1" weight="medium" mr="1">
+              <Text size="1" weight="medium" mr="1" wrap="nowrap">
                 Show results from:&nbsp;
               </Text>
               <Select.Root
@@ -191,7 +194,9 @@ const DialogContent = ({
                 }}
                 value={selectedCategoryId}
               >
-                <Select.Trigger>{selectedCategoryLabel}</Select.Trigger>
+                <Select.Trigger className={s['search-dialog-category']}>
+                  {selectedCategoryLabel}
+                </Select.Trigger>
                 <Select.Content>
                   <Select.Item value={'__all__'}>All</Select.Item>
                   {searchCategories.map((category) => {

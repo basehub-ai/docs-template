@@ -93,3 +93,8 @@
     cursor: default;
   }
 }
+
+.search-dialog-category {
+  min-width: 0;
+  flex-shrink: 1;
+}
