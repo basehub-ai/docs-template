@@ -37,7 +37,7 @@ export const SearchProvider = ({
 
   const search = useSearch({
     _searchKey,
-    queryBy: ['_title', 'body'],
+    queryBy: ['_title', 'body', 'excerpt'],
     ...(selectedCategoryId !== '__all__' && {
       filterBy: `_idPath:${selectedCategoryId}*`,
     }),
@@ -223,7 +223,7 @@ const DialogContent = ({
 const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
   const search = SearchBox.useContext()
   return (
-    <SearchBox.HitsList>
+    <SearchBox.HitList>
       {isRecent && (
         <Text weight="medium" color="gray" size="1" ml="3" mb="1" as="p">
           Recent searches
@@ -232,18 +232,13 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
       {hits.map((hit) => {
         let pathname = getAritcleSlugFromSlugPath(hit.document._slugPath ?? '')
 
-        // TODO is there an opportunity to build a helper function in our SDK here? looks like a common usecase
-        const bodyHighlight = hit.highlights
-          .map((h) => {
-            if (h.fieldPath.startsWith('body') === false) return
-            const splitted = h.fieldPath.split('.').slice(0, 2)
-            const fullField = hit._getField(splitted.join('.'))
-            return fullField
-          })
-          .filter(Boolean)[0] as { _id: string | undefined } | undefined
+        const bodyHighlight = hit._getFieldHighlight('body')
 
-        if (bodyHighlight?._id) {
-          pathname += `#${bodyHighlight._id}`
+        if (
+          bodyHighlight?.highlightedField?._type === 'rich-text-section' &&
+          bodyHighlight.highlightedField._id
+        ) {
+          pathname += `#${bodyHighlight.highlightedField._id}`
         }
 
         return (
@@ -272,6 +267,7 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
                 />
                 <SearchBox.HitSnippet
                   fieldPath="body"
+                  fallbackFieldPaths={['excerpt']}
                   components={{
                     container: ({ children }) => (
                       <Text size="1" mt="1" as="p">
@@ -299,7 +295,7 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
           </Box>
         )
       })}
-    </SearchBox.HitsList>
+    </SearchBox.HitList>
   )
 }
 
