@@ -35,14 +35,9 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   const pathname = usePathname()
   const params = useParams()
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
-  const scrollPosition = React.useRef(0)
-  const pageHeight = React.useRef(0)
 
   React.useLayoutEffect(() => {
     setMobileSidebarOpen(false)
-    if (window.innerWidth <= 1024 && !window.location.hash) {
-      setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }))
-    }
   }, [pathname])
 
   const activeSlugs: string[] = React.useMemo(() => {
@@ -60,42 +55,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     })
   }, [activeSlugs, data])
 
-  React.useLayoutEffect(() => {
-    const handleScroll = () => {
-      scrollPosition.current = window.scrollY
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  React.useLayoutEffect(() => {
-    const handleResize = () => {
-      if (mobileSidebarOpen) return
-      pageHeight.current = document.body.scrollHeight
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [mobileSidebarOpen])
-
   const toggleSidebar = () => {
-    if (!mobileSidebarOpen) {
-      scrollPosition.current = window.scrollY
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      const newPageHeight = document.body.scrollHeight
-      const heightDifference = newPageHeight - pageHeight.current
-      const adjustedScrollPosition = scrollPosition.current - heightDifference
-      window.scrollTo({ top: adjustedScrollPosition, behavior: 'instant' })
-    }
     setMobileSidebarOpen((prevState) => !prevState)
-    pageHeight.current = document.body.scrollHeight
   }
 
   React.useLayoutEffect(() => {
@@ -154,25 +115,24 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
       </Box>
 
       <Box
-        style={{
-          borderRight: '1px solid var(--gray-5)',
-          backgroundColor: 'var(--color-background)',
-        }}
+        className={s.sidebar}
         height={{ initial: 'auto', md: 'var(--sidebar)' }}
-        position={{ initial: 'relative', md: 'sticky' }}
-        top={{ initial: 'unset', md: 'var(--header)' }}
+        position={{ initial: 'fixed', md: 'sticky' }}
+        top="calc(var(--header) - 1px)"
+        left={{ initial: '0', md: 'unset' }}
         display={{
           initial: mobileSidebarOpen ? 'block' : 'none',
           md: 'block',
         }}
-        width={{ initial: '97svw', md: '320px' }}
-        ml="-3"
+        width={{ initial: '100svw', md: '320px' }}
+        px={{ initial: '3', md: '0' }}
+        ml={{ initial: '0', md: '-3' }}
       >
         <ScrollArea data-mobile-display={mobileSidebarOpen}>
           <Flex
             asChild
             ml="-3"
-            pb="7"
+            pb={{ initial: '3', md: '7' }}
             pl="5"
             pr="3"
             pt="5"
@@ -352,7 +312,7 @@ const SidebarItem = ({
   if (level > 0 && !data.body) return null
 
   return (
-    <div>
+    <Box>
       <Box position="relative">
         {titleNode}
 
@@ -414,7 +374,7 @@ const SidebarItem = ({
           })}
         </Box>
       </Box>
-    </div>
+    </Box>
   )
 }
 

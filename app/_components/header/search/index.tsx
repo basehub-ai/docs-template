@@ -302,8 +302,8 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
 export const DialogTriggerMobile = () => {
   return (
     <Dialog.Trigger>
-      <IconButton variant="soft">
-        <MagnifyingGlassIcon />
+      <IconButton variant="soft" size="2">
+        <MagnifyingGlassIcon width={16} height={16} />
       </IconButton>
     </Dialog.Trigger>
   )

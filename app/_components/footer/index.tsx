@@ -37,7 +37,7 @@ export const Footer = () => {
                 minWidth={{ sm: '526px' }}
               >
                 <Flex justify="center" direction="column" align="center">
-                  <Logo logoLight={logoLight} logoDark={logoDark} />
+                  <Logo logoLight={logoLight} logoDark={logoDark} size='lg' />
 
                   <Text
                     size="2"

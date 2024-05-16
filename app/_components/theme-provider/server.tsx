@@ -46,7 +46,7 @@ export const ThemeProvider = async ({
         radius={data.settings.theme.radius as ThemeProps['radius']}
         scaling={data.settings.theme.scaling as ThemeProps['scaling']}
         appearance={
-          (data.settings.theme.appearance === 'inherit'
+          (data.settings.theme.appearance === 'system'
             ? undefined
             : data.settings.theme.appearance) as ThemeProps['appearance']
         }
