@@ -21,6 +21,7 @@ import { Logo } from '../logo'
 import { ThemeSettingsFragment } from '../theme-provider/server'
 
 import s from './header.module.scss'
+import { Icon } from '../icon'
 
 export const Header = () => {
   return (
@@ -78,6 +79,7 @@ export const Header = () => {
                     <Box ml="3">
                       <DialogTriggerMobile />
                     </Box>
+                    <Icon name={'accessibility-icon'} />
                   </Flex>
 
                   <TopRightNav

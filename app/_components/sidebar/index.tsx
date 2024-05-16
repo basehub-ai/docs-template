@@ -22,6 +22,7 @@ import {
   VisuallyHidden,
 } from '@radix-ui/themes'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
+// import { Icon } from '../icon'
 
 import s from './sidebar.module.scss'
 
@@ -139,6 +140,9 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
             size="3"
             onClick={toggleSidebar}
           >
+            {/* {activeSidebarItem?.sidebarIcon && (
+              <Icon name={activeSidebarItem.sidebarIcon} />
+            )} */}
             <Text weight="medium">
               {activeSidebarItem?._title ?? 'Untitled article'}
             </Text>
