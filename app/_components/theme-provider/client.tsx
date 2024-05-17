@@ -18,7 +18,9 @@ export const LiveThemeSwitcher = ({
     onScalingChange,
     onAppearanceChange,
   } = useThemeContext()
-  const { setTheme } = useTheme()
+  const { setTheme, theme: activeTheme } = useTheme()
+  const activeThemeRef = React.useRef(activeTheme)
+  activeThemeRef.current = activeTheme
   const hasRendered = useHasRendered()
 
   React.useEffect(() => {
@@ -29,15 +31,17 @@ export const LiveThemeSwitcher = ({
     onGrayColorChange(theme.grayScale as any)
     onAppearanceChange(theme.appearance as any)
     onScalingChange(theme.scaling as any)
-    setTheme((p) => {
-      const changed =
-        p !== theme.appearance &&
-        theme.appearance !== 'inherit' &&
-        theme.appearance !== 'system'
-      if (!changed) return p
-      if (!theme.appearance || theme.appearance === 'inherit') return 'system'
-      return theme.appearance
-    })
+
+    const themeChanged =
+      activeThemeRef.current !== theme.appearance &&
+      theme.appearance !== 'inherit' &&
+      theme.appearance !== 'system'
+    if (themeChanged && theme.appearance) {
+      if (!theme.appearance || theme.appearance === 'inherit') {
+        setTheme('system')
+      }
+      return setTheme(theme.appearance)
+    }
   }, [
     theme.accentColor,
     theme.radius,
