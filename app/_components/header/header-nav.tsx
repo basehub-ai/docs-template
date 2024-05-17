@@ -92,9 +92,7 @@ export const TopRightNavDesktop = ({
         if (isLast) {
           return (
             <Button key={item._id} asChild size="2">
-              <Link asChild>
-                <NextLink href={item.href}>{item.label}</NextLink>
-              </Link>
+              <NextLink href={item.href}>{item.label}</NextLink>
             </Button>
           )
         }
