@@ -3,7 +3,6 @@
 import * as React from 'react'
 import {
   ArticleMetaFragmentRecursive,
-  SidebarArticleFragmentRecursive,
   SidebarFragment,
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
@@ -203,7 +202,7 @@ const SidebarItem = ({
   level,
   pathname,
 }: {
-  data: SidebarArticleFragmentRecursive
+  data: ArticleMetaFragmentRecursive
   level: number
   pathname: string
 }) => {
@@ -232,7 +231,7 @@ const SidebarItem = ({
 
   const href = React.useMemo(() => {
     function getHrefFromArticle(
-      article: SidebarArticleFragmentRecursive
+      article: ArticleMetaFragmentRecursive
     ): string | null {
       if (!article.children.items.length) {
         return pathname
@@ -386,7 +385,7 @@ const SidebarContext = React.createContext<
   | undefined
   | {
       activeSidebarItem:
-        | SidebarArticleFragmentRecursive
+        | ArticleMetaFragmentRecursive
         | ArticleMetaFragmentRecursive
         | null
       activeSlugs: string[]

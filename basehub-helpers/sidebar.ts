@@ -1,18 +1,12 @@
 import { SidebarProps } from '@/app/_components/sidebar'
-import {
-  ArticleMetaFragmentRecursive,
-  PageFragment,
-  SidebarArticleFragmentRecursive,
-} from './fragments'
+import { ArticleMetaFragmentRecursive } from './fragments'
 
 export const getBreadcrumb = ({
   sidebar,
   activeSidebarItem,
 }: {
-  sidebar: SidebarProps['data'] | PageFragment['articles']
-  activeSidebarItem:
-    | SidebarArticleFragmentRecursive
-    | ArticleMetaFragmentRecursive
+  sidebar: SidebarProps['data']
+  activeSidebarItem: ArticleMetaFragmentRecursive
 }) => {
   const breadcrumb = sidebar.items.reduce<{
     titles: string[]
@@ -32,31 +26,27 @@ export const getBreadcrumb = ({
   return breadcrumb
 }
 
-export type SidebarItem =
-  | SidebarArticleFragmentRecursive
-  | ArticleMetaFragmentRecursive
-
 export function getActiveSidebarItem({
   sidebar,
   activeSlugs,
 }: {
-  sidebar: SidebarProps['data'] | PageFragment['articles']
+  sidebar: SidebarProps['data']
   activeSlugs: string[]
 }): {
   current: {
-    article: SidebarItem | null
+    article: ArticleMetaFragmentRecursive | null
     path: string[]
   }
   next: {
-    article: SidebarItem | null
+    article: ArticleMetaFragmentRecursive | null
     path: string[]
   }
 } {
-  let current: SidebarItem | null = null
-  let next: SidebarItem | null = null
+  let current: ArticleMetaFragmentRecursive | null = null
+  let next: ArticleMetaFragmentRecursive | null = null
   let currentItems = sidebar.items
-  let firstValidItem: SidebarItem | null = null
-  let firstValidNext: SidebarItem | null = null
+  let firstValidItem: ArticleMetaFragmentRecursive | null = null
+  let firstValidNext: ArticleMetaFragmentRecursive | null = null
 
   activeSlugs.forEach((slug, i) => {
     const index = currentItems.findIndex((item) => item._slug === slug)
@@ -97,7 +87,7 @@ export function getActiveSidebarItem({
     })
   }
 
-  const findPathToThisArticle = (article: SidebarItem) => {
+  const findPathToThisArticle = (article: ArticleMetaFragmentRecursive) => {
     let path: string[] = []
     sidebar.items.forEach((item) => {
       processArticle(item, (a, { path: p }) => {
@@ -127,11 +117,8 @@ export function getActiveSidebarItem({
  * Recursive function to process every level of nesting
  */
 export function processArticle(
-  article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
-  callback: (
-    _article: SidebarArticleFragmentRecursive | ArticleMetaFragmentRecursive,
-    _meta: Meta
-  ) => void,
+  article: ArticleMetaFragmentRecursive,
+  callback: (_article: ArticleMetaFragmentRecursive, _meta: Meta) => void,
   meta?: Meta
 ) {
   meta = meta || { level: 0, path: [], titlesPath: [], index: 0 }
