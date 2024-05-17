@@ -13,6 +13,7 @@ export const ThemeSettingsFragment = fragmentOn('ThemeComponent', {
   appearance: true,
   radius: true,
   scaling: true,
+  panelBackground: true,
 })
 
 export type ThemeSettingsFragment = fragmentOn.infer<
@@ -49,6 +50,9 @@ export const ThemeProvider = async ({
           (data.settings.theme.appearance === 'system'
             ? undefined
             : data.settings.theme.appearance) as ThemeProps['appearance']
+        }
+        panelBackground={
+          data.settings.theme.panelBackground as ThemeProps['panelBackground']
         }
       >
         {children}

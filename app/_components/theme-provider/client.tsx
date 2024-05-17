@@ -17,6 +17,7 @@ export const LiveThemeSwitcher = ({
     onGrayColorChange,
     onScalingChange,
     onAppearanceChange,
+    onPanelBackgroundChange,
   } = useThemeContext()
   const { setTheme, theme: activeTheme } = useTheme()
   const activeThemeRef = React.useRef(activeTheme)
@@ -31,6 +32,7 @@ export const LiveThemeSwitcher = ({
     onGrayColorChange(theme.grayScale as any)
     onAppearanceChange(theme.appearance as any)
     onScalingChange(theme.scaling as any)
+    onPanelBackgroundChange(theme.panelBackground as any)
 
     const themeChanged =
       activeThemeRef.current !== theme.appearance &&
@@ -48,11 +50,13 @@ export const LiveThemeSwitcher = ({
     theme.grayScale,
     theme.appearance,
     theme.scaling,
+    theme.panelBackground,
     onAccentColorChange,
     onGrayColorChange,
     onAppearanceChange,
     onRadiusChange,
     onScalingChange,
+    onPanelBackgroundChange,
     setTheme,
     hasRendered,
   ])
