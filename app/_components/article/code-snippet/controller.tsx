@@ -59,6 +59,32 @@ export const CodeBlockClientController = ({
     })
   }, [activeSnippet])
 
+  /**
+   * Save snippet selection with localStorage.
+   */
+  const localStorageKey = `active-snippet-for-${snippets.map((s) => s.fileName).join('-')}`
+  const [syncedWithLS, setSyncedWithLS] = React.useState(false)
+
+  React.useEffect(() => {
+    const activeSnippetFromLS = window.localStorage.getItem(localStorageKey)
+    if (activeSnippetFromLS) {
+      const snippet = snippets.find((s) => s.fileName === activeSnippetFromLS)
+      if (snippet) _setActiveSnippet(snippet)
+    }
+    setSyncedWithLS(true)
+  }, [localStorageKey, snippets])
+
+  React.useEffect(() => {
+    if (!syncedWithLS) return
+    if (activeSnippet) {
+      if (activeSnippet.fileName) {
+        window.localStorage.setItem(localStorageKey, activeSnippet.fileName)
+      } else {
+        window.localStorage.removeItem(localStorageKey)
+      }
+    }
+  }, [localStorageKey, activeSnippet, syncedWithLS])
+
   return (
     <CodeBlockContext.Provider
       value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}

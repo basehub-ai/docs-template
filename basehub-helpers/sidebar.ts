@@ -68,7 +68,7 @@ export function getActiveSidebarItem({
       }
     }
 
-    currentItems = item.children.items.filter((item) => item.body)
+    currentItems = item.children.items
   })
 
   let fallbackPath: string[] = []

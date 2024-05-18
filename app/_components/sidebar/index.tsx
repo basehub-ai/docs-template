@@ -21,6 +21,7 @@ import {
   VisuallyHidden,
 } from '@radix-ui/themes'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
+import { clsx } from 'clsx'
 
 import s from './sidebar.module.scss'
 
@@ -129,14 +130,14 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
       >
         <ScrollArea data-mobile-display={mobileSidebarOpen}>
           <Flex
-            asChild
             ml="-3"
             pb={{ initial: '3', md: '7' }}
             pl="5"
             pr="3"
             pt="5"
             direction="column"
-            gap="4"
+            className={s.sidebar__aside}
+            asChild
           >
             <aside>
               {data.items.map((item) => (
@@ -250,7 +251,7 @@ const SidebarItem = ({
   const titleNode = React.useMemo(() => {
     const title = data.titleSidebarOverride ?? data._title
 
-    if (href)
+    if (href) {
       return (
         <Flex asChild px="3" py="2" ml="-3" align="center" position="relative">
           <Link
@@ -265,11 +266,13 @@ const SidebarItem = ({
           </Link>
         </Flex>
       )
+    }
 
-    if (data.children.items.length <= 0)
+    if (data.children.items.length <= 0) {
       return (
         <Text className={s.sidebar__title}>{title || 'Untitled article'}</Text>
       )
+    }
 
     if (isRootLevel) {
       return (
@@ -307,11 +310,12 @@ const SidebarItem = ({
     isActive,
   ])
 
-  // filter the empty pages to prevent linking to a 404
-  if (level > 0 && !data.body) return null
+  const rendersAsSection = isRootLevel && data.children.items.length > 0
 
+  // filter the empty pages to prevent linking to a 404
+  if (level > 0 && !data.body && data.children.items.length === 0) return null
   return (
-    <Box>
+    <Box className={clsx(rendersAsSection && s['sidebar__item-section'])}>
       <Box position="relative">
         {titleNode}
 
@@ -350,13 +354,13 @@ const SidebarItem = ({
       </Box>
 
       <Box
-        py="2"
+        pt={level > 0 ? '1' : '2'}
+        pb={level > 0 ? '1' : '2'}
         display={isCollapsed || !data.children.items.length ? 'none' : 'block'}
       >
         <Box position="relative" pl={!isRootLevel ? '5' : '0'}>
           {!isRootLevel && (
             <Box
-              height="100%"
               className={s['sidebar__descendants-line']}
               position="absolute"
             />
