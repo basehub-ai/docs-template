@@ -125,12 +125,12 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
           md: 'block',
         }}
         width={{ initial: '100svw', md: '320px' }}
-        px={{ initial: '3', md: '0' }}
+        px={{ md: '0' }}
         ml={{ initial: '0', md: '-3' }}
       >
         <ScrollArea data-mobile-display={mobileSidebarOpen}>
           <Flex
-            ml="-3"
+            ml={{ initial: '0', md: '-3' }}
             pb={{ initial: '3', md: '7' }}
             pl="5"
             pr="3"
@@ -151,12 +151,6 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
             </aside>
           </Flex>
         </ScrollArea>
-      </Box>
-
-      <Box
-        display={{ initial: mobileSidebarOpen ? 'block' : 'none', md: 'none' }}
-      >
-        <Separator size="4" />
       </Box>
     </SidebarContext.Provider>
   )

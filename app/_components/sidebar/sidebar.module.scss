@@ -1,6 +1,6 @@
 .sidebar {
   background-color: var(--color-background);
-  z-index: 50;
+  z-index: 40;
   box-shadow: var(--shadow-3);
   border-radius: 0 0 var(--radius-4) var(--radius-4);
 
@@ -13,6 +13,12 @@
 }
 
 .sidebar__aside {
+  max-height: calc(90svh - var(--header));
+
+  @media screen and (min-width: 1024px) {
+    max-height: unset;
+  }
+
   > .sidebar__item-section:not(:first-child) {
     margin-top: var(--space-4);
   }
