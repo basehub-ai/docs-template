@@ -16,7 +16,6 @@ import {
   IconButton,
   Link,
   ScrollArea,
-  Separator,
   Text,
   VisuallyHidden,
 } from '@radix-ui/themes'
