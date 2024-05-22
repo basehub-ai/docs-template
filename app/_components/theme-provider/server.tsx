@@ -7,7 +7,7 @@ import { draftMode } from 'next/headers'
 
 import '@radix-ui/themes/styles.css'
 
-export const ThemeSettingsFragment = fragmentOn('ThemeComponent', {
+export const ThemeSettingsFragment = fragmentOn('Theme', {
   accentColor: true,
   grayScale: true,
   appearance: true,
