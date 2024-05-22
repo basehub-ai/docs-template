@@ -34,7 +34,7 @@ export const CodeBlockClientController = ({
   snippets,
 }: CodeBlockClientControllerProps) => {
   const groupRef = React.useRef<HTMLDivElement>(null)
-  const [activeSnippet, _setActiveSnippet] = React.useState<ClientSnippet>(
+  const [activeSnippet, setActiveSnippet] = React.useState<ClientSnippet>(
     snippets[0] as ClientSnippet
   )
 
@@ -63,31 +63,56 @@ export const CodeBlockClientController = ({
    * Save snippet selection with localStorage.
    */
   const localStorageKey = `active-snippet-for-${snippets.map((s) => s.fileName).join('-')}`
-  const [syncedWithLS, setSyncedWithLS] = React.useState(false)
 
   React.useEffect(() => {
     const activeSnippetFromLS = window.localStorage.getItem(localStorageKey)
     if (activeSnippetFromLS) {
       const snippet = snippets.find((s) => s.fileName === activeSnippetFromLS)
-      if (snippet) _setActiveSnippet(snippet)
+      if (snippet) setActiveSnippet(snippet)
     }
-    setSyncedWithLS(true)
+
+    /**
+     * Sync active snippet throughout multiple code snippets throughout the page.
+     */
+    function handleSnippetChange(
+      event: CustomEvent<{ key: string; snippet: ClientSnippet }>
+    ) {
+      if (event.detail.key !== localStorageKey) return
+      const newActiveSnippet = snippets.find(
+        (s) => s.fileName === event.detail.snippet.fileName
+      )
+      if (newActiveSnippet) {
+        setActiveSnippet(newActiveSnippet)
+      }
+    }
+
+    // @ts-ignore
+    window.addEventListener('snippet-change', handleSnippetChange)
+    return () => {
+      // @ts-ignore
+      window.removeEventListener('snippet-change', handleSnippetChange)
+    }
   }, [localStorageKey, snippets])
 
-  React.useEffect(() => {
-    if (!syncedWithLS) return
-    if (activeSnippet) {
-      if (activeSnippet.fileName) {
-        window.localStorage.setItem(localStorageKey, activeSnippet.fileName)
+  const selectSnippet = React.useCallback(
+    (snippet: ClientSnippet) => {
+      setActiveSnippet(snippet)
+      if (snippet.fileName) {
+        window.localStorage.setItem(localStorageKey, snippet.fileName)
+        const event = new CustomEvent('snippet-change', {
+          detail: { key: localStorageKey, snippet },
+        })
+        window.dispatchEvent(event)
       } else {
         window.localStorage.removeItem(localStorageKey)
       }
-    }
-  }, [localStorageKey, activeSnippet, syncedWithLS])
+    },
+    [localStorageKey]
+  )
 
   return (
     <CodeBlockContext.Provider
-      value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}
+      value={{ activeSnippet, snippets, selectSnippet }}
     >
       <div
         ref={groupRef}
