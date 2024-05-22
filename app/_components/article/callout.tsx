@@ -54,7 +54,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
             </Heading>
           ),
           a: ({ children, ...rest }) => (
-            <Link size="2" asChild>
+            <Link asChild>
               <NextLink {...rest}>{children}</NextLink>
             </Link>
           ),

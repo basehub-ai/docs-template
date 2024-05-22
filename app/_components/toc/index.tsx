@@ -164,7 +164,7 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
         )}
 
         <Button
-          mt="5"
+          mt={Boolean(children.length) ? '5' : '0'}
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}

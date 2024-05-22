@@ -7,6 +7,7 @@ import {
 import NextLink from 'next/link'
 import {
   Blockquote,
+  Em,
   Flex,
   Link,
   Heading as RadixHeading,
@@ -16,7 +17,6 @@ import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Code, Table, Text } from '@radix-ui/themes'
 
-import { HeadingWithIconMark } from './heading-with-icon'
 import { CalloutComponent } from './callout'
 import { StepperComponent } from './stepper'
 import { CardsGridComponent } from './cards-grid'
@@ -36,8 +36,9 @@ import { ArticleBreadcrumb } from './breadcrumb'
 import { ArticleFooter } from './footer'
 import { ArticleIndex } from './article-index'
 import { flattenRichTextNodes } from '../toc/utils'
-
+import { ArticleLinkMark } from '../article-link/mark'
 import headingStyles from './heading/heading.module.scss'
+
 import s from './article.module.scss'
 
 export const Article = ({
@@ -154,7 +155,7 @@ export const ArticleWrapper = ({
               {excerpt}
             </Text>
           )}
-          <Box className={s.body}>{children}</Box>
+          {children}
         </Box>
         <ArticleFooter
           lastUpdatedAt={lastModifiedAt}
@@ -167,103 +168,103 @@ export const ArticleWrapper = ({
 
 export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
   return (
-    <RichText
-      blocks={props.blocks}
-      components={{
-        a: ({ children, ...rest }) => (
-          <Link size="3" asChild>
-            <NextLink {...rest}>{children}</NextLink>
-          </Link>
-        ),
-        h1: (props) => (
-          <Heading as="h1" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        h2: (props) => (
-          <Heading as="h2" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        h3: (props) => (
-          <Heading as="h3" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        h4: (props) => (
-          <Heading as="h4" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        h5: (props) => (
-          <Heading as="h5" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        h6: (props) => (
-          <Heading as="h6" id={props.id}>
-            {props.children}
-          </Heading>
-        ),
-        blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
-        table: (props) => (
-          <Table.Root {...props} size="2" variant="surface" layout="fixed" />
-        ),
-        tbody: (props) => <Table.Body {...props} />,
-        tr: ({ children }) => <Table.Row>{children}</Table.Row>,
-        th: ({ children, rowspan, colspan }) => (
-          <Table.ColumnHeaderCell colSpan={colspan} rowSpan={rowspan}>
-            {children}
-          </Table.ColumnHeaderCell>
-        ),
-        td: ({ children, rowspan, colspan }) => (
-          <Table.Cell colSpan={colspan} rowSpan={rowspan}>
-            {children}
-          </Table.Cell>
-        ),
-        hr: () => <Separator size="4" my="7" color="gray" />,
-        StepperComponent,
-        AccordionGroupComponent: AccordionComponent,
-        CalloutComponent,
-        CardsGridComponent,
-        CardsGridComponent_mark: CardsGridComponent,
-        HeadingWithIconComponent_mark: HeadingWithIconMark,
-        video: Video,
-        img: Image,
-        CodeSnippetComponent: CodeSnippetSingle,
-        CodeGroupComponent: CodeSnippetGroup,
-        p: ({ children }) => (
-          <Text as="p" size="3">
-            {children}
-          </Text>
-        ),
-        code: ({ isInline, ...rest }) => {
-          if (isInline)
-            return (
-              <Code data-type="inline-code" variant="outline">
-                {rest.children}
-              </Code>
-            )
+    <div className={s.body}>
+      <RichText
+        blocks={props.blocks}
+        components={{
+          a: ({ children, ...rest }) => (
+            <Link size="3" asChild>
+              <NextLink {...rest}>{children}</NextLink>
+            </Link>
+          ),
+          h1: (props) => (
+            <Heading as="h1" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          h2: (props) => (
+            <Heading as="h2" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          h3: (props) => (
+            <Heading as="h3" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          h4: (props) => (
+            <Heading as="h4" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          h5: (props) => (
+            <Heading as="h5" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          h6: (props) => (
+            <Heading as="h6" id={props.id}>
+              {props.children}
+            </Heading>
+          ),
+          blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
+          table: (props) => <Table.Root {...props} size="2" layout="auto" />,
+          em: (props) => <Em {...props} />,
+          tbody: (props) => <Table.Body {...props} />,
+          tr: ({ children }) => <Table.Row>{children}</Table.Row>,
+          th: ({ children, rowspan, colspan }) => (
+            <Table.ColumnHeaderCell colSpan={colspan} rowSpan={rowspan}>
+              {children}
+            </Table.ColumnHeaderCell>
+          ),
+          td: ({ children, rowspan, colspan }) => (
+            <Table.Cell colSpan={colspan} rowSpan={rowspan}>
+              {children}
+            </Table.Cell>
+          ),
+          hr: () => <Separator size="4" my="7" color="gray" />,
+          AccordionGroupComponent: AccordionComponent,
+          CalloutComponent,
+          CardsGridComponent,
+          video: Video,
+          img: Image,
+          CodeSnippetComponent: CodeSnippetSingle,
+          CodeGroupComponent: CodeSnippetGroup,
+          ArticleLinkComponent_mark: ArticleLinkMark,
+          StepperComponent,
+          p: ({ children }) => (
+            <Text as="p" size="3">
+              {children}
+            </Text>
+          ),
+          code: ({ isInline, ...rest }) => {
+            if (isInline)
+              return (
+                <Code data-type="inline-code" variant="outline">
+                  {rest.children}
+                </Code>
+              )
 
-          return (
-            <Box position="relative" data-code-snippet>
-              <CodeSnippet code={{ ...rest }} />
-              <CopyButton
-                snippet={rest.code}
-                style={{
-                  position: 'absolute',
-                  right: 'var(--space-2)',
-                  top: 'var(--space-2)',
-                }}
-              />
-            </Box>
-          )
-        },
-        pre: ({ children }) => <>{children}</>,
-        ...props.components,
-      }}
-    >
-      {props.children}
-    </RichText>
+            return (
+              <Box position="relative" data-code-snippet>
+                <CodeSnippet code={{ ...rest }} />
+                <CopyButton
+                  activeSnippetId={null}
+                  style={{
+                    position: 'absolute',
+                    right: 'var(--space-2)',
+                    top: 'var(--space-2)',
+                  }}
+                />
+              </Box>
+            )
+          },
+          pre: ({ children }) => <>{children}</>,
+          ...props.components,
+        }}
+      >
+        {props.children}
+      </RichText>
+    </div>
   )
 }

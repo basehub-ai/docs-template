@@ -115,10 +115,10 @@ export const useCodeBlock = () => {
  * -----------------------------------------------------------------------------------------------*/
 
 export const CopyButton = ({
-  snippet,
+  activeSnippetId,
   style,
 }: {
-  snippet: CodeSnippetFragment['code']['code']
+  activeSnippetId: CodeSnippetFragment['_id'] | null
   style?: JSX.IntrinsicElements['button']['style']
 }) => {
   const [copied, setCopied] = React.useState(false)
@@ -139,9 +139,17 @@ export const CopyButton = ({
       size="1"
       variant="surface"
       color="gray"
-      onClick={() => {
-        setCopied(true)
-        navigator.clipboard.writeText(snippet)
+      onClick={(e) => {
+        const snippet = activeSnippetId
+          ? document.querySelector(`[data-snippet-id="${activeSnippetId}"]`)
+              ?.textContent
+          : e.currentTarget.closest<HTMLDivElement>(
+              '[data-code-snippet="true"]'
+            )?.textContent
+        if (snippet) {
+          navigator.clipboard.writeText(snippet)
+          setCopied(true)
+        }
       }}
     >
       {copied ? (

@@ -32,7 +32,6 @@ export const Logo = ({
             src={logoLight}
             alt="logo"
             className={clsx(s.logo, resolvedSizeClassName)}
-            style={{ position: 'absolute' }}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

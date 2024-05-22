@@ -23,6 +23,7 @@
 
   code[data-type='inline-code'] {
     font-family: var(--font-geist-mono);
+    white-space: nowrap;
   }
 
   p + p {
@@ -59,7 +60,7 @@
 
     video,
     img {
-      border-radius: var(--radius-1);
+      border-radius: var(--radius-3);
       position: relative;
       max-width: 100%;
       height: auto;
@@ -124,6 +125,14 @@
     &:not(:last-child) {
       margin-bottom: var(--space-6);
     }
+  }
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
   }
 }
 

@@ -37,19 +37,6 @@ export const Highlighter = async ({
       transformerNotationDiff(),
       transformerNotationErrorLevel(),
       transformerNotationHighlight(),
-      {
-        line(node, line) {
-          node.children = [
-            {
-              type: 'element',
-              tagName: 'span',
-              properties: { class: 'line-indicator' },
-              children: [{ type: 'text', value: line.toString() }],
-            },
-            ...node.children,
-          ]
-        },
-      },
       transformerNotationWordHighlight(),
     ],
   })

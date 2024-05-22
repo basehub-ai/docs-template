@@ -52,7 +52,7 @@ export const CodeGroupHeader = () => {
           activeSnippet.fileName || 'Untitled'
         )}
 
-        <CopyButton snippet={activeSnippet.code.code} />
+        <CopyButton activeSnippetId={activeSnippet._id} />
       </header>
     </Flex>
   )

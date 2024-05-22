@@ -13,10 +13,10 @@
     }
 
     h3 {
-    margin: 0;
-  }
+      margin: 0;
+    }
 
-    button[data-type="accordion-trigger"] {
+    button[data-type='accordion-trigger'] {
       width: 100%;
       padding: var(--space-4);
       display: flex;
@@ -29,7 +29,7 @@
       border: none;
       text-align: left;
 
-      &[data-state="open"] {
+      &[data-state='open'] {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         background-color: var(--gray-1);
@@ -57,7 +57,7 @@
         }
       }
 
-      &[data-state="open"] {
+      &[data-state='open'] {
         span:has(svg) {
           svg {
             transform: rotate(90deg);
@@ -70,29 +70,9 @@
   .accordion-content {
     padding: 0 var(--space-3) var(--space-3);
     margin: 0 var(--space-2) var(--space-2);
-    border-radius: 0px 0px var(--radius-1) var(--radius-1);
+    border-radius: 0px 0px var(--radius-3) var(--radius-3);
     border-bottom: 1px solid var(--gray-3);
     position: relative;
     background: linear-gradient(180deg, transparent 3.75%, var(--gray-2) 100%);
-
-    &:after {
-      bottom: 0;
-      content: '';
-      position: absolute;
-      right: 0;
-      height: 100%;
-      width: 1px;
-      background-image: linear-gradient(0deg, var(--gray-3) 0%, transparent 100%);
-    }
-
-    &:before {
-      bottom: 0;
-      content: '';
-      position: absolute;
-      left: 0;
-      height: 100%;
-      width: 1px;
-      background-image: linear-gradient(0deg, var(--gray-3) 0%, transparent 100%);
-    }
   }
 }

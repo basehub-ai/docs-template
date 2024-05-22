@@ -1,4 +1,5 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
+import { ArticleLinkFragment } from '@/app/_components/article-link/mark'
 import { AccordionGroupFragment } from '@/app/_components/article/accordion'
 import { CalloutFragment } from '@/app/_components/article/callout'
 import { CardsGridFragment } from '@/app/_components/article/cards-grid'
@@ -45,6 +46,7 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     on_StepperComponent: StepperFragment,
     on_CodeGroupComponent: CodeGroupFragment,
     on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
+    on_ArticleLinkComponent: ArticleLinkFragment,
   },
 })
 
