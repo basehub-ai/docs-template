@@ -1,5 +1,5 @@
 .code-snippet-header {
-  border-radius: var(--radius-4) var(--space-2) 0px 0px;
+  border-radius: var(--radius-4) var(--radius-4) 0px 0px;
   border: 1px solid var(--gray-6);
   background: var(--gray-3);
   color: var(--normal);
@@ -51,12 +51,12 @@
 
     --shiki-color-text: #000;
     --shiki-background: var(--gray-2);
-    --shiki-token-constant: var(--gray-12);
+    --shiki-token-constant: var(--accent-12);
     --shiki-token-function: var(--gray-11);
     --shiki-token-string-expression: var(--gray-11);
     --shiki-token-string: var(--accent-indicator);
-    --shiki-token-comment: #94a4ad;
-    --shiki-token-keyword: var(--accent-indicator);
+    --shiki-token-comment: var(--gray-10);
+    --shiki-token-keyword: var(--accent-11);
     --shiki-token-parameter: #d6deeb;
     --shiki-token-punctuation: #c792e9;
     --shiki-token-link: #79b8ff;
@@ -100,7 +100,7 @@
         margin: -1px 0;
       }
       &:global(.diff.remove) {
-        background-color: var(--red-6);
+        background-color: var(--red-3);
 
         &::before {
           content: '-';
@@ -108,7 +108,7 @@
         }
       }
       &:global(.diff.add) {
-        background-color: var(--green-6);
+        background-color: var(--green-3);
 
         &::before {
           content: '+';

@@ -1,26 +1,39 @@
 import { fragmentOn } from '@/.basehub'
 import { Callout, Heading, Link } from '@radix-ui/themes'
-import { Body } from '.'
 import NextLink from 'next/link'
+import { RichText } from 'basehub/react-rich-text'
+import {
+  CheckCircledIcon,
+  ExclamationTriangleIcon,
+  InfoCircledIcon,
+  Pencil1Icon,
+} from '@radix-ui/react-icons'
 
 export const CalloutComponent = (props: CalloutFragment) => {
   let calloutColor: React.ComponentProps<typeof Callout.Root>['color'] = 'gray'
 
+  let icon
   switch (props.type) {
+    default:
     case 'info':
       calloutColor = 'gray'
+      icon = <InfoCircledIcon />
       break
     case 'check':
       calloutColor = 'green'
+      icon = <CheckCircledIcon />
       break
     case 'warning':
       calloutColor = 'yellow'
+      icon = <ExclamationTriangleIcon />
       break
     case 'danger':
       calloutColor = 'red'
+      icon = <ExclamationTriangleIcon />
       break
     case 'note':
       calloutColor = 'blue'
+      icon = <Pencil1Icon />
       break
   }
 
@@ -31,13 +44,10 @@ export const CalloutComponent = (props: CalloutFragment) => {
       data-type="callout"
       my="4"
     >
-      <Body
+      {icon && <Callout.Icon>{icon}</Callout.Icon>}
+      <RichText
         components={{
-          p: ({ children }) => (
-            <Callout.Text size="2" color="gray">
-              {children}
-            </Callout.Text>
-          ),
+          p: ({ children }) => <Callout.Text>{children}</Callout.Text>,
           h1: ({ children }) => (
             <Heading as="h1" size="3" weight="medium">
               {children}
@@ -61,7 +71,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
         }}
       >
         {props.content?.json.content}
-      </Body>
+      </RichText>
     </Callout.Root>
   )
 }

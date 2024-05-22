@@ -71,10 +71,10 @@
     }
   }
 
-  p[data-type='caption'] {
-    padding-top: var(--space-4);
+  figcaption {
+    padding-top: var(--space-5);
     padding-bottom: var(--space-2);
-    margin-top: calc(var(--space-7) * -1);
+    margin-top: calc(var(--space-8) * -1);
     display: block;
     position: relative;
     text-align: center;
@@ -82,8 +82,8 @@
     border-bottom-left-radius: var(--radius-4);
     border-bottom-right-radius: var(--radius-4);
     border: 1px solid var(--gray-5);
-    background: var(--gray-10);
-    color: var(--strong);
+    background: var(--gray-3);
+    color: var(--gray-11);
     font-size: var(--font-size-2);
     font-weight: 500;
     line-height: var(--space-4);
