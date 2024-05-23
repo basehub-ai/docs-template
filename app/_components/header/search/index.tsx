@@ -123,9 +123,11 @@ const DialogContent = ({
             <TextField.Slot>
               <MagnifyingGlassIcon color="currentColor" />
             </TextField.Slot>
-            <TextField.Slot>
-              <Kbd style={{ marginBlock: 'auto' }}>Esc</Kbd>
-            </TextField.Slot>
+            <Dialog.Close>
+              <TextField.Slot style={{ cursor: 'default' }}>
+                <Kbd style={{ marginBlock: 'auto' }}>Esc</Kbd>
+              </TextField.Slot>
+            </Dialog.Close>
           </TextField.Root>
         </SearchBox.Input>
         <Separator size="4" mt="2" />
