@@ -305,8 +305,6 @@ const SidebarItem = ({
 
   const rendersAsSection = isRootLevel && data.children.items.length > 0
 
-  // filter the empty pages to prevent linking to a 404
-  if (level > 0 && !data.body && data.children.items.length === 0) return null
   return (
     <Box className={clsx(rendersAsSection && s['sidebar__item-section'])}>
       <Box position="relative">

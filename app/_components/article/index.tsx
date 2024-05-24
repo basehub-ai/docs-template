@@ -71,10 +71,6 @@ export const Article = ({
         const article = data._componentInstances.article.items[0]
         if (!article) return notFound()
 
-        const innerArticlesWithContent = article.children.items.filter(
-          (item) => item.body
-        )
-
         const flattenedToc = flattenRichTextNodes(article?.body?.json.toc ?? [])
         const tocIsEmpty = !flattenedToc.some(
           (node) =>
@@ -95,8 +91,8 @@ export const Article = ({
                 <Body blocks={article.body.json.blocks}>
                   {article.body.json.content}
                 </Body>
-              ) : innerArticlesWithContent.length ? (
-                <ArticleIndex articles={innerArticlesWithContent} />
+              ) : article.children.items.length ? (
+                <ArticleIndex articles={article.children.items} />
               ) : (
                 <Text size="3" color="gray" style={{ opacity: 0.5 }}>
                   This article has no content yet.

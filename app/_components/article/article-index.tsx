@@ -5,7 +5,11 @@ import { Card, Grid, Heading, Text } from '@radix-ui/themes'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-export const ArticleIndex = ({ articles }: { articles: ArticleFragment['children']['items'] }) => {
+export const ArticleIndex = ({
+  articles,
+}: {
+  articles: ArticleFragment['children']['items']
+}) => {
   const pathname = usePathname()
 
   return (
