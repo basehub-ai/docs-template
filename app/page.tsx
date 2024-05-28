@@ -5,7 +5,11 @@ import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-export default async function RootPage() {
+export default async function RootPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string>
+}) {
   const { header, pages } = await basehub({
     next: { tags: ['basehub'] },
   }).query({
@@ -30,11 +34,17 @@ export default async function RootPage() {
       activeSlugs: [],
       sidebar: page.articles,
     })
+    const queryParams = new URLSearchParams(searchParams)
 
     if (firstArticlePath) {
-      redirect(`${page._slug}/${firstArticlePath.join('/')}/${article?._slug}`)
+      redirect(
+        `${page._slug}/${firstArticlePath.join('/')}/${article?._slug}` +
+          (queryParams.toString() ? `?${queryParams.toString()}` : '')
+      )
     } else {
-      redirect(page._slug)
+      redirect(
+        `${page._slug}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+      )
     }
   }
 }
