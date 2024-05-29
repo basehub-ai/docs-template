@@ -1,5 +1,4 @@
 import { Pump } from '@/.basehub/react-pump'
-import { DraftModeHeader } from '../../draft'
 import { Box, Container, Flex } from '@radix-ui/themes'
 import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
 import { draftMode } from 'next/headers'
@@ -70,7 +69,6 @@ export const PagesNav = async () => {
               >
                 <Flex align="center" justify="between" height="100%">
                   <Nav subNavLinks={data.header.subNavLinks} />
-                  {draftMode().isEnabled && <DraftModeHeader />}
                 </Flex>
               </Container>
             </Flex>
