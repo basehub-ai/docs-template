@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
+import { Toolbar } from 'basehub/next-toolbar'
 
 export default function Layout({
   children,
@@ -19,6 +20,7 @@ export default function Layout({
       mt={{ initial: 'var(--header)', md: '0' }}
     >
       <Flex direction={{ initial: 'column', md: 'row' }}>
+        <Toolbar />
         <Pump
           queries={[{ pages: SidebarFragment }]}
           next={{ revalidate: 30 }}
