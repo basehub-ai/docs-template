@@ -52,17 +52,4 @@
       color: var(--strong);
     }
   }
-
-  .footer__badge {
-    background-color: var(--gray-2);
-    border: 1px solid var(--gray-4);
-    border-radius: var(--radius-6);
-    color: var(--strong);
-    padding: var(--space-1) var(--space-3);
-
-    &:hover {
-      text-decoration: none;
-      border-color: var(--gray-6);
-    }
-  }
 }
