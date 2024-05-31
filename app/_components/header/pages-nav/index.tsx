@@ -1,11 +1,47 @@
 import { Pump } from '@/.basehub/react-pump'
 import { DraftModeHeader } from '../../draft'
 import { Box, Container, Flex } from '@radix-ui/themes'
-import { fragmentOn } from '@/.basehub'
+import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { Nav } from './nav'
 
 import s from './nav.module.scss'
+
+export const ArticleSlugFragmentRecursive = fragmentOnRecursiveCollection(
+  'ArticleComponent',
+  { _slug: true },
+  { levels: 5, recursiveKey: 'children' }
+)
+
+export type ArticleSlugFragment = fragmentOn.infer<
+  typeof ArticleSlugFragmentRecursive
+>
+
+export const HeaderFragment = fragmentOn('Header', {
+  topRightLinks: {
+    items: {
+      _id: true,
+      label: true,
+      href: true,
+    },
+  },
+  subNavLinks: {
+    items: {
+      _id: true,
+      page: {
+        _id: true,
+        _title: true,
+        _slug: true,
+        articles: {
+          __args: { first: 1 },
+          items: ArticleSlugFragmentRecursive,
+        },
+      },
+      label: true,
+      href: true,
+    },
+  },
+})
 
 export const PagesNav = async () => {
   return (
@@ -29,11 +65,11 @@ export const PagesNav = async () => {
               <Container
                 height="100%"
                 px={{ initial: '5', md: '8' }}
-                overflowX="auto"
-                overflowY="clip"
+                overflowX={{ initial: 'auto', md: 'visible' }}
+                overflowY={{ initial: 'clip', md: 'visible' }}
               >
                 <Flex align="center" justify="between" height="100%">
-                  <Nav navLinks={data.header.navLinks} />
+                  <Nav subNavLinks={data.header.subNavLinks} />
                   {draftMode().isEnabled && <DraftModeHeader />}
                 </Flex>
               </Container>
@@ -44,16 +80,5 @@ export const PagesNav = async () => {
     </Pump>
   )
 }
-
-export const HeaderFragment = fragmentOn('Header', {
-  navLinks: {
-    items: {
-      _id: true,
-      page: { _title: true, _slug: true },
-      label: true,
-      href: true,
-    },
-  },
-})
 
 export type HeaderFragment = fragmentOn.infer<typeof HeaderFragment>

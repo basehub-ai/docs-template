@@ -59,41 +59,38 @@ const LightThemeOG = ({
     >
       <div
         style={{
-          padding: '30px 80px',
+          padding: '40px 80px',
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-start',
           borderBottom: '1px solid rgba(224, 224, 224, 0.05)',
-          backgroundImage:
-            'linear-gradient(90deg, rgba(252, 252, 252, 0.80) 0%, #FCFCFC 50%, rgba(252, 252, 252, 0.70) 100%)',
+          gap: 24,
         }}
       >
+        <img src={logo.url} alt={logo.alt ?? 'logo'} style={{ width: 184 }} />
         <span
           style={{
-            color: '#838383',
-            fontFamily: 'Geist',
-            fontSize: 24,
+            fontSize: 48,
+            fontWeight: 300,
+            color: '#DDD',
+          }}
+        >
+          /
+        </span>
+        <span
+          style={{
+            color: '#000',
+            fontFamily: 'Geist Sans',
+            fontSize: 40,
             fontWeight: 600,
             lineHeight: '115%',
-            letterSpacing: 2.4,
-            textTransform: 'uppercase',
+            letterSpacing: '-1.6px',
           }}
         >
           Docs
         </span>
-        <img style={{ width: 148 }} src={logo.url} alt={logo.alt ?? 'logo'} />
       </div>
-
-      <hr
-        style={{
-          margin: 0,
-          height: 1,
-          opacity: 0.34,
-          backgroundImage: `linear-gradient(90deg, transparent 0%, ${accentColor} 50%, transparent 100%)`,
-          width: '100%',
-        }}
-      />
 
       <div style={{ display: 'flex', position: 'relative' }}>
         <div
@@ -101,7 +98,7 @@ const LightThemeOG = ({
             display: 'flex',
             justifyContent: 'flex-start',
             flexDirection: 'column',
-            marginTop: 90,
+            marginTop: 20,
             padding: '0 0 136px 80px',
             width: '100%',
           }}
@@ -109,11 +106,11 @@ const LightThemeOG = ({
           <h1
             style={{
               color: '#202020',
-              fontFamily: 'Geist',
-              fontSize: 64,
+              fontFamily: 'Geist Sans',
+              fontSize: 84,
               fontWeight: 500,
               lineHeight: '115%',
-              letterSpacing: '-2.56px',
+              letterSpacing: '-3.36px',
               textAlign: 'left',
             }}
           >
@@ -122,17 +119,18 @@ const LightThemeOG = ({
           <p
             style={{
               color: '#646464',
-              fontFamily: 'Geist',
-              fontSize: 32,
+              fontFamily: 'Geist Sans',
+              fontSize: 44,
               fontWeight: 400,
               lineHeight: '140%',
-              letterSpacing: '-1.28px',
-              maxWidth: '80%',
-              marginTop: 16,
-              marginBottom: 136,
+              letterSpacing: '-1.76px',
+              maxWidth: '90%',
+              marginTop: 0,
+              marginBottom: 80,
+              height: 200,
             }}
           >
-            {truncateString(subtitle, 200)}
+            {truncateString(subtitle, 140)}
           </p>
           <hr
             style={{
@@ -140,6 +138,7 @@ const LightThemeOG = ({
               height: 1,
               opacity: 0.1,
               backgroundImage: `linear-gradient(90deg, transparent 0%, ${accentColor} 34%, transparent 100%)`,
+              position: 'relative',
               width: '150%',
             }}
           />
@@ -184,42 +183,38 @@ const DarkThemeOG = ({
     >
       <div
         style={{
-          padding: '30px 80px',
+          padding: '40px 80px',
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-start',
           borderBottom: '1px solid rgba(224, 224, 224, 0.05)',
-          background: 'rgba(39, 39, 42, 0.1)',
+          gap: 24,
         }}
       >
+        <img src={logo.url} alt={logo.alt ?? 'logo'} style={{ width: 184 }} />
         <span
           style={{
-            color: '#B4B4B4',
-            fontFamily: 'Geist',
-            fontSize: 24,
+            fontSize: 48,
+            fontWeight: 300,
+            color: 'rgba(255, 255, 255, 0.40)',
+          }}
+        >
+          /
+        </span>
+        <span
+          style={{
+            color: '#FFF',
+            fontFamily: 'Geist Sans',
+            fontSize: 40,
             fontWeight: 600,
             lineHeight: '115%',
-            letterSpacing: 2.4,
-            textTransform: 'uppercase',
+            letterSpacing: '-1.6px',
           }}
         >
           Docs
         </span>
-        <img style={{ width: 148 }} src={logo.url} alt={logo.alt ?? 'logo'} />
       </div>
-
-      <hr
-        style={{
-          margin: 0,
-          height: 1,
-          opacity: 0.34,
-          backgroundImage: `linear-gradient(90deg, transparent 0%, ${accentColor} 50%, transparent 100%)`,
-          width: '100%',
-          transform: 'translateY(-2px)',
-          position: 'relative',
-        }}
-      />
 
       <div style={{ display: 'flex', position: 'relative' }}>
         <div
@@ -227,7 +222,7 @@ const DarkThemeOG = ({
             display: 'flex',
             justifyContent: 'flex-start',
             flexDirection: 'column',
-            marginTop: 90,
+            marginTop: 20,
             padding: '0 0 136px 80px',
             width: '100%',
           }}
@@ -235,11 +230,11 @@ const DarkThemeOG = ({
           <h1
             style={{
               color: '#FFFFFF',
-              fontFamily: 'Geist',
-              fontSize: 64,
+              fontFamily: 'Geist Sans',
+              fontSize: 84,
               fontWeight: 500,
               lineHeight: '115%',
-              letterSpacing: '-2.56px',
+              letterSpacing: '-3.36px',
               textAlign: 'left',
             }}
           >
@@ -248,17 +243,18 @@ const DarkThemeOG = ({
           <p
             style={{
               color: '#B4B4B4',
-              fontFamily: 'Geist',
-              fontSize: 32,
+              fontFamily: 'Geist Sans',
+              fontSize: 44,
               fontWeight: 400,
               lineHeight: '140%',
-              letterSpacing: '-1.28px',
-              maxWidth: '80%',
-              marginTop: 16,
-              marginBottom: 136,
+              letterSpacing: '-1.76px',
+              maxWidth: '90%',
+              marginTop: 0,
+              marginBottom: 80,
+              height: 200,
             }}
           >
-            {truncateString(subtitle, 200)}
+            {truncateString(subtitle, 140)}
           </p>
           <hr
             style={{

@@ -140,10 +140,17 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
                           setTimeout(() => (disabled.current = false), 400)
                         }}
                       >
-                        <span>
-                          {childrenAsString.length < 35
-                            ? childrenAsString
-                            : childrenAsString.slice(0, 35) + '...'}
+                        <span
+                          style={{
+                            // line clamp
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 2,
+                          }}
+                        >
+                          {childrenAsString}
                         </span>
                       </NextLink>
                     </Link>
@@ -157,11 +164,10 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
         )}
 
         <Button
-          mt="5"
+          mt={Boolean(children.length) ? '5' : '0'}
           color="gray"
           ref={backToTopButton}
           style={{ opacity: 0, pointerEvents: 'none' }}
-          radius="large"
           variant="soft"
           onClick={() => {
             document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })

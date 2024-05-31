@@ -34,7 +34,7 @@ export const CodeBlockClientController = ({
   snippets,
 }: CodeBlockClientControllerProps) => {
   const groupRef = React.useRef<HTMLDivElement>(null)
-  const [activeSnippet, _setActiveSnippet] = React.useState<ClientSnippet>(
+  const [activeSnippet, setActiveSnippet] = React.useState<ClientSnippet>(
     snippets[0] as ClientSnippet
   )
 
@@ -59,9 +59,60 @@ export const CodeBlockClientController = ({
     })
   }, [activeSnippet])
 
+  /**
+   * Save snippet selection with localStorage.
+   */
+  const localStorageKey = `active-snippet-for-${snippets.map((s) => s.fileName).join('-')}`
+
+  React.useEffect(() => {
+    const activeSnippetFromLS = window.localStorage.getItem(localStorageKey)
+    if (activeSnippetFromLS) {
+      const snippet = snippets.find((s) => s.fileName === activeSnippetFromLS)
+      if (snippet) setActiveSnippet(snippet)
+    }
+
+    /**
+     * Sync active snippet throughout multiple code snippets throughout the page.
+     */
+    function handleSnippetChange(
+      event: CustomEvent<{ key: string; snippet: ClientSnippet }>
+    ) {
+      if (event.detail.key !== localStorageKey) return
+      const newActiveSnippet = snippets.find(
+        (s) => s.fileName === event.detail.snippet.fileName
+      )
+      if (newActiveSnippet) {
+        setActiveSnippet(newActiveSnippet)
+      }
+    }
+
+    // @ts-ignore
+    window.addEventListener('snippet-change', handleSnippetChange)
+    return () => {
+      // @ts-ignore
+      window.removeEventListener('snippet-change', handleSnippetChange)
+    }
+  }, [localStorageKey, snippets])
+
+  const selectSnippet = React.useCallback(
+    (snippet: ClientSnippet) => {
+      setActiveSnippet(snippet)
+      if (snippet.fileName) {
+        window.localStorage.setItem(localStorageKey, snippet.fileName)
+        const event = new CustomEvent('snippet-change', {
+          detail: { key: localStorageKey, snippet },
+        })
+        window.dispatchEvent(event)
+      } else {
+        window.localStorage.removeItem(localStorageKey)
+      }
+    },
+    [localStorageKey]
+  )
+
   return (
     <CodeBlockContext.Provider
-      value={{ activeSnippet, snippets, selectSnippet: _setActiveSnippet }}
+      value={{ activeSnippet, snippets, selectSnippet }}
     >
       <div
         ref={groupRef}
@@ -89,10 +140,10 @@ export const useCodeBlock = () => {
  * -----------------------------------------------------------------------------------------------*/
 
 export const CopyButton = ({
-  snippet,
+  activeSnippetId,
   style,
 }: {
-  snippet: CodeSnippetFragment['code']['code']
+  activeSnippetId: CodeSnippetFragment['_id'] | null
   style?: JSX.IntrinsicElements['button']['style']
 }) => {
   const [copied, setCopied] = React.useState(false)
@@ -112,11 +163,18 @@ export const CopyButton = ({
       style={style}
       size="1"
       variant="surface"
-      radius="large"
       color="gray"
-      onClick={() => {
-        setCopied(true)
-        navigator.clipboard.writeText(snippet)
+      onClick={(e) => {
+        const snippet = activeSnippetId
+          ? document.querySelector(`[data-snippet-id="${activeSnippetId}"]`)
+              ?.textContent
+          : e.currentTarget.closest<HTMLDivElement>(
+              '[data-code-snippet="true"]'
+            )?.textContent
+        if (snippet) {
+          navigator.clipboard.writeText(snippet)
+          setCopied(true)
+        }
       }}
     >
       {copied ? (

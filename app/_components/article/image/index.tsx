@@ -29,7 +29,7 @@ export const ImageWithZoom = ({
           sizes="(min-width: 1024px) 1024px, 100vw"
         />
       </picture>
-      {caption && <p data-type="caption">{caption}</p>}
+      {caption && <figcaption>{caption}</figcaption>}
     </Zoom>
   )
 }

@@ -1,5 +1,5 @@
 import { basehub, fragmentOn } from '@/.basehub'
-import { Theme } from '@radix-ui/themes'
+import { Theme, ThemeProps } from '@radix-ui/themes'
 import { ThemeProvider as NextThemesThemeProvider } from 'next-themes'
 import { Pump } from '@/.basehub/react-pump'
 import { LiveThemeSwitcher } from './client'
@@ -7,14 +7,13 @@ import { draftMode } from 'next/headers'
 
 import '@radix-ui/themes/styles.css'
 
-export const ThemeSettingsFragment = fragmentOn('Settings', {
-  theme: {
-    accentColor: true,
-    grayScale: true,
-    panelBackground: true,
-    radius: true,
-    scaling: true,
-  },
+export const ThemeSettingsFragment = fragmentOn('Theme', {
+  accentColor: true,
+  grayScale: true,
+  appearance: true,
+  radius: true,
+  scaling: true,
+  panelBackground: true,
 })
 
 export type ThemeSettingsFragment = fragmentOn.infer<
@@ -29,20 +28,36 @@ export const ThemeProvider = async ({
   const data = await basehub({
     next: { revalidate: 30 },
     draft: draftMode().isEnabled,
-  }).query({ settings: ThemeSettingsFragment })
+  }).query({ settings: { theme: ThemeSettingsFragment } })
 
   return (
-    <NextThemesThemeProvider attribute="class">
+    <NextThemesThemeProvider
+      attribute="class"
+      forcedTheme={
+        data.settings.theme.appearance === 'system'
+          ? undefined
+          : data.settings.theme.appearance ?? undefined
+      }
+    >
       <Theme
-        accentColor={data.settings.theme.accentColor as any}
-        grayColor={data.settings.theme.grayScale as any}
-        radius={data.settings.theme.radius as any}
-        scaling={data.settings.theme.scaling as any}
-        panelBackground={data.settings.theme.panelBackground as any}
+        accentColor={
+          data.settings.theme.accentColor as ThemeProps['accentColor']
+        }
+        grayColor={data.settings.theme.grayScale as ThemeProps['grayColor']}
+        radius={data.settings.theme.radius as ThemeProps['radius']}
+        scaling={data.settings.theme.scaling as ThemeProps['scaling']}
+        appearance={
+          (data.settings.theme.appearance === 'system'
+            ? undefined
+            : data.settings.theme.appearance) as ThemeProps['appearance']
+        }
+        panelBackground={
+          data.settings.theme.panelBackground as ThemeProps['panelBackground']
+        }
       >
         {children}
         <Pump
-          queries={[{ settings: ThemeSettingsFragment }]}
+          queries={[{ settings: { theme: ThemeSettingsFragment } }]}
           next={{ revalidate: 30 }}
           draft={draftMode().isEnabled}
         >

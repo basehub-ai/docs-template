@@ -1,22 +1,22 @@
 .header {
-   position: fixed;
-   top: 0;
-   z-index: 50;
-   width: 100%;
-   height: var(--header-only);
-   background-color: var(--color-background);
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  height: var(--header-only);
+  background-color: var(--color-background);
 
-   @media screen and (min-width: 1024px) {
-      position: sticky;
-   }
+  @media screen and (min-width: 1024px) {
+    position: sticky;
+  }
 
-   .header__head {
-      height: var(--header-head);
-   }
+  .header__head {
+    height: var(--header-head);
+  }
 
-   .header__main-cta {
-      &:hover {
-         text-decoration: none;
-      }
-   }
+  .header__main-cta {
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

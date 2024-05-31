@@ -16,6 +16,7 @@ export const Footer = () => {
           footer: {
             links: { items: { url: true, icon: { url: true, alt: true } } },
             copyright: true,
+            showPoweredByBaseHub: true,
           },
         },
       ]}
@@ -30,14 +31,9 @@ export const Footer = () => {
         return (
           <Flex asChild justify="center" align="center" direction="column">
             <footer className={s.footer}>
-              <Container
-                py="9"
-                mb="3"
-                size="4"
-                minWidth={{ sm: '526px' }}
-              >
+              <Container py="9" mb="3" size="4" minWidth={{ sm: '526px' }}>
                 <Flex justify="center" direction="column" align="center">
-                  <Logo logoLight={logoLight} logoDark={logoDark} />
+                  <Logo logoLight={logoLight} logoDark={logoDark} size="lg" />
 
                   <Text
                     size="2"
@@ -80,31 +76,28 @@ export const Footer = () => {
                     </Flex>
                   )}
 
-                  <Flex
-                    maxWidth="max-content"
-                    mx="auto"
-                    asChild
-                    align="center"
-                    justify="center"
-                  >
-                    <Link asChild size="2" color="gray">
-                      <NextLink
-                        href="https://basehub.com/home"
-                        className={s['footer__badge']}
-                      >
-                        <Image
-                          src="/basehub.svg"
-                          width={11}
-                          height={14}
-                          alt="BaseHub logo"
-                        />
-                        &nbsp;&nbsp;Powered by&nbsp;
-                        <Text as="span" color="orange">
-                          BaseHub
-                        </Text>
-                      </NextLink>
-                    </Link>
-                  </Flex>
+                  {footer.showPoweredByBaseHub && (
+                    <Flex
+                      maxWidth="max-content"
+                      mx="auto"
+                      asChild
+                      align="center"
+                      justify="center"
+
+                    >
+                        <NextLink
+                          href="https://basehub.com/basehub/docs"
+                          target='_blank'
+                        >
+                          <Image
+                            src="https://basehub.dev/edit-in-basehub.svg"
+                            width={150}
+                            height={28}
+                            alt="Edit in BaseHub"
+                          />
+                        </NextLink>
+                    </Flex>
+                  )}
                 </Flex>
               </Container>
             </footer>

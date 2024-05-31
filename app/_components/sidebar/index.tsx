@@ -3,7 +3,6 @@
 import * as React from 'react'
 import {
   ArticleMetaFragmentRecursive,
-  SidebarArticleFragmentRecursive,
   SidebarFragment,
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
@@ -17,11 +16,11 @@ import {
   IconButton,
   Link,
   ScrollArea,
-  Separator,
   Text,
   VisuallyHidden,
 } from '@radix-ui/themes'
 import { ChevronRightIcon } from '@radix-ui/react-icons'
+import { clsx } from 'clsx'
 
 import s from './sidebar.module.scss'
 
@@ -35,14 +34,9 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   const pathname = usePathname()
   const params = useParams()
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false)
-  const scrollPosition = React.useRef(0)
-  const pageHeight = React.useRef(0)
 
   React.useLayoutEffect(() => {
     setMobileSidebarOpen(false)
-    if (window.innerWidth <= 1024 && !window.location.hash) {
-      setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }))
-    }
   }, [pathname])
 
   const activeSlugs: string[] = React.useMemo(() => {
@@ -60,42 +54,8 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
     })
   }, [activeSlugs, data])
 
-  React.useLayoutEffect(() => {
-    const handleScroll = () => {
-      scrollPosition.current = window.scrollY
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  React.useLayoutEffect(() => {
-    const handleResize = () => {
-      if (mobileSidebarOpen) return
-      pageHeight.current = document.body.scrollHeight
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [mobileSidebarOpen])
-
   const toggleSidebar = () => {
-    if (!mobileSidebarOpen) {
-      scrollPosition.current = window.scrollY
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      const newPageHeight = document.body.scrollHeight
-      const heightDifference = newPageHeight - pageHeight.current
-      const adjustedScrollPosition = scrollPosition.current - heightDifference
-      window.scrollTo({ top: adjustedScrollPosition, behavior: 'instant' })
-    }
     setMobileSidebarOpen((prevState) => !prevState)
-    pageHeight.current = document.body.scrollHeight
   }
 
   React.useLayoutEffect(() => {
@@ -110,7 +70,12 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   }, [])
 
   return (
-    <SidebarContext.Provider value={{ activeSidebarItem, activeSlugs }}>
+    <SidebarContext.Provider
+      value={{
+        activeSidebarItem: params.slug ? activeSidebarItem : null,
+        activeSlugs,
+      }}
+    >
       <Box
         position="fixed"
         ml={{ initial: '-5', md: '0' }}
@@ -149,30 +114,29 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
       </Box>
 
       <Box
-        style={{
-          borderRight: '1px solid var(--gray-5)',
-          backgroundColor: 'var(--color-background)',
-        }}
+        className={s.sidebar}
         height={{ initial: 'auto', md: 'var(--sidebar)' }}
-        position={{ initial: 'relative', md: 'sticky' }}
-        top={{ initial: 'unset', md: 'var(--header)' }}
+        position={{ initial: 'fixed', md: 'sticky' }}
+        top="calc(var(--header) - 1px)"
+        left={{ initial: '0', md: 'unset' }}
         display={{
           initial: mobileSidebarOpen ? 'block' : 'none',
           md: 'block',
         }}
-        width={{ initial: '97svw', md: '320px' }}
-        ml="-3"
+        width={{ initial: '100svw', md: '320px' }}
+        px={{ md: '0' }}
+        ml={{ initial: '0', md: '-3' }}
       >
         <ScrollArea data-mobile-display={mobileSidebarOpen}>
           <Flex
-            asChild
-            ml="-3"
-            pb="7"
+            ml={{ initial: '0', md: '-3' }}
+            pb={{ initial: '3', md: '7' }}
             pl="5"
             pr="3"
             pt="5"
             direction="column"
-            gap="4"
+            className={s.sidebar__aside}
+            asChild
           >
             <aside>
               {data.items.map((item) => (
@@ -186,12 +150,6 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
             </aside>
           </Flex>
         </ScrollArea>
-      </Box>
-
-      <Box
-        display={{ initial: mobileSidebarOpen ? 'block' : 'none', md: 'none' }}
-      >
-        <Separator size="4" />
       </Box>
     </SidebarContext.Provider>
   )
@@ -238,7 +196,7 @@ const SidebarItem = ({
   level,
   pathname,
 }: {
-  data: SidebarArticleFragmentRecursive
+  data: ArticleMetaFragmentRecursive
   level: number
   pathname: string
 }) => {
@@ -267,7 +225,7 @@ const SidebarItem = ({
 
   const href = React.useMemo(() => {
     function getHrefFromArticle(
-      article: SidebarArticleFragmentRecursive
+      article: ArticleMetaFragmentRecursive
     ): string | null {
       if (!article.children.items.length) {
         return pathname
@@ -286,7 +244,7 @@ const SidebarItem = ({
   const titleNode = React.useMemo(() => {
     const title = data.titleSidebarOverride ?? data._title
 
-    if (href)
+    if (href) {
       return (
         <Flex asChild px="3" py="2" ml="-3" align="center" position="relative">
           <Link
@@ -297,17 +255,17 @@ const SidebarItem = ({
             color="gray"
             asChild
           >
-            <NextLink href={href} prefetch={false}>
-              {title || 'Untitled article'}
-            </NextLink>
+            <NextLink href={href}>{title || 'Untitled article'}</NextLink>
           </Link>
         </Flex>
       )
+    }
 
-    if (data.children.items.length <= 0)
+    if (data.children.items.length <= 0) {
       return (
         <Text className={s.sidebar__title}>{title || 'Untitled article'}</Text>
       )
+    }
 
     if (isRootLevel) {
       return (
@@ -345,11 +303,10 @@ const SidebarItem = ({
     isActive,
   ])
 
-  // filter the empty pages to prevent linking to a 404
-  if (level > 0 && !data.body) return null
+  const rendersAsSection = isRootLevel && data.children.items.length > 0
 
   return (
-    <div>
+    <Box className={clsx(rendersAsSection && s['sidebar__item-section'])}>
       <Box position="relative">
         {titleNode}
 
@@ -366,7 +323,6 @@ const SidebarItem = ({
             <IconButton
               data-collapsed={isCollapsed}
               variant="surface"
-              radius="large"
               color="gray"
               size="1"
               className={s['sidebar-item__collapse']}
@@ -389,13 +345,13 @@ const SidebarItem = ({
       </Box>
 
       <Box
-        py="2"
+        pt={level > 0 ? '1' : '2'}
+        pb={level > 0 ? '1' : '2'}
         display={isCollapsed || !data.children.items.length ? 'none' : 'block'}
       >
         <Box position="relative" pl={!isRootLevel ? '5' : '0'}>
           {!isRootLevel && (
             <Box
-              height="100%"
               className={s['sidebar__descendants-line']}
               position="absolute"
             />
@@ -412,7 +368,7 @@ const SidebarItem = ({
           })}
         </Box>
       </Box>
-    </div>
+    </Box>
   )
 }
 
@@ -424,7 +380,7 @@ const SidebarContext = React.createContext<
   | undefined
   | {
       activeSidebarItem:
-        | SidebarArticleFragmentRecursive
+        | ArticleMetaFragmentRecursive
         | ArticleMetaFragmentRecursive
         | null
       activeSlugs: string[]

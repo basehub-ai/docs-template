@@ -13,21 +13,23 @@ export const ArticleBreadcrumb = ({
   breadcrumb: ArticleBreadcrumb
 }) => {
   return (
-    <Flex align="center" wrap="wrap" gap="1">
+    <Flex align="center" wrap="wrap">
       {breadcrumb.map((segment, index) => {
-        const href =
-          index === 0
-            ? '/'
-            : `/${breadcrumb
-                .slice(0, index + 1)
-                .map((segment) => segment.slug)
-                .join('/')}`
+        const href = `/${breadcrumb
+          .slice(0, index + 1)
+          .map((segment) => segment.slug)
+          .join('/')}`
 
         if (index === breadcrumb.length - 1) {
           return (
-            <Text size="2" weight="medium" key={index} wrap="nowrap">
-              {segment.title}
-            </Text>
+            <React.Fragment key={index}>
+              <Text as="span" size="2" weight="medium" wrap="nowrap">
+                {segment.title}
+              </Text>
+              {breadcrumb.length === 1 && (
+                <SlashIcon color="gray" style={{ flexShrink: 0 }} />
+              )}
+            </React.Fragment>
           )
         }
 
@@ -36,9 +38,7 @@ export const ArticleBreadcrumb = ({
             <Link asChild color="gray" size="2" wrap="nowrap">
               <NextLink href={href}>{segment.title}</NextLink>
             </Link>
-            {index < breadcrumb.length - 1 && (
-              <SlashIcon color="gray" style={{ flexShrink: 0 }} />
-            )}
+            <SlashIcon color="gray" style={{ flexShrink: 0 }} />
           </React.Fragment>
         )
       })}

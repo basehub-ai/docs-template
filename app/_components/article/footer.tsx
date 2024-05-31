@@ -15,7 +15,7 @@ import s from './article.module.scss'
 
 export type ArticleFooter = {
   lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
-  nextArticle: { title: string; excerpt: string | null; href: string } | null
+  nextArticle: { title: string; href: string } | null
 }
 
 export const ArticleFooter = ({
@@ -23,7 +23,7 @@ export const ArticleFooter = ({
   nextArticle,
 }: ArticleFooter) => {
   return (
-    <Container asChild px={{ initial: '0', md: '9' }} mt="8" width="100%" flexGrow="0">
+    <Container asChild mt="9" width="100%" flexGrow="0">
       <footer className={s['article-footer']}>
         {lastUpdatedAt && (
           <Text size="2" weight="medium" color="gray" mb="2">
@@ -38,11 +38,8 @@ export const ArticleFooter = ({
                 <Flex align="center">
                   <Box>
                     <Text size="3" weight="medium">
-                      {nextArticle.title}
+                      {nextArticle.title || 'Untitled article'}
                     </Text>
-                    {nextArticle.excerpt && (
-                      <Text size="2">{nextArticle.excerpt}</Text>
-                    )}
                   </Box>
                   <Flex ml="auto" align="center">
                     <Separator orientation="vertical" />

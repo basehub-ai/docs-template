@@ -2,18 +2,49 @@
 
 import * as React from 'react'
 import { Flex, Text } from '@radix-ui/themes'
-import { HeaderFragment } from '.'
+import { ArticleSlugFragment, HeaderFragment } from '.'
 import { NavLink } from './nav-link'
 
-export const Nav = ({ navLinks }: HeaderFragment) => {
+export const Nav = ({
+  subNavLinks,
+}: {
+  subNavLinks: HeaderFragment['subNavLinks']
+}) => {
   const navLinksRef = React.useRef<HTMLAnchorElement[]>([])
 
   let firstPageLinkId: string | null = null
 
+  const getFirstHref = (
+    navLink: HeaderFragment['subNavLinks']['items'][number]
+  ) => {
+    const navLinkSlug = `/${navLink.page?._slug}`
+    const firstChild = navLink.page?.articles.items[0]
+    const firstSlugs = firstChild
+      ? `${navLinkSlug}/${firstChild._slug}`
+      : navLinkSlug
+
+    if (!firstChild) return firstSlugs
+
+    const plusChildren =
+      firstSlugs + recursivelyGetFirstChildrenSlugs(firstChild)
+
+    return plusChildren
+  }
+
+  const recursivelyGetFirstChildrenSlugs = (
+    article: ArticleSlugFragment
+  ): string => {
+    const firstChild = article.children.items?.[0]
+    if (!firstChild) return ''
+    if (!firstChild?.children.items.length) return `/${firstChild._slug}`
+
+    return recursivelyGetFirstChildrenSlugs(firstChild)
+  }
+
   return (
     <Flex asChild align="center" height="100%">
       <nav>
-        {navLinks.items.map((navLink) => {
+        {subNavLinks.items.map((navLink) => {
           const label = navLink.label ?? navLink.page?._title
           const href =
             navLink.href ??
@@ -33,8 +64,7 @@ export const Nav = ({ navLinks }: HeaderFragment) => {
 
                 navLinksRef.current.push(ref)
               }}
-              href={href}
-              data-slug={navLink.page?._slug}
+              href={getFirstHref(navLink)}
               key={navLink._id}
               isFirstPageLink={isPageLink && navLink._id === firstPageLinkId}
             >

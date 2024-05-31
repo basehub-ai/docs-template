@@ -12,7 +12,6 @@ export const DraftModeHeader = () => {
       &nbsp;
       <Button
         size="1"
-        radius="large"
         variant="surface"
         onClick={async () => {
           const res = await fetch('/api/draft/disable', { method: 'POST' })

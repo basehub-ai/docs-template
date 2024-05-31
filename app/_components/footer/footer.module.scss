@@ -1,60 +1,55 @@
 .footer {
-   border-top: 1px solid var(--gray-5);
+  border-top: 1px solid var(--gray-5);
 
-   .footer__logo {
+  .footer__logo {
+    height: var(--space-5);
+    margin-inline: auto;
+  }
+
+  .footer__separator {
+    --accent-indicator: inherit;
+    background-image: linear-gradient(
+      to right,
+      var(--color-background),
+      var(--accent-indicator),
+      var(--color-background)
+    );
+    background-color: none;
+    position: relative;
+
+    &::before {
+      content: '';
+      width: 75%;
+      position: absolute;
+      top: calc(var(--space-2) * -1);
       height: var(--space-5);
-      margin-inline: auto;
-   }
+      background-color: var(--accent-indicator);
+      opacity: 0.12;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 99%;
+      filter: blur(24px);
+      clip-path: inset(-300% -100% 66% -100%);
+    }
+  }
 
-   .footer__separator {
-      --accent-indicator: inherit;
-      background-image: linear-gradient(to right, var(--color-background), var(--accent-indicator), var(--color-background));
-      background-color: none;
-      position: relative;
+  .footer__copyright {
+    color: var(--gray-10);
+    text-align: center;
+    padding: 0 var(--space-6);
 
-      &::before {
-         content: "";
-         width: 75%;
-         position: absolute;
-         top: calc(var(--space-2) * -1);
-         height: var(--space-5);
-         background-color: var(--accent-indicator);
-         opacity: 0.12;
-         left: 50%;
-         transform: translateX(-50%);
-         border-radius: 99%;
-         filter: blur(24px);
-         clip-path: inset(-300% -100% 66% -100%);
-      }
-   }
+    @media screen and (min-width: 1024px) {
+      padding: 0;
+      text-align: inherit;
+    }
+  }
 
-   .footer__copyright {
-      color: var(--gray-10);
-   }
+  .footer__link {
+    color: var(--gray-10);
+    display: inline-flex;
 
-   .footer__link {
-      color: var(--gray-10);
-      display: inline-flex;
-
-      &:hover {
-         color: var(--strong);
-      }
-   }
-
-   .footer__badge {
-      background-color: var(--gray-2);
-      border: 1px solid var(--gray-4);
-      border-radius: var(--radius-6);
+    &:hover {
       color: var(--strong);
-      padding: var(--space-1) var(--space-3);
-
-      & > span {
-         text-shadow: 0px 0px 1px rgba(228, 115, 32, 0.48);
-      }
-
-      &:hover {
-         text-decoration: none;
-         border-color: var(--gray-6);
-      }
-   }
+    }
+  }
 }

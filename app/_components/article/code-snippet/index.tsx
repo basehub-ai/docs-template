@@ -32,11 +32,11 @@ export const CodeSnippetGroup = ({
 
 export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
   return (
-    <Box className={s['code-snippet']} my="8">
+    <Box className={s['code-snippet']}>
       <Flex asChild align="center" justify="between" p="2">
         <header className={s['code-snippet-header']}>
           {props.fileName || 'Untitled'}
-          <CopyButton snippet={props.code.code} />
+          <CopyButton activeSnippetId={props._id} />
         </header>
       </Flex>
 

@@ -1,4 +1,5 @@
 import { basehub } from '@/.basehub'
+import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -35,15 +36,7 @@ export async function GET(request: Request) {
     if (article) {
       // _slugPath will have something like root/pages/<category>/articles/<page>/children/<page>/children/<page>...
       // remove root/pages and then filter out every other part
-      redirectTo =
-        '/' +
-        article._slugPath
-          .replace('root/pages/', '')
-          .split('/')
-          .filter((_part, index) => {
-            return index % 2 === 0
-          })
-          .join('/')
+      redirectTo = getAritcleSlugFromSlugPath(article._slugPath)
     }
   }
 
