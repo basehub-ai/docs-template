@@ -79,7 +79,7 @@ export const generateMetadata = async ({
   if (!params.slug?.length) {
     const title = `${category._title} ${data.settings.metadata.pageTitleTemplate}`
     const description = siteName + ' documentation / ' + category._title
-    console.log(process.env)
+
     const images = [
       {
         url: `/dynamic-og?article=${category._id}&type=category`,
