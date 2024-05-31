@@ -36,10 +36,9 @@ export const LiveThemeSwitcher = ({
 
     const themeChanged =
       activeThemeRef.current !== theme.appearance &&
-      theme.appearance !== 'inherit' &&
       theme.appearance !== 'system'
     if (themeChanged && theme.appearance) {
-      if (!theme.appearance || theme.appearance === 'inherit') {
+      if (!theme.appearance) {
         setTheme('system')
       }
       return setTheme(theme.appearance)

@@ -12,6 +12,7 @@ import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { Toc } from '@/app/_components/toc'
 import { ArticleIndex } from '@/app/_components/article/article-index'
+import { siteURL } from '@/app/_constants'
 
 export const dynamic = 'force-static'
 
@@ -79,10 +80,9 @@ export const generateMetadata = async ({
   if (!params.slug?.length) {
     const title = `${category._title} ${data.settings.metadata.pageTitleTemplate}`
     const description = siteName + ' documentation / ' + category._title
-
     const images = [
       {
-        url: `/dynamic-og?article=${category._id}&type=category`,
+        url: `${siteURL.origin}/dynamic-og?article=${category._id}&type=category`,
         width: 1200,
         height: 630,
       },
@@ -128,7 +128,7 @@ export const generateMetadata = async ({
 
   const images = [
     {
-      url: `/dynamic-og?article=${_id}`,
+      url: `${siteURL.origin}/dynamic-og?article=${_id}`,
       width: 1200,
       height: 630,
     },
