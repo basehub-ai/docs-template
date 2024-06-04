@@ -83,19 +83,18 @@ export const Footer = () => {
                       asChild
                       align="center"
                       justify="center"
-
                     >
-                        <NextLink
-                          href="https://basehub.com/basehub/docs"
-                          target='_blank'
-                        >
-                          <Image
-                            src="https://basehub.dev/edit-in-basehub.svg"
-                            width={150}
-                            height={28}
-                            alt="Edit in BaseHub"
-                          />
-                        </NextLink>
+                      <NextLink
+                        href="https://basehub.com/basehub/docs"
+                        target="_blank"
+                      >
+                        <Image
+                          src="https://basehub.com/template-button.svg"
+                          width={150}
+                          height={28}
+                          alt="Edit in BaseHub"
+                        />
+                      </NextLink>
                     </Flex>
                   )}
                 </Flex>
