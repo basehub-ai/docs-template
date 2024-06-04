@@ -15,9 +15,7 @@ export default async function RootPage() {
         __args: { first: 1 },
         items: {
           page: {
-            on_PagesItem: {
-              _slug: true,
-            },
+            _slug: true,
           },
         },
       },

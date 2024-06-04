@@ -76,9 +76,7 @@ export const CodeSnippetFragmentRecursive = fragmentOn('CodeSnippetComponent', {
     language: true,
   },
   fileName: true,
-  targetOptionalToReuse: {
-    on_CodeSnippetComponent: CodeSnippetFragment,
-  },
+  targetOptionalToReuse: CodeSnippetFragment,
 })
 
 export const CodeGroupFragment = fragmentOn('CodeGroupComponent', {

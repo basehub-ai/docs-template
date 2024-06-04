@@ -29,14 +29,12 @@ export const HeaderFragment = fragmentOn('Header', {
     items: {
       _id: true,
       page: {
-        on_PagesItem: {
-          _id: true,
-          _title: true,
-          _slug: true,
-          articles: {
-            __args: { first: 1 },
-            items: ArticleSlugFragmentRecursive,
-          },
+        _id: true,
+        _title: true,
+        _slug: true,
+        articles: {
+          __args: { first: 1 },
+          items: ArticleSlugFragmentRecursive,
         },
       },
       label: true,

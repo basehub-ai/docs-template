@@ -7,12 +7,10 @@ import NextLink from 'next/link'
 export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
   _id: true,
   target: {
-    on_ArticleComponent: {
-      _slugPath: true,
-      _title: true,
-      titleSidebarOverride: true,
-      excerpt: true,
-    },
+    _slugPath: true,
+    _title: true,
+    titleSidebarOverride: true,
+    excerpt: true,
   },
   anchor: true,
 })
