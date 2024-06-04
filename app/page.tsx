@@ -13,7 +13,13 @@ export default async function RootPage() {
     header: {
       subNavLinks: {
         __args: { first: 1 },
-        items: { page: { _slug: true } },
+        items: {
+          page: {
+            on_PagesItem: {
+              _slug: true,
+            },
+          },
+        },
       },
     },
   })
