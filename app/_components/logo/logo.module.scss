@@ -4,7 +4,7 @@
 }
 
 .logo--md {
-   height: var(--space-5);
+   height: calc(var(--space-5) - 1px);
    max-width: 100%;
 }
 
