@@ -46,12 +46,10 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
   }, [params.slug])
 
   const {
+    idPath: activeIdPath,
     current: { article: activeSidebarItem },
   } = React.useMemo(() => {
-    return getActiveSidebarItem({
-      sidebar: data,
-      activeSlugs,
-    })
+    return getActiveSidebarItem({ sidebar: data, activeSlugs })
   }, [activeSlugs, data])
 
   const toggleSidebar = () => {
@@ -74,6 +72,7 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
       value={{
         activeSidebarItem: params.slug ? activeSidebarItem : null,
         activeSlugs,
+        activeIdPath,
       }}
     >
       <Box
@@ -201,12 +200,13 @@ const SidebarItem = ({
   pathname: string
 }) => {
   const isRootLevel = level === 0
-  const { activeSidebarItem, activeSlugs } = useSidebarContext()
+  const { activeSidebarItem, activeIdPath } = useSidebarContext()
   const isActive = activeSidebarItem?._id === data._id
   const userCollapsedSidebar = React.useRef(false)
+
   const isActiveInPath = React.useMemo(
-    () => activeSlugs.includes(data._slug),
-    [activeSlugs, data._slug]
+    () => activeIdPath.includes(data._id),
+    [activeIdPath, data._id]
   )
 
   const { isCollapsed, toggleCollapsed, setNotCollapsed } = useCollapsedState(
@@ -384,6 +384,7 @@ const SidebarContext = React.createContext<
         | ArticleMetaFragmentRecursive
         | null
       activeSlugs: string[]
+      activeIdPath: string[]
     }
 >(undefined)
 

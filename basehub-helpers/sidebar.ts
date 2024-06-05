@@ -33,6 +33,7 @@ export function getActiveSidebarItem({
   sidebar: SidebarProps['data']
   activeSlugs: string[]
 }): {
+  idPath: string[]
   current: {
     article: ArticleMetaFragmentRecursive | null
     path: string[]
@@ -47,12 +48,15 @@ export function getActiveSidebarItem({
   let currentItems = sidebar.items
   let firstValidItem: ArticleMetaFragmentRecursive | null = null
   let firstValidNext: ArticleMetaFragmentRecursive | null = null
+  const idPath: string[] = []
+  const idPath_fallback: string[] = []
 
   activeSlugs.forEach((slug, i) => {
     const index = currentItems.findIndex((item) => item._slug === slug)
     const item = currentItems[index]
     if (!item) return
     current = item
+    idPath.push(item._id)
 
     const firstChild = item.children.items[0]
     if (firstChild && i === activeSlugs.length - 1) {
@@ -82,6 +86,7 @@ export function getActiveSidebarItem({
         if (!firstValidItem && article.body?.__typename) {
           firstValidItem = article
           fallbackPath = path
+          idPath_fallback.push(article._id)
         }
       })
     })
@@ -102,6 +107,7 @@ export function getActiveSidebarItem({
   const resolvedNext = next ?? firstValidNext
 
   return {
+    idPath: idPath.length > 0 ? idPath : idPath_fallback,
     current: {
       article: current ?? firstValidItem,
       path: current ? activeSlugs : fallbackPath,
