@@ -1,5 +1,5 @@
 import { fragmentOn } from '@/.basehub'
-import { Callout, Heading, Link } from '@radix-ui/themes'
+import { Callout, Code, Heading, Link } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { RichText } from 'basehub/react-rich-text'
 import {
@@ -47,7 +47,9 @@ export const CalloutComponent = (props: CalloutFragment) => {
       {icon && <Callout.Icon>{icon}</Callout.Icon>}
       <RichText
         components={{
-          p: ({ children }) => <Callout.Text>{children}</Callout.Text>,
+          p: ({ children }) => (
+            <Callout.Text style={{ marginTop: 0 }}>{children}</Callout.Text>
+          ),
           h1: ({ children }) => (
             <Heading as="h1" size="3" weight="medium">
               {children}
@@ -68,6 +70,10 @@ export const CalloutComponent = (props: CalloutFragment) => {
               <NextLink {...rest}>{children}</NextLink>
             </Link>
           ),
+          code: ({ children, isInline }) => {
+            if (!isInline) return null
+            return <Code>{children}</Code>
+          },
         }}
       >
         {props.content?.json.content}
