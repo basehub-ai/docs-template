@@ -33,10 +33,10 @@ export const Footer = () => {
             <footer className={s.footer}>
               <Container py="9" mb="3" size="4" minWidth={{ sm: '526px' }}>
                 <Flex justify="center" direction="column" align="center">
-                  <Logo logoLight={logoLight} logoDark={logoDark} size="lg" />
+                  <Logo logoLight={logoLight} logoDark={logoDark} />
 
                   <Text
-                    size="2"
+                    size="1"
                     as="p"
                     mt="3"
                     className={s['footer__copyright']}
@@ -52,14 +52,13 @@ export const Footer = () => {
                   />
 
                   {footer.links.items.length && (
-                    <Flex maxWidth="max-content" mx="auto" mb="8">
+                    <Flex maxWidth="max-content" mx="auto" gapX="3">
                       {footer.links.items.map((link, index) => (
                         <Link
                           key={index}
                           href={link.url}
                           className={s['footer__link']}
                           color="gray"
-                          mr="3"
                         >
                           <Image
                             src={link.icon.url}
@@ -83,6 +82,7 @@ export const Footer = () => {
                       asChild
                       align="center"
                       justify="center"
+                      mt="8"
                     >
                       <NextLink
                         href="https://basehub.com/basehub/docs"
@@ -92,7 +92,11 @@ export const Footer = () => {
                           src="https://basehub.com/template-button.svg"
                           width={150}
                           height={28}
-                          alt="Edit in BaseHub"
+                          style={{
+                            height: 28,
+                            width: 'auto',
+                          }}
+                          alt="Use BaseHub Template"
                         />
                       </NextLink>
                     </Flex>
