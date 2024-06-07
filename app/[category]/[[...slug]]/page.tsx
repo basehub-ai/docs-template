@@ -12,7 +12,6 @@ import { basehub } from '@/.basehub'
 import { draftMode } from 'next/headers'
 import { Toc } from '@/app/_components/toc'
 import { ArticleIndex } from '@/app/_components/article/article-index'
-import { siteURL } from '@/app/_constants'
 
 export const dynamic = 'force-static'
 
@@ -82,7 +81,7 @@ export const generateMetadata = async ({
     const description = siteName + ' documentation / ' + category._title
     const images = [
       {
-        url: `${siteURL.origin}/dynamic-og?article=${category._id}&type=category`,
+        url: category.ogImage.url,
         width: 1200,
         height: 630,
       },
@@ -128,7 +127,7 @@ export const generateMetadata = async ({
 
   const images = [
     {
-      url: `${siteURL.origin}/dynamic-og?article=${_id}`,
+      url: article.ogImage.url,
       width: 1200,
       height: 630,
     },
