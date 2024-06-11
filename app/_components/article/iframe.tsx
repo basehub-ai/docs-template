@@ -1,6 +1,10 @@
-import { fragmentOn } from '@/.basehub'
+'use client'
+import * as React from 'react'
+import { fragmentOn } from 'basehub'
 
 export const IFrameComponent = (props: IFrameFragment) => {
+  const [loaded, setLoaded] = React.useState(false)
+
   return (
     <picture
       style={{
@@ -15,6 +19,11 @@ export const IFrameComponent = (props: IFrameFragment) => {
           border: 'none',
           width: '100%',
           aspectRatio: '16 / 9',
+          opacity: loaded ? 1 : 0,
+          transition: 'opacity 0.2s',
+        }}
+        onLoad={() => {
+          setLoaded(true)
         }}
       />
     </picture>
@@ -23,7 +32,6 @@ export const IFrameComponent = (props: IFrameFragment) => {
 
 export const IFrameFragment = fragmentOn('IFrameComponent', {
   _id: true,
-  _title: true,
   src: true,
 })
 
