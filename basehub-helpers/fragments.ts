@@ -7,6 +7,7 @@ import {
   CodeGroupFragment,
   CodeSnippetFragmentRecursive,
 } from '@/app/_components/article/code-snippet'
+import { IFrameFragment } from '@/app/_components/article/iframe'
 import { StepperFragment } from '@/app/_components/article/stepper'
 
 /* -------------------------------------------------------------------------------------------------
@@ -48,6 +49,7 @@ export const ArticleBodyFragment = fragmentOn('BodyRichText', {
     on_CodeGroupComponent: CodeGroupFragment,
     on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
     on_ArticleLinkComponent: ArticleLinkFragment,
+    on_IFrameComponent: IFrameFragment,
   },
 })
 
@@ -69,6 +71,7 @@ export const ArticleFragment = fragmentOn('ArticleComponent', {
     readingTime: true,
     json: ArticleBodyFragment,
   },
+  fullBleed: true,
 })
 
 export const ArticlePlainTextFragment = fragmentOn('ArticleComponent', {

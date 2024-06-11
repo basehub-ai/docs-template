@@ -38,6 +38,7 @@ import { ArticleIndex } from './article-index'
 import { flattenRichTextNodes } from '../toc/utils'
 import { ArticleLinkMark } from '../article-link/mark'
 import headingStyles from './heading/heading.module.scss'
+import { IFrameComponent } from './iframe'
 
 import s from './article.module.scss'
 
@@ -86,6 +87,7 @@ export const Article = ({
               lastModifiedAt={article._sys.lastModifiedAt}
               nextArticle={nextArticle}
               breadcrumb={breadcrumb}
+              fullBleed={article.fullBleed}
             >
               {article.body ? (
                 <Body blocks={article.body.json.blocks}>
@@ -100,7 +102,9 @@ export const Article = ({
               )}
             </ArticleWrapper>
 
-            <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
+            {!article.fullBleed && (
+              <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
+            )}
           </>
         )
       }}
@@ -115,6 +119,7 @@ export const ArticleWrapper = ({
   children,
   breadcrumb,
   nextArticle,
+  fullBleed,
 }: {
   title: string
   excerpt?: string | null
@@ -122,6 +127,7 @@ export const ArticleWrapper = ({
   children: React.ReactNode
   breadcrumb: ArticleBreadcrumb
   nextArticle: ArticleFooter['nextArticle']
+  fullBleed?: boolean
 }) => {
   return (
     <Flex
@@ -132,7 +138,10 @@ export const ArticleWrapper = ({
       width="100%"
       height="100%"
     >
-      <article className={s.article}>
+      <article
+        className={s.article}
+        style={fullBleed ? { maxWidth: '100%', paddingRight: 0 } : undefined}
+      >
         <Box>
           <Box mb="4">
             <ArticleBreadcrumb breadcrumb={breadcrumb} />
@@ -228,6 +237,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           CodeGroupComponent: CodeSnippetGroup,
           ArticleLinkComponent_mark: ArticleLinkMark,
           StepperComponent,
+          IFrameComponent: IFrameComponent,
           p: ({ children }) => (
             <Text as="p" size="3">
               {children}
