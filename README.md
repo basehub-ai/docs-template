@@ -2,16 +2,21 @@
 
 [BaseHub Templates](https://basehub.com/templates) are production-ready website templates, powered by BaseHub.
 
-
 # Documentation Template
 
 [![Use template](https://basehub.com/template-button.svg)](https://basehub.com/basehub/docs)
 
-Fully featured documentation website. Perfect for developer documentation and user manuals. Featuring:
+Fully featured documentation website.
+
+- 🔸 Perfect for developer docs, user manuals, and similar
+- 🔸 Fully editable from BaseHub
+- 🔸 Comes with Search, Dark/Light Mode, Analytics, and more
+- 🔸 Requires just a BaseHub account and a deployment platform—no other service
+
+## Stack
 
 - Next.js
-- BaseHub Search
-- BaseHub Analytics
+- BaseHub
 - Radix Themes
 
 ## One Click Deployment
