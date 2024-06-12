@@ -22,3 +22,24 @@ Fully featured documentation website.
 ## One Click Deployment
 
 [![Deploy with Vercel](https://vercel.com/button)]([https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbasehub-ai%2Fnextjs-docs&integration-ids=oac_xwgyJe0UwFLtsKIvIScYh0rY&env=&demo-url=https%3A%2F%2Fdocs.basehub.com&demo-description=Fully%20featured%20documentation%20website%2C%20featuring%3A%0A%0A-%20Next.js%0A-%20BaseHub%20Search%0A-%20BaseHub%20Analytics%0A-%20Radix%20Themes&demo-image=https%3A%2F%2Fbasehub.earth%2F7b31fb4b%2Fnp3FWfA8x4zRJYH5EPNwo%2Fimage-150.png&external-id=mly6i259eym3jkyvq6txyciu%3ARzwcwGKShcB0pBmOiUseY))
+
+_You can deploy this anywhere. Vercel works nicely and with one click._
+
+## Local Development
+
+**Install dependencies**
+```bash
+pnpm i
+```
+
+**Add your BASEHUB_TOKEN to `.env.local`**
+```txt
+# .env.local
+
+BASEHUB_TOKEN="<get-it-from-your-basehub-repo>"
+```
+
+**Start the dev server**
+```bash
+pnpm dev
+```
