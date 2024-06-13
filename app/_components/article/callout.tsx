@@ -8,6 +8,7 @@ import {
   InfoCircledIcon,
   Pencil1Icon,
 } from '@radix-ui/react-icons'
+import { ArticleLinkFragment, ArticleLinkMark } from '../article-link/mark'
 
 export const CalloutComponent = (props: CalloutFragment) => {
   let calloutColor: React.ComponentProps<typeof Callout.Root>['color'] = 'gray'
@@ -46,6 +47,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
     >
       {icon && <Callout.Icon>{icon}</Callout.Icon>}
       <RichText
+        {...props.content?.json}
         components={{
           p: ({ children }) => (
             <Callout.Text style={{ marginTop: 0 }}>{children}</Callout.Text>
@@ -74,10 +76,9 @@ export const CalloutComponent = (props: CalloutFragment) => {
             if (!isInline) return null
             return <Code>{children}</Code>
           },
+          ArticleLinkComponent_mark: ArticleLinkMark,
         }}
-      >
-        {props.content?.json.content}
-      </RichText>
+      />
     </Callout.Root>
   )
 }
@@ -85,7 +86,14 @@ export const CalloutComponent = (props: CalloutFragment) => {
 export const CalloutFragment = fragmentOn('CalloutComponent', {
   _id: true,
   _title: true,
-  content: { json: { content: true } },
+  content: {
+    json: {
+      content: true,
+      blocks: {
+        on_ArticleLinkComponent: ArticleLinkFragment,
+      },
+    },
+  },
   type: true,
 })
 

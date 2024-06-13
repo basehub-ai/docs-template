@@ -6,6 +6,7 @@ import NextLink from 'next/link'
 
 export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
   _id: true,
+  __typename: true,
   target: {
     _slugPath: true,
     _title: true,
@@ -32,7 +33,7 @@ export const ArticleLinkMark = ({
   return (
     <HoverCard.Root>
       <HoverCard.Trigger>
-        <Link size="3" asChild>
+        <Link asChild>
           <NextLink href={href}>{children}</NextLink>
         </Link>
       </HoverCard.Trigger>
