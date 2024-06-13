@@ -184,6 +184,7 @@ export default function ArticlePage({
           return (
             <>
               <ArticleWrapper
+                _analyticsKey={page._analyticsKey}
                 title={page._title}
                 lastModifiedAt={page._sys.lastModifiedAt ?? null}
                 nextArticle={{

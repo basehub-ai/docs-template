@@ -87,6 +87,7 @@ export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>
  * -----------------------------------------------------------------------------------------------*/
 
 export const PageFragment = fragmentOn('PagesItem', {
+  _analyticsKey: true,
   _id: true,
   _slug: true,
   _title: true,

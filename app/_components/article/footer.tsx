@@ -18,7 +18,7 @@ import { Feedback } from '../analytics/feedback'
 export type ArticleFooter = {
   lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
   nextArticle: { title: string; href: string } | null
-  _analyticsKey: string
+  _analyticsKey?: string
 }
 
 export const ArticleFooter = ({
@@ -51,7 +51,9 @@ export const ArticleFooter = ({
                     </Text>
                   </Box>
                   <Flex ml="auto" align="center">
-                    <Feedback analyticsKey={_analyticsKey} />
+                    {_analyticsKey && (
+                      <Feedback analyticsKey={_analyticsKey} />
+                    )}
                     <Separator orientation="vertical" />
                     <Text size="1" ml="2" color="gray">
                       Up next

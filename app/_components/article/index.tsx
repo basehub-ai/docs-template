@@ -132,7 +132,7 @@ export const ArticleWrapper = ({
   breadcrumb: ArticleBreadcrumb
   nextArticle: ArticleFooter['nextArticle']
   fullBleed?: boolean
-  _analyticsKey: string
+  _analyticsKey?: string
 }) => {
   return (
     <Flex
