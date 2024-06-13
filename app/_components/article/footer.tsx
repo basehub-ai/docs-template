@@ -1,5 +1,5 @@
 import NextLink from 'next/link'
-import { ChevronRightIcon } from '@radix-ui/react-icons'
+import { ChevronRightIcon,  } from '@radix-ui/react-icons'
 import {
   Box,
   Card,
@@ -10,24 +10,33 @@ import {
   Text,
 } from '@radix-ui/themes'
 import { ArticleFragment } from '@/basehub-helpers/fragments'
+import { formatDistance } from 'date-fns'
 
 import s from './article.module.scss'
+import { Feedback } from '../analytics/feedback'
 
 export type ArticleFooter = {
   lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
   nextArticle: { title: string; href: string } | null
+  _analyticsKey: string
 }
 
 export const ArticleFooter = ({
   lastUpdatedAt,
   nextArticle,
+  _analyticsKey
 }: ArticleFooter) => {
+  console.log('ArticleFooter', lastUpdatedAt, nextArticle, _analyticsKey)
+  const lastUpdatedFormatted = formatDistance(
+    new Date(lastUpdatedAt ?? new Date()),
+    new Date(),
+  )
   return (
     <Container asChild mt="9" width="100%" flexGrow="0">
       <footer className={s['article-footer']}>
         {lastUpdatedAt && (
           <Text size="2" weight="medium" color="gray" mb="2">
-            Last updated on {new Date(lastUpdatedAt).toLocaleDateString()}
+            Last updated {lastUpdatedFormatted}
           </Text>
         )}
 
@@ -42,6 +51,7 @@ export const ArticleFooter = ({
                     </Text>
                   </Box>
                   <Flex ml="auto" align="center">
+                    <Feedback analyticsKey={_analyticsKey} />
                     <Separator orientation="vertical" />
                     <Text size="1" ml="2" color="gray">
                       Up next

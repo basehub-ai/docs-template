@@ -41,6 +41,7 @@ import headingStyles from './heading/heading.module.scss'
 import { IFrameComponent } from './iframe'
 
 import s from './article.module.scss'
+import { PageView } from '../analytics/page-view'
 
 export const Article = ({
   id,
@@ -81,6 +82,7 @@ export const Article = ({
 
         return (
           <>
+            <PageView _analyticsKey={article._analyticsKey} />
             <ArticleWrapper
               title={article._title}
               excerpt={article.excerpt}
@@ -88,6 +90,7 @@ export const Article = ({
               nextArticle={nextArticle}
               breadcrumb={breadcrumb}
               fullBleed={article.fullBleed}
+              _analyticsKey={article._analyticsKey}
             >
               {article.body ? (
                 <Body blocks={article.body.json.blocks}>
@@ -120,6 +123,7 @@ export const ArticleWrapper = ({
   breadcrumb,
   nextArticle,
   fullBleed,
+  _analyticsKey
 }: {
   title: string
   excerpt?: string | null
@@ -128,6 +132,7 @@ export const ArticleWrapper = ({
   breadcrumb: ArticleBreadcrumb
   nextArticle: ArticleFooter['nextArticle']
   fullBleed?: boolean
+  _analyticsKey: string
 }) => {
   return (
     <Flex
@@ -163,6 +168,7 @@ export const ArticleWrapper = ({
           {children}
         </Box>
         <ArticleFooter
+          _analyticsKey={_analyticsKey}
           lastUpdatedAt={lastModifiedAt}
           nextArticle={nextArticle}
         />
