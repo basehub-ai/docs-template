@@ -1,5 +1,5 @@
 import NextLink from 'next/link'
-import { ChevronRightIcon,  } from '@radix-ui/react-icons'
+import { ChevronRightIcon } from '@radix-ui/react-icons'
 import {
   Box,
   Card,
@@ -10,10 +10,10 @@ import {
   Text,
 } from '@radix-ui/themes'
 import { ArticleFragment } from '@/basehub-helpers/fragments'
-import { formatDistance } from 'date-fns'
+import { intlFormatDistance } from 'date-fns'
+import { Feedback } from '../analytics/feedback'
 
 import s from './article.module.scss'
-import { Feedback } from '../analytics/feedback'
 
 export type ArticleFooter = {
   lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
@@ -24,21 +24,26 @@ export type ArticleFooter = {
 export const ArticleFooter = ({
   lastUpdatedAt,
   nextArticle,
-  _analyticsKey
+  _analyticsKey,
 }: ArticleFooter) => {
-  console.log('ArticleFooter', lastUpdatedAt, nextArticle, _analyticsKey)
-  const lastUpdatedFormatted = formatDistance(
+  const lastUpdatedFormatted = intlFormatDistance(
     new Date(lastUpdatedAt ?? new Date()),
-    new Date(),
+    new Date()
   )
+
   return (
     <Container asChild mt="9" width="100%" flexGrow="0">
       <footer className={s['article-footer']}>
-        {lastUpdatedAt && (
+        <Flex justify="between">
           <Text size="2" weight="medium" color="gray" mb="2">
-            Last updated {lastUpdatedFormatted}
+            {lastUpdatedAt ? (
+              <>Last updated {lastUpdatedFormatted}</>
+            ) : (
+              <>&nbsp;</>
+            )}
           </Text>
-        )}
+          {_analyticsKey && <Feedback analyticsKey={_analyticsKey} />}
+        </Flex>
 
         {nextArticle && (
           <Card asChild variant="surface">
@@ -51,9 +56,6 @@ export const ArticleFooter = ({
                     </Text>
                   </Box>
                   <Flex ml="auto" align="center">
-                    {_analyticsKey && (
-                      <Feedback analyticsKey={_analyticsKey} />
-                    )}
                     <Separator orientation="vertical" />
                     <Text size="1" ml="2" color="gray">
                       Up next

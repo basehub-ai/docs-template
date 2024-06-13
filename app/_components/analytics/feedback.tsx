@@ -15,7 +15,10 @@ export const Feedback = ({
     'positive' | 'negative' | null
   >(null)
 
-  const handleFeedback = (e: React.MouseEvent, type: 'positive' | 'negative') => {
+  const handleFeedback = (
+    e: React.MouseEvent,
+    type: 'positive' | 'negative'
+  ) => {
     e.preventDefault()
     e.stopPropagation()
     if (sentFeedback === type) return
@@ -36,37 +39,35 @@ export const Feedback = ({
   }, [_analyticsKey])
 
   return (
-        <Flex gap="2" mr='4' position='relative' style={{ zIndex: 10 }}>
-          <IconButton
-            variant="ghost"
-            mx="0 !important"
-            color="gray"
-            type='button'
-            onClick={(e) => handleFeedback(e, 'negative')}
-            aria-label="No, it did not."
-          >
-            <ThumbsDown
-              height={14}
-              width={14}
-              fill={sentFeedback === 'negative' ? 'var(--accent-12)' : 'none'}
-            />
-          </IconButton>
-          <IconButton
-            variant="ghost"
-            mx="0 !important"
-            type='button'
-            color="gray"
-            onClick={(e) => handleFeedback(e, 'positive')}
-            aria-label="Yes, the problem is solved."
-          >
-            <ThumbsUp
-              height={14}
-              width={14}
-              fill={sentFeedback === 'positive' ? 'var(--accent-12)' : 'none'}
-            />
-          </IconButton>
-        </Flex>
-
-
+    <Flex gap="2" mr="4" position="relative" style={{ zIndex: 10 }}>
+      <IconButton
+        variant="ghost"
+        mx="0 !important"
+        color="gray"
+        type="button"
+        onClick={(e) => handleFeedback(e, 'negative')}
+        aria-label="Bad article"
+      >
+        <ThumbsDown
+          height={14}
+          width={14}
+          fill={sentFeedback === 'negative' ? 'var(--accent-12)' : 'none'}
+        />
+      </IconButton>
+      <IconButton
+        variant="ghost"
+        mx="0 !important"
+        type="button"
+        color="gray"
+        onClick={(e) => handleFeedback(e, 'positive')}
+        aria-label="Good article."
+      >
+        <ThumbsUp
+          height={14}
+          width={14}
+          fill={sentFeedback === 'positive' ? 'var(--accent-12)' : 'none'}
+        />
+      </IconButton>
+    </Flex>
   )
 }
