@@ -12,11 +12,14 @@ export const Footer = () => {
     <Pump
       queries={[
         {
-          settings: { logo: { url: true }, logoDark: { url: true } },
+          settings: {
+            logo: { url: true },
+            logoDark: { url: true },
+            showUseTemplate: true,
+          },
           footer: {
             links: { items: { url: true, icon: { url: true, alt: true } } },
             copyright: true,
-            showPoweredByBaseHub: true,
           },
         },
       ]}
@@ -75,7 +78,7 @@ export const Footer = () => {
                     </Flex>
                   )}
 
-                  {footer.showPoweredByBaseHub && (
+                  {settings.showUseTemplate && (
                     <Flex
                       maxWidth="max-content"
                       mx="auto"

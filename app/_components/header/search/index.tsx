@@ -28,7 +28,7 @@ export const SearchProvider = ({
   searchCategories,
   children,
 }: {
-  _searchKey: string | null
+  _searchKey: string
   searchCategories: HeaderFragment['subNavLinks']['items']
   children: React.ReactNode
 }) => {
