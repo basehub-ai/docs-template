@@ -1,4 +1,4 @@
-import { basehub } from '@/.basehub'
+import { basehub } from 'basehub'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { redirect } from 'next/navigation'

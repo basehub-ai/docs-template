@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { fragmentOn } from '@/.basehub'
+import { fragmentOn } from 'basehub'
 import { Box, Card, Grid, Heading, Text } from '@radix-ui/themes'
 import Link from 'next/link'
 

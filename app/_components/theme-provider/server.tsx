@@ -1,4 +1,4 @@
-import { basehub, fragmentOn } from '@/.basehub'
+import { basehub, fragmentOn } from 'basehub'
 import { Theme, ThemeProps } from '@radix-ui/themes'
 import { ThemeProvider as NextThemesThemeProvider } from 'next-themes'
 import { Pump } from '@/.basehub/react-pump'

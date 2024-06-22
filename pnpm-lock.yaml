@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.3.0
     version: 1.3.0
   basehub:
-    specifier: 7.0.1
-    version: 7.0.1(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4)
+    specifier: 7.0.2
+    version: 7.0.2(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4)
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
@@ -2741,8 +2741,8 @@ packages:
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  /basehub@7.0.1(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4):
-    resolution: {integrity: sha512-aeInetkTNDK03G33SVb8mNOBOeG5MA+zcO1zyyI5jyD/yizdeJ/4PeY+vY7uMIVm/989GaM2o18O6D5d65dpHA==}
+  /basehub@7.0.2(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.4):
+    resolution: {integrity: sha512-6PbpDwjxs8kBlXOJV1aAkIXAI4bVccoS0wH/Zqt1stFKVOOw92XWD/ZRWof9XytOpMSDNfZwO72kfPsqwmJxbw==}
     hasBin: true
     peerDependencies:
       react: ^18.2.0

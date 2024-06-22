@@ -1,4 +1,4 @@
-import { fragmentOn } from '@/.basehub'
+import { fragmentOn } from 'basehub'
 import { Callout, Code, Heading, Link } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { RichText } from 'basehub/react-rich-text'

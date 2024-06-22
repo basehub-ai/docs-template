@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { fragmentOn } from '@/.basehub'
+import { fragmentOn } from 'basehub'
 
 import { StepController } from './step-controller'
 import { Body } from '..'

@@ -1,4 +1,4 @@
-import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
+import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
 import { ArticleLinkFragment } from '@/app/_components/article-link/mark'
 import { AccordionGroupFragment } from '@/app/_components/article/accordion'
 import { CalloutFragment } from '@/app/_components/article/callout'

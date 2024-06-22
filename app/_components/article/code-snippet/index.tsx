@@ -3,7 +3,7 @@ import { BundledLanguage } from 'shiki'
 import { Highlighter } from './highlighter'
 
 import { CodeBlockClientController, CopyButton } from './controller'
-import { fragmentOn } from '@/.basehub'
+import { fragmentOn } from 'basehub'
 import { CodeGroupHeader } from './header'
 import { Box, Flex } from '@radix-ui/themes'
 

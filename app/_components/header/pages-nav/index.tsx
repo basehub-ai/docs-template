@@ -1,6 +1,6 @@
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Container, Flex } from '@radix-ui/themes'
-import { fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
+import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
 import { draftMode } from 'next/headers'
 import { Nav } from './nav'
 
