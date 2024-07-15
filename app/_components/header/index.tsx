@@ -24,7 +24,10 @@ export const Header = () => {
           },
         },
         { header: HeaderFragment },
-        { _componentInstances: { article: { _searchKey: true } } },
+        {
+          _componentInstances: { article: { _searchKey: true } },
+          __typename: true,
+        },
       ]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
