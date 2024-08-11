@@ -1,13 +1,14 @@
-import { basehub } from 'basehub'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
-import { redirect } from 'next/navigation'
+import { basehub } from 'basehub'
+import { NextRequest, NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic'
-
-export default async function RootPage() {
+export async function middleware(request: NextRequest) {
+  /**
+   * Redirect to first category page.
+   */
   const { header, pages } = await basehub({
-    next: { tags: ['basehub'] },
+    next: { revalidate: 30 },
   }).query({
     pages: SidebarFragment,
     header: {
@@ -23,7 +24,7 @@ export default async function RootPage() {
   })
 
   const firstCategorySlug = header.subNavLinks.items?.[0]?.page?._slug
-  if (!firstCategorySlug) return null
+  if (!firstCategorySlug) return NextResponse.next()
 
   const page = pages.items.find((page) => page._slug === firstCategorySlug)
 
@@ -36,9 +37,23 @@ export default async function RootPage() {
     })
 
     if (firstArticlePath) {
-      redirect(`${page._slug}/${firstArticlePath.join('/')}/${article?._slug}`)
+      return NextResponse.redirect(
+        new URL(
+          `/${page._slug}/${firstArticlePath.join('/')}/${article?._slug}`.replace(
+            /\/\//g,
+            '/'
+          ),
+          request.url
+        )
+      )
     } else {
-      redirect(page._slug)
+      return NextResponse.redirect(new URL(page._slug, request.url))
     }
   }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: '/',
 }

@@ -92,7 +92,7 @@ export const Article = ({
               fullBleed={article.fullBleed}
               _analyticsKey={article._analyticsKey}
             >
-              {article.body ? (
+              {article.body?.json.content ? (
                 <Body blocks={article.body.json.blocks}>
                   {article.body.json.content}
                 </Body>
@@ -123,7 +123,7 @@ export const ArticleWrapper = ({
   breadcrumb,
   nextArticle,
   fullBleed,
-  _analyticsKey
+  _analyticsKey,
 }: {
   title: string
   excerpt?: string | null
