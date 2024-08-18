@@ -24,9 +24,10 @@ import { AccordionComponent } from './accordion'
 import { notFound } from 'next/navigation'
 import { Heading } from './heading'
 import {
-  CodeSnippet,
   CodeSnippetGroup,
+  CodeSnippetItem,
   CodeSnippetSingle,
+  theme,
 } from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
@@ -42,6 +43,7 @@ import { IFrameComponent } from './iframe'
 
 import s from './article.module.scss'
 import { PageView } from '../analytics/page-view'
+import { CodeBlock, Language } from 'basehub/react-code-block'
 
 export const Article = ({
   id,
@@ -259,14 +261,29 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
 
             return (
               <Box position="relative" data-code-snippet>
-                <CodeSnippet code={{ ...rest }} />
-                <CopyButton
-                  activeSnippetId={null}
-                  style={{
-                    position: 'absolute',
-                    right: 'var(--space-2)',
-                    top: 'var(--space-2)',
+                <CodeBlock
+                  snippets={[
+                    {
+                      code: rest.code,
+                      id: '',
+                      lang: rest.language as Language,
+                    },
+                  ]}
+                  theme={theme}
+                  components={{
+                    div: ({ children, ...rest }) => (
+                      <CodeSnippetItem {...rest}>{children}</CodeSnippetItem>
+                    ),
                   }}
+                  childrenBottom={
+                    <CopyButton
+                      style={{
+                        position: 'absolute',
+                        right: 'var(--space-2)',
+                        top: 'var(--space-2)',
+                      }}
+                    />
+                  }
                 />
               </Box>
             )

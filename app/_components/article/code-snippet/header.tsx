@@ -2,13 +2,14 @@
 
 import * as React from 'react'
 import { Flex, Tabs } from '@radix-ui/themes'
-import { CopyButton, useCodeBlock } from './controller'
+import { useCodeBlockContext } from 'basehub/react-code-block/client'
 
 import s from './code-snippet.module.scss'
+import { CopyButton } from './controller'
 
 export const CodeGroupHeader = () => {
   const highligterRef = React.useRef<HTMLDivElement>(null)
-  const { activeSnippet, snippets, selectSnippet } = useCodeBlock()
+  const { activeSnippet, snippets, selectSnippet } = useCodeBlockContext()
 
   React.useEffect(() => {
     if (!highligterRef.current) return
@@ -31,28 +32,28 @@ export const CodeGroupHeader = () => {
       <header className={s['code-snippet-header']}>
         {snippets.length > 1 ? (
           <Tabs.Root
-            defaultValue={snippets?.[0]?._id}
-            value={activeSnippet._id}
+            defaultValue={snippets?.[0]?.id}
+            value={activeSnippet.id}
             onValueChange={(_id) => {
               const selectedSnippet = snippets.find(
-                (snippet) => snippet._id === _id
+                (snippet) => snippet.id === _id
               )
               if (selectedSnippet) selectSnippet(selectedSnippet)
             }}
           >
             <Tabs.List>
               {snippets.map((snippet) => (
-                <Tabs.Trigger key={snippet._id} value={snippet._id}>
-                  {snippet.fileName || 'Untitled'}
+                <Tabs.Trigger key={snippet.id} value={snippet.id}>
+                  {snippet.label || 'Untitled'}
                 </Tabs.Trigger>
               ))}
             </Tabs.List>
           </Tabs.Root>
         ) : (
-          activeSnippet.fileName || 'Untitled'
+          activeSnippet.label || 'Untitled'
         )}
 
-        <CopyButton activeSnippetId={activeSnippet._id} />
+        <CopyButton />
       </header>
     </Flex>
   )
