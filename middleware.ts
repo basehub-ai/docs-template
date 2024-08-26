@@ -1,6 +1,7 @@
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { basehub } from 'basehub'
+import { draftMode } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
@@ -9,6 +10,7 @@ export async function middleware(request: NextRequest) {
    */
   const { header, pages } = await basehub({
     next: { revalidate: 30 },
+    draft: draftMode().isEnabled,
   }).query({
     pages: SidebarFragment,
     header: {
