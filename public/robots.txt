@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://docs.basehub.com
+
+# Sitemaps
+Sitemap: https://docs.basehub.com/sitemap.xml
