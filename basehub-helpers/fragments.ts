@@ -94,6 +94,7 @@ export const PageFragment = fragmentOn('PagesItem', {
   _sys: { lastModifiedAt: true },
   articles: { items: ArticleMetaFragmentRecursive },
   ogImage: { url: true },
+  openApiSpec: { enabled: true, url: true },
 })
 
 export type PageFragment = fragmentOn.infer<typeof PageFragment>

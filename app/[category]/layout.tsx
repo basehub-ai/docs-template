@@ -18,8 +18,12 @@ export default function Layout({
       size="4"
       px={{ initial: '5', md: '8' }}
       mt={{ initial: 'var(--header)', md: '0' }}
+      id="content-container"
     >
-      <Flex direction={{ initial: 'column', md: 'row' }}>
+      <Flex
+        direction={{ initial: 'column', md: 'row' }}
+        id="content-container-inner"
+      >
         <Toolbar />
         <Pump
           queries={[{ pages: SidebarFragment }]}

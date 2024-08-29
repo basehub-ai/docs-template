@@ -12,6 +12,7 @@ import { basehub } from 'basehub'
 import { draftMode } from 'next/headers'
 import { Toc } from '@/app/_components/toc'
 import { ArticleIndex } from '@/app/_components/article/article-index'
+import { OpenApi } from '@/app/_components/openapi'
 
 export const dynamic = 'force-static'
 
@@ -171,6 +172,13 @@ export default function ArticlePage({
 
         const page = data.pages.items[0]
         if (!page) notFound()
+
+        if (page.openApiSpec.enabled) {
+          if (!page.openApiSpec.url) {
+            throw new Error('OpenAPI spec URL is required')
+          }
+          return <OpenApi url={page.openApiSpec.url} />
+        }
 
         const {
           current: { article: activeSidebarItem },
