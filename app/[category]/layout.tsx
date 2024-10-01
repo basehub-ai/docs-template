@@ -6,6 +6,8 @@ import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
 import { Toolbar } from 'basehub/next-toolbar'
 
+export const dynamicParams = false
+
 export default function Layout({
   children,
   params,

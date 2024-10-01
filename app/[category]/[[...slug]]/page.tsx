@@ -15,6 +15,7 @@ import { ArticleIndex } from '@/app/_components/article/article-index'
 import { OpenApi } from '@/app/_components/openapi'
 
 export const dynamic = 'force-static'
+export const dynamicParams = false
 
 export const generateStaticParams = async (): Promise<
   Array<{ category: string; slug: string[] }>
