@@ -7,17 +7,23 @@ import { NavLink } from './nav-link'
 
 export const Nav = ({
   subNavLinks,
+  pages,
 }: {
   subNavLinks: HeaderFragment['subNavLinks']
+  pages: { _slug: string }[]
 }) => {
   const navLinksRef = React.useRef<HTMLAnchorElement[]>([])
 
   let firstPageLinkId: string | null = null
 
-  const getFirstHref = (
+  const getFirstHref = ({
+    navLink,
+    pageLinkIndex,
+  }: {
     navLink: HeaderFragment['subNavLinks']['items'][number]
-  ) => {
-    const navLinkSlug = `/${navLink.page?._slug}`
+    pageLinkIndex: number
+  }) => {
+    const navLinkSlug = pageLinkIndex === 0 ? '' : `/${navLink.page?._slug}`
     const firstChild = navLink.page?.articles.items[0]
     const firstSlugs = firstChild
       ? `${navLinkSlug}/${firstChild._slug}`
@@ -45,11 +51,13 @@ export const Nav = ({
     <Flex asChild align="center" height="100%">
       <nav>
         {subNavLinks.items.map((navLink) => {
+          const pageLinkIndex =
+            !navLink.href && navLink.page
+              ? pages.findIndex((p) => p._slug === navLink.page?._slug)
+              : -1
+
           const label = navLink.label ?? navLink.page?._title
-          const href =
-            navLink.href ??
-            (navLink.page?._slug ? `/${navLink.page._slug}` : '')
-          if (!label || !href) return null
+          if (!label) return null
 
           const isPageLink = !!navLink.page
           if (!firstPageLinkId && isPageLink) {
@@ -64,9 +72,10 @@ export const Nav = ({
 
                 navLinksRef.current.push(ref)
               }}
-              href={getFirstHref(navLink)}
+              href={getFirstHref({ navLink, pageLinkIndex })}
               key={navLink._id}
               isFirstPageLink={isPageLink && navLink._id === firstPageLinkId}
+              segmentToMatch={navLink.page?._slug}
             >
               <Text weight="medium" size="2" wrap="nowrap">
                 {label}

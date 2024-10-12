@@ -45,7 +45,7 @@ export const HeaderFragment = fragmentOn('Header', {
 export const PagesNav = async () => {
   return (
     <Pump
-      queries={[{ header: HeaderFragment }]}
+      queries={[{ header: HeaderFragment, pages: { items: { _slug: true } } }]}
       next={{ revalidate: 30 }}
       draft={draftMode().isEnabled}
     >
@@ -68,7 +68,10 @@ export const PagesNav = async () => {
                 overflowY={{ initial: 'clip', md: 'visible' }}
               >
                 <Flex align="center" justify="between" height="100%">
-                  <Nav subNavLinks={data.header.subNavLinks} />
+                  <Nav
+                    subNavLinks={data.header.subNavLinks}
+                    pages={data.pages.items}
+                  />
                 </Flex>
               </Container>
             </Flex>

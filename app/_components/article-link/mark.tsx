@@ -3,11 +3,14 @@ import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { Heading, HoverCard, Link, Text } from '@radix-ui/themes'
 import { fragmentOn } from 'basehub'
 import NextLink from 'next/link'
+import { Pump } from '@/.basehub/react-pump'
+import { draftMode } from 'next/headers'
 
 export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
   _id: true,
   __typename: true,
   target: {
+    _idPath: true,
     _slugPath: true,
     _title: true,
     titleSidebarOverride: true,
@@ -18,7 +21,26 @@ export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
 
 type ArticleLinkFragment = fragmentOn.infer<typeof ArticleLinkFragment>
 
-export const ArticleLinkMark = ({
+export const ArticleLinkMark = (
+  props: {
+    children: React.ReactNode
+  } & ArticleLinkFragment
+) => {
+  return (
+    <Pump
+      queries={[{ pages: { __args: { first: 1 }, items: { _id: true } } }]}
+      next={{ revalidate: 30 }}
+      draft={draftMode().isEnabled}
+    >
+      {async ([{ pages }]) => {
+        'use server'
+        return <ArticleLinkMarkImpl {...props} />
+      }}
+    </Pump>
+  )
+}
+
+const ArticleLinkMarkImpl = ({
   children,
   target,
   anchor,

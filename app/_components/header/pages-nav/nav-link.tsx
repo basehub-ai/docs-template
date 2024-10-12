@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Flex, Link } from '@radix-ui/themes'
-import { usePathname } from 'next/navigation'
+import { useSelectedLayoutSegments } from 'next/navigation'
 import NextLink from 'next/link'
 
 import s from './nav.module.scss'
@@ -13,11 +13,14 @@ export const NavLink = React.forwardRef<
     children?: React.ReactNode
     href: string
     isFirstPageLink?: boolean
+    segmentToMatch?: string
   } & JSX.IntrinsicElements['a']
->(({ children, href, isFirstPageLink, ...rest }, ref) => {
-  const pathname = usePathname()
-  const category = pathname.split('/')[1]
-  const isActive = !category ? isFirstPageLink : href.startsWith(`/${category}`)
+>(({ children, href, isFirstPageLink, segmentToMatch, ...rest }, ref) => {
+  const [category] = useSelectedLayoutSegments()
+  const isActive = !category
+    ? isFirstPageLink
+    : href.startsWith(`/${category}`) || segmentToMatch === category
+  console.log(category)
 
   return (
     <Flex height="100%" align="center" asChild px="2">

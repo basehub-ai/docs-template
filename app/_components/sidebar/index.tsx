@@ -138,14 +138,16 @@ export const Sidebar = ({ data, level, category }: SidebarProps) => {
             asChild
           >
             <aside>
-              {data.items.map((item) => (
-                <SidebarItem
-                  data={item}
-                  key={item._id}
-                  level={level}
-                  pathname={`${category}/${item._slug}`}
-                />
-              ))}
+              {data.items.map((item) => {
+                return (
+                  <SidebarItem
+                    data={item}
+                    key={item._id}
+                    level={level}
+                    pathname={`${category}/${item._slug}`}
+                  />
+                )
+              })}
             </aside>
           </Flex>
         </ScrollArea>

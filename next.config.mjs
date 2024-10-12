@@ -39,9 +39,10 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: `/${firstPage._slug}/:path*`,
-          // destination: `http://localhost:3000/${firstPage._slug}/:path*`,
-          // destination: `https://wikipedia.com/:path*`,
+          destination:
+            process.env.NODE_ENV === 'development'
+              ? `http://localhost:3000/${firstPage._slug}/:path*`
+              : `/${firstPage._slug}/:path*`,
         },
       ],
     }
