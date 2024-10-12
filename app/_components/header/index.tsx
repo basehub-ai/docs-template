@@ -1,6 +1,5 @@
 import { Pump } from '@/.basehub/react-pump'
 import { HeaderFragment, PagesNav } from './pages-nav'
-import { draftMode } from 'next/headers'
 import { Box, Container, Flex, Grid } from '@radix-ui/themes'
 import {
   DialogTriggerDesktop,
@@ -28,8 +27,6 @@ export const Header = () => {
           _componentInstances: { article: { _searchKey: true } },
         },
       ]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
     >
       {async ([
         { settings },

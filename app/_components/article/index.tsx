@@ -1,5 +1,3 @@
-import { draftMode } from 'next/headers'
-
 import {
   ArticleBodyFragment,
   ArticleFragment,
@@ -66,8 +64,6 @@ export const Article = ({
           },
         },
       ]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'

@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
    * Redirect to first category page.
    */
   const { header, pages } = await basehub({
-    next: { revalidate: 30 },
     draft: draftMode().isEnabled,
   }).query({
     pages: SidebarFragment,

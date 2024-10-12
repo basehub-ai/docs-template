@@ -59,10 +59,7 @@ export const generateMetadata = async ({
 }: {
   params: { category: string; slug: string[] | undefined }
 }): Promise<Metadata> => {
-  const data = await basehub({
-    next: { revalidate: 30 },
-    draft: draftMode().isEnabled,
-  }).query({
+  const data = await basehub({ draft: draftMode().isEnabled }).query({
     pages: pageBySlug(params.category),
     settings: {
       metadata: {
@@ -162,11 +159,7 @@ export default function ArticlePage({
   const activeSlugs = params.slug ?? []
 
   return (
-    <Pump
-      queries={[{ pages: pageBySlug(params.category) }]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
-    >
+    <Pump queries={[{ pages: pageBySlug(params.category) }]}>
       {async ([data]) => {
         'use server'
 
