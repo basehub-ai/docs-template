@@ -14,20 +14,25 @@ export const ArticleIndex = ({
 
   return (
     <Grid columns={{ xs: '1', sm: '2' }} gap="4">
-      {articles.map((article) => (
-        <Card key={article._id} size="2" asChild>
-          <Link href={`${pathname}/${article._slug}`} color="gray">
-            <Heading style={{ fontWeight: 600 }} size="3" as="h6">
-              {article._title ?? 'Untiled article'}
-            </Heading>
-            {article.excerpt && (
-              <Text color="gray" size="2" mt="1" as="p">
-                {article.excerpt}
-              </Text>
-            )}
-          </Link>
-        </Card>
-      ))}
+      {articles.map((article, i) => {
+        return (
+          <Card key={article._id} size="2" asChild>
+            <Link
+              href={`${i === 0 ? '' : pathname}/${article._slug}`}
+              color="gray"
+            >
+              <Heading style={{ fontWeight: 600 }} size="3" as="h6">
+                {article._title ?? 'Untiled article'}
+              </Heading>
+              {article.excerpt && (
+                <Text color="gray" size="2" mt="1" as="p">
+                  {article.excerpt}
+                </Text>
+              )}
+            </Link>
+          </Card>
+        )
+      })}
     </Grid>
   )
 }

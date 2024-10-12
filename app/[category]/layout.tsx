@@ -6,6 +6,8 @@ import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
 import { Toolbar } from 'basehub/next-toolbar'
 
+export const dynamicParams = false
+
 export default function Layout({
   children,
   params,
@@ -34,16 +36,17 @@ export default function Layout({
             'use server'
 
             if (!data.pages.items.length) notFound()
-            const category = data.pages.items.find(
+            const categoryIndex = data.pages.items.findIndex(
               (page) => params.category === page._slug
             )
+            const category = data.pages.items[categoryIndex]
             if (!category) notFound()
 
             return (
               <Sidebar
                 data={category.articles}
                 level={0}
-                category={`/${category._slug}`}
+                category={categoryIndex === 0 ? '' : `/${category._slug}`}
               />
             )
           }}
