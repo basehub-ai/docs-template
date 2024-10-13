@@ -1,10 +1,12 @@
 'use client'
 
 import * as React from 'react'
+import { search as searchRaw } from 'basehub/search'
 import { useSearch, SearchBox, Hit } from 'basehub/react-search'
 import { Cross1Icon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import {
   Box,
+  Button,
   Dialog,
   Flex,
   IconButton,
@@ -83,6 +85,7 @@ export const SearchProvider = ({
               search.onQueryChange(search.query)
             }
           }}
+          _searchKey={_searchKey}
         />
       </SearchBox.Root>
     </Dialog.Root>
@@ -93,10 +96,12 @@ const DialogContent = ({
   searchCategories,
   selectedCategoryId,
   onCategoryChange,
+  _searchKey,
 }: {
   searchCategories: HeaderFragment['subNavLinks']['items']
   selectedCategoryId: string
   onCategoryChange: (_id: string) => void
+  _searchKey: string
 }) => {
   const search = SearchBox.useContext()
   const inputRef = React.useRef<HTMLInputElement>(null)
@@ -123,11 +128,31 @@ const DialogContent = ({
             <TextField.Slot>
               <MagnifyingGlassIcon color="currentColor" />
             </TextField.Slot>
-            <Dialog.Close>
-              <TextField.Slot style={{ cursor: 'default' }}>
-                <Kbd style={{ marginBlock: 'auto' }}>Esc</Kbd>
+            <Button
+              variant="ghost"
+              type="button"
+              style={{ cursor: 'default', alignSelf: 'center' }}
+              onClick={(e) => {
+                e.preventDefault()
+                searchRaw(
+                  'k19b3p50ue6irgvnp-1.a1.typesense.net:GgYNFpR4dI2LLmCb8erFh5Q97CIMHpOy:yJC5bzTqgSCGwIzeylItr__6cilu6IceejaWHUYQoIWC__GOSCkL1oxXpFlktOiuZY_',
+                  search.query,
+                  {
+                    queryBy: ['__embedding'],
+                    excludeFields: ['__embedding'],
+                    // @ts-ignore
+                    conversation: true,
+                    conversation_model_id: 'conv-model-1',
+                    // conversation_id: 'b87559a3-febc-4282-a580-b5df133d1fb4',
+                  }
+                )
+              }}
+            >
+              <TextField.Slot style={{ cursor: 'default' }} gap="2">
+                <Kbd style={{ marginBlock: 'auto' }}>Tab</Kbd>
+                <Text size="2">to Ask AI</Text>
               </TextField.Slot>
-            </Dialog.Close>
+            </Button>
           </TextField.Root>
         </SearchBox.Input>
         <Separator size="4" mt="2" />
