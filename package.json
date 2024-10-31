@@ -18,7 +18,7 @@
     "@radix-ui/themes": "^3.0.2",
     "@scalar/api-reference-react": "^0.3.83",
     "@shikijs/transformers": "^1.3.0",
-    "basehub": "7.5.21",
+    "basehub": "7.5.22",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "geist": "^1.3.0",
