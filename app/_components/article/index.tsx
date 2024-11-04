@@ -261,7 +261,6 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
                   snippets={[
                     {
                       code: rest.code,
-                      id: '',
                       lang: rest.language as Language,
                     },
                   ]}
