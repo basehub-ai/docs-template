@@ -5,13 +5,14 @@ import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
 import { Toolbar } from 'basehub/next-toolbar'
 
-export default function Layout({
+export default async function Layout({
   children,
-  params,
+  params: _params,
 }: {
   children: React.ReactNode
-  params: { category: string }
+  params: Promise<{ category: string }>
 }) {
+  const params = await _params
   return (
     <Container
       size="4"
