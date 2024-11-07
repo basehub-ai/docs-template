@@ -26,7 +26,7 @@ export const ThemeProvider = async ({
   children: React.ReactNode
 }) => {
   const data = await basehub({
-    draft: draftMode().isEnabled,
+    draft: (await draftMode()).isEnabled,
   }).query({ settings: { theme: ThemeSettingsFragment } })
 
   return (

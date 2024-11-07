@@ -14,8 +14,6 @@ import { Toc } from '@/app/_components/toc'
 import { ArticleIndex } from '@/app/_components/article/article-index'
 import { OpenApi } from '@/app/_components/openapi'
 
-export const dynamic = 'force-static'
-
 export const generateStaticParams = async (): Promise<
   Array<{ category: string; slug: string[] }>
 > => {
@@ -55,11 +53,12 @@ export const generateStaticParams = async (): Promise<
 }
 
 export const generateMetadata = async ({
-  params,
+  params: _params,
 }: {
-  params: { category: string; slug: string[] | undefined }
+  params: Promise<{ category: string; slug: string[] | undefined }>
 }): Promise<Metadata> => {
-  const data = await basehub({ draft: draftMode().isEnabled }).query({
+  const params = await _params
+  const data = await basehub({ draft: (await draftMode()).isEnabled }).query({
     pages: pageBySlug(params.category),
     settings: {
       metadata: {
@@ -112,7 +111,7 @@ export const generateMetadata = async ({
     activeSlugs: params.slug ?? [],
   })
   if (!article) return notFound()
-  const { _id, _title, titleSidebarOverride, excerpt } = article
+  const { _title, titleSidebarOverride, excerpt } = article
 
   const title = {
     absolute: `${category._title} / ${titleSidebarOverride ?? _title} ${data.settings.metadata.pageTitleTemplate}`,
@@ -151,11 +150,12 @@ export const generateMetadata = async ({
   }
 }
 
-export default function ArticlePage({
-  params,
+export default async function ArticlePage({
+  params: _params,
 }: {
-  params: { category: string; slug: string[] | undefined }
+  params: Promise<{ category: string; slug: string[] | undefined }>
 }) {
+  const params = await _params
   const activeSlugs = params.slug ?? []
 
   return (
