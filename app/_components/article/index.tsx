@@ -1,5 +1,3 @@
-import { draftMode } from 'next/headers'
-
 import {
   ArticleBodyFragment,
   ArticleFragment,
@@ -66,8 +64,6 @@ export const Article = ({
           },
         },
       ]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'
@@ -265,7 +261,6 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
                   snippets={[
                     {
                       code: rest.code,
-                      id: '',
                       lang: rest.language as Language,
                     },
                   ]}

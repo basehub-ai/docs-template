@@ -1,6 +1,5 @@
 import { Pump } from '@/.basehub/react-pump'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
-import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
@@ -25,11 +24,7 @@ export default function Layout({
         id="content-container-inner"
       >
         <Toolbar />
-        <Pump
-          queries={[{ pages: SidebarFragment }]}
-          next={{ revalidate: 30 }}
-          draft={draftMode().isEnabled}
-        >
+        <Pump queries={[{ pages: SidebarFragment }]}>
           {async ([data]) => {
             'use server'
 
