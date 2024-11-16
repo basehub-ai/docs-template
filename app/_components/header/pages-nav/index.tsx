@@ -1,7 +1,6 @@
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Container, Flex } from '@radix-ui/themes'
 import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
-import { draftMode } from 'next/headers'
 import { Nav } from './nav'
 
 import s from './nav.module.scss'
@@ -46,8 +45,6 @@ export const PagesNav = async () => {
   return (
     <Pump
       queries={[{ header: HeaderFragment, pages: { items: { _slug: true } } }]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
     >
       {async ([data]) => {
         'use server'

@@ -26,7 +26,6 @@ export const ThemeProvider = async ({
   children: React.ReactNode
 }) => {
   const data = await basehub({
-    next: { revalidate: 30 },
     draft: draftMode().isEnabled,
   }).query({ settings: { theme: ThemeSettingsFragment } })
 
@@ -56,11 +55,7 @@ export const ThemeProvider = async ({
         }
       >
         {children}
-        <Pump
-          queries={[{ settings: { theme: ThemeSettingsFragment } }]}
-          next={{ revalidate: 30 }}
-          draft={draftMode().isEnabled}
-        >
+        <Pump queries={[{ settings: { theme: ThemeSettingsFragment } }]}>
           {async ([data]) => {
             'use server'
 

@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
    * Redirect to first category page.
    */
   const { header, pages } = await basehub({
-    next: { revalidate: 30 },
     draft: draftMode().isEnabled,
   }).query({
     pages: SidebarFragment,
@@ -30,6 +29,8 @@ export async function middleware(request: NextRequest) {
 
   const page = pages.items.find((page) => page._slug === firstCategorySlug)
 
+  const url = new URL(request.url)
+
   if (page) {
     const {
       current: { article, path: firstArticlePath },
@@ -44,12 +45,16 @@ export async function middleware(request: NextRequest) {
           `/${page._slug}/${firstArticlePath.join('/')}/${article?._slug}`.replace(
             /\/\//g,
             '/'
-          ),
-          request.url
+          ) +
+            url.search +
+            url.hash,
+          url
         )
       )
     } else {
-      return NextResponse.redirect(new URL(page._slug, request.url))
+      return NextResponse.redirect(
+        new URL(page._slug + url.search + url.hash, url)
+      )
     }
   }
 

@@ -1,5 +1,4 @@
 import { Container, Flex, Link, Separator, Text } from '@radix-ui/themes'
-import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
 import { Pump } from '@/.basehub/react-pump'
 import Image from 'next/image'
@@ -23,8 +22,6 @@ export const Footer = () => {
           },
         },
       ]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
     >
       {async ([{ settings, footer }]) => {
         'use server'
