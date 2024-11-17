@@ -3,6 +3,7 @@ import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { basehub } from 'basehub'
 import { draftMode } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import nextConfig from './next.config'
 
 export async function middleware(request: NextRequest) {
   /**
@@ -42,7 +43,7 @@ export async function middleware(request: NextRequest) {
     if (firstArticlePath) {
       return NextResponse.redirect(
         new URL(
-          `/${firstArticlePath.join('/')}/${article?._slug}`.replace(
+          `${nextConfig.basePath ?? '/'}${firstArticlePath.join('/')}/${article?._slug}`.replace(
             /\/\//g,
             '/'
           ) +
@@ -53,7 +54,10 @@ export async function middleware(request: NextRequest) {
       )
     } else {
       return NextResponse.redirect(
-        new URL(page._slug + url.search + url.hash, url)
+        new URL(
+          (nextConfig.basePath ?? '/') + page._slug + url.search + url.hash,
+          url
+        )
       )
     }
   }
