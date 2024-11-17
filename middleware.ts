@@ -9,35 +9,21 @@ export async function middleware(request: NextRequest) {
   /**
    * Redirect to first category page.
    */
-  const { header, pages } = await basehub({
+  const { pages } = await basehub({
     draft: (await draftMode()).isEnabled,
-  }).query({
-    pages: SidebarFragment,
-    header: {
-      subNavLinks: {
-        __args: { first: 1 },
-        items: {
-          page: {
-            _slug: true,
-          },
-        },
-      },
-    },
-  })
+  }).query({ pages: { __args: { first: 1 }, items: SidebarFragment.items } })
 
-  const firstCategorySlug = header.subNavLinks.items?.[0]?.page?._slug
-  if (!firstCategorySlug) return NextResponse.next()
-
-  const page = pages.items.find((page) => page._slug === firstCategorySlug)
+  const firstCategory = pages.items?.[0]
+  if (!firstCategory) return NextResponse.next()
 
   const url = new URL(request.url)
 
-  if (page) {
+  if (firstCategory) {
     const {
       current: { article, path: firstArticlePath },
     } = getActiveSidebarItem({
       activeSlugs: [],
-      sidebar: page.articles,
+      sidebar: firstCategory.articles,
     })
 
     if (firstArticlePath) {
@@ -55,7 +41,10 @@ export async function middleware(request: NextRequest) {
     } else {
       return NextResponse.redirect(
         new URL(
-          (nextConfig.basePath ?? '/') + page._slug + url.search + url.hash,
+          (nextConfig.basePath ?? '/') +
+            firstCategory._slug +
+            url.search +
+            url.hash,
           url
         )
       )

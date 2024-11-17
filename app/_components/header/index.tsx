@@ -8,6 +8,7 @@ import {
 } from './search'
 import { Logo } from '../logo'
 import { TopRightNavDesktop, TopRightNavMobile } from './header-nav'
+import { PageMetaFragment } from '@/basehub-helpers/fragments'
 
 import s from './header.module.scss'
 
@@ -23,7 +24,7 @@ export const Header = () => {
           },
           header: HeaderFragment,
           _componentInstances: { article: { _searchKey: true } },
-          pages: { __args: { first: 1 }, items: { _id: true } },
+          pages: { items: PageMetaFragment },
         },
       ]}
     >
@@ -45,7 +46,7 @@ export const Header = () => {
         return (
           <SearchProvider
             _searchKey={_searchKey}
-            searchCategories={header.subNavLinks.items}
+            searchCategories={pages.items}
             firstCategoryId={pages.items[0]?._id}
           >
             <header className={s.header}>

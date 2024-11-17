@@ -47,6 +47,9 @@ export const generateStaticParams = async (): Promise<
   }
 
   data.pages.items.map((page) => {
+    // add the category index
+    result.push({ category: page._slug, slug: [] })
+    // process articles recursively
     page.articles.items.forEach((article) => {
       processArticle([], article, page._slug)
     })
@@ -162,8 +165,13 @@ export default async function ArticlePage({
   const activeSlugs = params.slug ?? []
 
   return (
-    <Pump queries={[{ pages: pageBySlug(params.category) }]}>
-      {async ([data]) => {
+    <Pump
+      queries={[
+        { pages: pageBySlug(params.category) },
+        { pages: { __args: { first: 1 }, items: { _id: true } } },
+      ]}
+    >
+      {async ([data, firstCategoryData]) => {
         'use server'
 
         const page = data.pages.items[0]
@@ -186,6 +194,9 @@ export default async function ArticlePage({
           activeSlugs,
         })
 
+        const isInFirstCategory =
+          page._id === firstCategoryData.pages.items[0]?._id
+
         if (!params.slug?.length) {
           return (
             <>
@@ -196,7 +207,9 @@ export default async function ArticlePage({
                 nextArticle={{
                   title:
                     activeSidebarItem?._title ?? activeSidebarItem?._slug ?? '',
-                  href: '/' + params.category + '/' + activeSidebarItem?._slug,
+                  href: isInFirstCategory
+                    ? '/' + activeSidebarItem?._slug
+                    : '/' + params.category + '/' + activeSidebarItem?._slug,
                 }}
                 breadcrumb={[{ title: page._title, slug: page._slug }]}
               >
@@ -218,7 +231,7 @@ export default async function ArticlePage({
         })
 
         const breadcrumb = [
-          { title: page._title, slug: page._slug },
+          { title: page._title, slug: isInFirstCategory ? '' : page._slug },
           ...titles.map((item, index) => ({
             title: item,
             slug: slugs[index] ?? '#',
@@ -230,7 +243,9 @@ export default async function ArticlePage({
         if (next.article) {
           nextArticle = {
             title: next.article.titleSidebarOverride ?? next.article._title,
-            href: '/' + params.category + '/' + next.path.join('/'),
+            href: isInFirstCategory
+              ? '/' + next.path.join('/')
+              : '/' + params.category + '/' + next.path.join('/'),
           }
         }
 

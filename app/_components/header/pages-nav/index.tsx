@@ -1,19 +1,13 @@
 import { Pump } from '@/.basehub/react-pump'
 import { Box, Container, Flex } from '@radix-ui/themes'
-import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
+import { fragmentOn } from 'basehub'
 import { Nav } from './nav'
+import {
+  ArticleSlugFragmentRecursive,
+  PageMetaFragment,
+} from '@/basehub-helpers/fragments'
 
 import s from './nav.module.scss'
-
-export const ArticleSlugFragmentRecursive = fragmentOnRecursiveCollection(
-  'ArticleComponent',
-  { _slug: true },
-  { levels: 5, recursiveKey: 'children' }
-)
-
-export type ArticleSlugFragment = fragmentOn.infer<
-  typeof ArticleSlugFragmentRecursive
->
 
 export const HeaderFragment = fragmentOn('Header', {
   topRightLinks: {
@@ -44,7 +38,12 @@ export const HeaderFragment = fragmentOn('Header', {
 export const PagesNav = async () => {
   return (
     <Pump
-      queries={[{ header: HeaderFragment, pages: { items: { _slug: true } } }]}
+      queries={[
+        {
+          header: HeaderFragment,
+          pages: { __args: { first: 1 }, items: PageMetaFragment },
+        },
+      ]}
     >
       {async ([data]) => {
         'use server'
@@ -66,8 +65,8 @@ export const PagesNav = async () => {
               >
                 <Flex align="center" justify="between" height="100%">
                   <Nav
+                    firstCategory={data.pages.items[0]}
                     subNavLinks={data.header.subNavLinks}
-                    pages={data.pages.items}
                   />
                 </Flex>
               </Container>

@@ -37,6 +37,16 @@ export type ArticleMetaFragmentRecursive = fragmentOn.infer<
   typeof ArticleMetaFragmentRecursive
 >
 
+export const ArticleSlugFragmentRecursive = fragmentOnRecursiveCollection(
+  'ArticleComponent',
+  { _slug: true },
+  { levels: 5, recursiveKey: 'children' }
+)
+
+export type ArticleSlugFragment = fragmentOn.infer<
+  typeof ArticleSlugFragmentRecursive
+>
+
 export const ArticleBodyFragment = fragmentOn('BodyRichText', {
   content: true,
   toc: true,
@@ -86,13 +96,23 @@ export type ArticleFragment = fragmentOn.infer<typeof ArticleFragment>
  * Page
  * -----------------------------------------------------------------------------------------------*/
 
-export const PageFragment = fragmentOn('PagesItem', {
-  _analyticsKey: true,
+export const PageMetaFragment = fragmentOn('PagesItem', {
   _id: true,
   _slug: true,
   _title: true,
-  _sys: { lastModifiedAt: true },
+  articles: {
+    __args: { first: 1 },
+    items: ArticleSlugFragmentRecursive,
+  },
+})
+
+export type PageMetaFragment = fragmentOn.infer<typeof PageMetaFragment>
+
+export const PageFragment = fragmentOn('PagesItem', {
+  ...PageMetaFragment,
   articles: { items: ArticleMetaFragmentRecursive },
+  _analyticsKey: true,
+  _sys: { lastModifiedAt: true },
   ogImage: { url: true },
   openApiSpec: { enabled: true, url: true },
 })

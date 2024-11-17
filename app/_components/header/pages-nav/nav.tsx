@@ -2,15 +2,19 @@
 
 import * as React from 'react'
 import { Flex, Text } from '@radix-ui/themes'
-import { ArticleSlugFragment, HeaderFragment } from '.'
+import { HeaderFragment } from '.'
 import { NavLink } from './nav-link'
+import {
+  ArticleSlugFragment,
+  PageMetaFragment,
+} from '@/basehub-helpers/fragments'
 
 export const Nav = ({
-  subNavLinks,
-  pages,
+  firstCategory,
+  subNavLinks: _subNavLinks,
 }: {
+  firstCategory: PageMetaFragment | undefined
   subNavLinks: HeaderFragment['subNavLinks']
-  pages: { _slug: string }[]
 }) => {
   const navLinksRef = React.useRef<HTMLAnchorElement[]>([])
 
@@ -18,12 +22,12 @@ export const Nav = ({
 
   const getFirstHref = ({
     navLink,
-    pageLinkIndex,
+    isFirstCategory,
   }: {
     navLink: HeaderFragment['subNavLinks']['items'][number]
-    pageLinkIndex: number
+    isFirstCategory: boolean
   }) => {
-    const navLinkSlug = pageLinkIndex === 0 ? '' : `/${navLink.page?._slug}`
+    const navLinkSlug = isFirstCategory ? '' : `/${navLink.page?._slug}`
     const firstChild = navLink.page?.articles.items[0]
     const firstSlugs = firstChild
       ? `${navLinkSlug}/${firstChild._slug}`
@@ -47,21 +51,34 @@ export const Nav = ({
     return recursivelyGetFirstChildrenSlugs(firstChild)
   }
 
+  // include first category in subNavLinks
+  const subNavLinks: typeof _subNavLinks.items = React.useMemo(() => {
+    if (!firstCategory) return _subNavLinks.items
+    return [
+      {
+        _id: firstCategory._id,
+        label: firstCategory._title,
+        href: null,
+        page: firstCategory,
+      },
+      ..._subNavLinks.items,
+    ]
+  }, [_subNavLinks.items, firstCategory])
+
   return (
     <Flex asChild align="center" height="100%">
       <nav>
-        {subNavLinks.items.map((navLink) => {
-          const pageLinkIndex =
-            !navLink.href && navLink.page
-              ? pages.findIndex((p) => p._slug === navLink.page?._slug)
-              : -1
-
+        {subNavLinks.map((navLink, i) => {
           const label = navLink.label ?? navLink.page?._title
           if (!label) return null
 
           const isPageLink = !!navLink.page
           if (!firstPageLinkId && isPageLink) {
             firstPageLinkId = navLink._id
+          }
+
+          if (firstCategory) {
+            if (i > 0 && navLink.page?._id === firstCategory._id) return null
           }
 
           return (
@@ -72,7 +89,7 @@ export const Nav = ({
 
                 navLinksRef.current.push(ref)
               }}
-              href={getFirstHref({ navLink, pageLinkIndex })}
+              href={getFirstHref({ navLink, isFirstCategory: i === 0 })}
               key={navLink._id}
               isFirstPageLink={isPageLink && navLink._id === firstPageLinkId}
               segmentToMatch={navLink.page?._slug}

@@ -17,10 +17,10 @@ import {
   VisuallyHidden,
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import { HeaderFragment } from '../pages-nav'
 import { clsx } from 'clsx'
 import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { flushSync } from 'react-dom'
+import { PageMetaFragment } from '@/basehub-helpers/fragments'
 
 import s from './search.module.scss'
 
@@ -31,7 +31,7 @@ export const SearchProvider = ({
   firstCategoryId,
 }: {
   _searchKey: string
-  searchCategories: HeaderFragment['subNavLinks']['items']
+  searchCategories: PageMetaFragment[]
   children: React.ReactNode
   firstCategoryId: string | undefined
 }) => {
@@ -99,7 +99,7 @@ const DialogContent = ({
   onCategoryChange,
   firstCategoryId,
 }: {
-  searchCategories: HeaderFragment['subNavLinks']['items']
+  searchCategories: PageMetaFragment[]
   selectedCategoryId: string
   onCategoryChange: (_id: string) => void
   firstCategoryId: string | undefined
@@ -107,10 +107,9 @@ const DialogContent = ({
   const search = SearchBox.useContext()
   const inputRef = React.useRef<HTMLInputElement>(null)
 
-  const selectedCategoryLabel =
-    searchCategories.find(
-      (category) => category.page?._id === selectedCategoryId
-    )?.page?._title ?? 'All'
+  const selectedCategory = searchCategories.find(
+    (category) => category._id === selectedCategoryId
+  )
 
   return (
     <Dialog.Content
@@ -213,18 +212,14 @@ const DialogContent = ({
                 value={selectedCategoryId}
               >
                 <Select.Trigger className={s['search-dialog-category']}>
-                  {selectedCategoryLabel}
+                  {selectedCategory?._title ?? 'All'}
                 </Select.Trigger>
                 <Select.Content>
                   <Select.Item value={'__all__'}>All</Select.Item>
                   {searchCategories.map((category) => {
-                    if (!category.page) return null
                     return (
-                      <Select.Item
-                        key={category.page._id}
-                        value={category.page._id}
-                      >
-                        {category.page._title}
+                      <Select.Item key={category._id} value={category._id}>
+                        {category._title}
                       </Select.Item>
                     )
                   })}

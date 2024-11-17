@@ -18,6 +18,7 @@ export const ArticleBreadcrumb = ({
         const href = `/${breadcrumb
           .slice(0, index + 1)
           .map((segment) => segment.slug)
+          .filter((slug) => slug !== '')
           .join('/')}`
 
         if (index === breadcrumb.length - 1) {
