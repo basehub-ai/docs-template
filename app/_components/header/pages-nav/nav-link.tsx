@@ -20,7 +20,6 @@ export const NavLink = React.forwardRef<
   const isActive = !category
     ? isFirstPageLink
     : href.startsWith(`/${category}`) || segmentToMatch === category
-  console.log(category)
 
   return (
     <Flex height="100%" align="center" asChild px="2">

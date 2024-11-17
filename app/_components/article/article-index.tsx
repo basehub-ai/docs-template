@@ -14,13 +14,10 @@ export const ArticleIndex = ({
 
   return (
     <Grid columns={{ xs: '1', sm: '2' }} gap="4">
-      {articles.map((article, i) => {
+      {articles.map((article) => {
         return (
           <Card key={article._id} size="2" asChild>
-            <Link
-              href={`${i === 0 ? '' : pathname}/${article._slug}`}
-              color="gray"
-            >
+            <Link href={`${pathname}/${article._slug}`} color="gray">
               <Heading style={{ fontWeight: 600 }} size="3" as="h6">
                 {article._title ?? 'Untiled article'}
               </Heading>

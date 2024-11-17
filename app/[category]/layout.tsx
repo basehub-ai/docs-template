@@ -7,13 +7,14 @@ import { Toolbar } from 'basehub/next-toolbar'
 
 export const dynamicParams = false
 
-export default function Layout({
+export default async function Layout({
   children,
-  params,
+  params: _params,
 }: {
   children: React.ReactNode
-  params: { category: string }
+  params: Promise<{ category: string }>
 }) {
+  const params = await _params
   return (
     <Container
       size="4"
@@ -30,12 +31,16 @@ export default function Layout({
           {async ([data]) => {
             'use server'
 
-            if (!data.pages.items.length) notFound()
+            if (!data.pages.items.length) {
+              notFound()
+            }
             const categoryIndex = data.pages.items.findIndex(
               (page) => params.category === page._slug
             )
             const category = data.pages.items[categoryIndex]
-            if (!category) notFound()
+            if (!category) {
+              notFound()
+            }
 
             return (
               <Sidebar

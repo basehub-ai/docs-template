@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { IFrameFragment } from '.'
+import { IFrameFragment } from './fragment'
 
 export const IFrameWithFadeIn = (props: IFrameFragment) => {
   const [loaded, setLoaded] = React.useState(false)

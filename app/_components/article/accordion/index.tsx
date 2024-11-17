@@ -1,4 +1,3 @@
-import { fragmentOn } from 'basehub'
 import {
   Accordion,
   AccordionContent,
@@ -6,6 +5,7 @@ import {
   AccordionTrigger,
 } from './accordion'
 import { Body } from '..'
+import { AccordionGroupFragment } from './fragment'
 
 export const AccordionComponent = ({ accordions }: AccordionGroupFragment) => {
   return (
@@ -21,12 +21,3 @@ export const AccordionComponent = ({ accordions }: AccordionGroupFragment) => {
     </Accordion>
   )
 }
-
-export const AccordionGroupFragment = fragmentOn('AccordionGroupComponent', {
-  _id: true,
-  accordions: {
-    items: { _id: true, _title: true, content: { json: { content: true } } },
-  },
-})
-
-type AccordionGroupFragment = fragmentOn.infer<typeof AccordionGroupFragment>

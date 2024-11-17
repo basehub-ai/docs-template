@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { fragmentOn } from 'basehub'
 import { Box, Card, Grid, Heading, Text } from '@radix-ui/themes'
 import Link from 'next/link'
+import { CardsGridFragment } from './cards-grid-fragment'
 
 export const CardsGridComponent = ({ cards }: CardsGridFragment) => {
   return (
@@ -45,26 +45,3 @@ export const CardsGridComponent = ({ cards }: CardsGridFragment) => {
     </Grid>
   )
 }
-
-export const CardsGridFragment = fragmentOn('CardsGridComponent', {
-  _id: true,
-  _title: true,
-  cards: {
-    items: {
-      _id: true,
-      _title: true,
-      href: true,
-      description: true,
-      icon: {
-        light: {
-          url: true,
-        },
-        dark: {
-          url: true,
-        },
-      },
-    },
-  },
-})
-
-type CardsGridFragment = fragmentOn.infer<typeof CardsGridFragment>

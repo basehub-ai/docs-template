@@ -56,11 +56,12 @@ export const generateStaticParams = async (): Promise<
 }
 
 export const generateMetadata = async ({
-  params,
+  params: _params,
 }: {
-  params: { category: string; slug: string[] | undefined }
+  params: Promise<{ category: string; slug: string[] | undefined }>
 }): Promise<Metadata> => {
-  const data = await basehub({ draft: draftMode().isEnabled }).query({
+  const params = await _params
+  const data = await basehub({ draft: (await draftMode()).isEnabled }).query({
     pages: pageBySlug(params.category),
     settings: {
       metadata: {
@@ -112,8 +113,8 @@ export const generateMetadata = async ({
     sidebar: category.articles,
     activeSlugs: params.slug ?? [],
   })
-  if (!article) return notFound()
-  const { _id, _title, titleSidebarOverride, excerpt } = article
+  if (!article) return {}
+  const { _title, titleSidebarOverride, excerpt } = article
 
   const title = {
     absolute: `${category._title} / ${titleSidebarOverride ?? _title} ${data.settings.metadata.pageTitleTemplate}`,
@@ -152,11 +153,12 @@ export const generateMetadata = async ({
   }
 }
 
-export default function ArticlePage({
-  params,
+export default async function ArticlePage({
+  params: _params,
 }: {
-  params: { category: string; slug: string[] | undefined }
+  params: Promise<{ category: string; slug: string[] | undefined }>
 }) {
+  const params = await _params
   const activeSlugs = params.slug ?? []
 
   return (
@@ -165,7 +167,9 @@ export default function ArticlePage({
         'use server'
 
         const page = data.pages.items[0]
-        if (!page) notFound()
+        if (!page) {
+          notFound()
+        }
 
         if (page.openApiSpec.enabled) {
           if (!page.openApiSpec.url) {
@@ -204,7 +208,9 @@ export default function ArticlePage({
           )
         }
 
-        if (!activeSidebarItem) notFound()
+        if (!activeSidebarItem) {
+          notFound()
+        }
 
         const { titles, slugs } = getBreadcrumb({
           sidebar: page.articles,

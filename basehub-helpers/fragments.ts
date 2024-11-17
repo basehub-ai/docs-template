@@ -1,14 +1,14 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
-import { ArticleLinkFragment } from '@/app/_components/article-link/mark'
-import { AccordionGroupFragment } from '@/app/_components/article/accordion'
-import { CalloutFragment } from '@/app/_components/article/callout'
-import { CardsGridFragment } from '@/app/_components/article/cards-grid'
+import { ArticleLinkFragment } from '@/app/_components/article-link/fragment'
+import { AccordionGroupFragment } from '@/app/_components/article/accordion/fragment'
+import { CalloutFragment } from '@/app/_components/article/callout-fragment'
+import { CardsGridFragment } from '@/app/_components/article/cards-grid-fragment'
 import {
   CodeGroupFragment,
   CodeSnippetFragmentRecursive,
-} from '@/app/_components/article/code-snippet'
-import { IFrameFragment } from '@/app/_components/article/iframe'
-import { StepperFragment } from '@/app/_components/article/stepper'
+} from '@/app/_components/article/code-snippet/fragment'
+import { IFrameFragment } from '@/app/_components/article/iframe/fragment'
+import { StepperFragment } from '@/app/_components/article/stepper/fragment'
 
 /* -------------------------------------------------------------------------------------------------
  * Article

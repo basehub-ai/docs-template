@@ -1,15 +1,9 @@
 import * as React from 'react'
-import { fragmentOn } from 'basehub'
 
 import { StepController } from './step-controller'
 import { Body } from '..'
 import { Box, Heading } from '@radix-ui/themes'
-import { CalloutFragment } from '../callout'
-import { CardsGridFragment } from '../cards-grid'
-import {
-  CodeGroupFragment,
-  CodeSnippetFragmentRecursive,
-} from '../code-snippet'
+import { StepperFragment } from './fragment'
 
 import s from './stepper.module.scss'
 
@@ -55,22 +49,3 @@ export const StepperComponent = async ({
     </Box>
   )
 }
-
-export const StepperFragment = fragmentOn('StepperComponent', {
-  __typename: true,
-  _id: true,
-  stepperContent: {
-    json: {
-      content: true,
-      blocks: {
-        __typename: true,
-        on_CalloutComponent: CalloutFragment,
-        on_CardsGridComponent: CardsGridFragment,
-        on_CodeGroupComponent: CodeGroupFragment,
-        on_CodeSnippetComponent: CodeSnippetFragmentRecursive,
-      },
-    },
-  },
-})
-
-export type StepperFragment = fragmentOn.infer<typeof StepperFragment>

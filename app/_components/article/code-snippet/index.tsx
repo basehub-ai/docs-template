@@ -5,11 +5,11 @@ import {
 } from 'basehub/react-code-block'
 
 import { CopyButton } from './controller'
-import { fragmentOn } from 'basehub'
 import { CodeGroupHeader } from './header'
 import { Box, Flex } from '@radix-ui/themes'
 
 import s from './code-snippet.module.scss'
+import { CodeSnippetFragment } from './fragment'
 
 export const theme = createCssVariablesTheme({
   name: 'css-variables',
@@ -88,30 +88,3 @@ export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
     </Box>
   )
 }
-
-export const CodeSnippetFragment = fragmentOn('CodeSnippetComponent', {
-  _id: true,
-  __typename: true,
-  code: { code: true, language: true },
-  fileName: true,
-})
-
-export const CodeSnippetFragmentRecursive = fragmentOn('CodeSnippetComponent', {
-  _id: true,
-  __typename: true,
-  code: {
-    __typename: true,
-    code: true,
-    language: true,
-  },
-  fileName: true,
-  targetOptionalToReuse: CodeSnippetFragment,
-})
-
-export const CodeGroupFragment = fragmentOn('CodeGroupComponent', {
-  _id: true,
-  __typename: true,
-  codeSnippets: { items: CodeSnippetFragmentRecursive },
-})
-
-export type CodeSnippetFragment = fragmentOn.infer<typeof CodeSnippetFragment>

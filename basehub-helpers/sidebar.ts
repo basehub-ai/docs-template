@@ -1,5 +1,5 @@
-import { SidebarProps } from '@/app/_components/sidebar'
-import { ArticleMetaFragmentRecursive } from './fragments'
+import type { SidebarProps } from '@/app/_components/sidebar'
+import type { ArticleMetaFragmentRecursive } from './fragments'
 
 export const getBreadcrumb = ({
   sidebar,

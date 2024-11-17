@@ -1,4 +1,3 @@
-import { fragmentOn } from 'basehub'
 import { Callout, Code, Heading, Link } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { RichText } from 'basehub/react-rich-text'
@@ -8,7 +7,8 @@ import {
   InfoCircledIcon,
   Pencil1Icon,
 } from '@radix-ui/react-icons'
-import { ArticleLinkFragment, ArticleLinkMark } from '../article-link/mark'
+import { ArticleLinkMark } from '../article-link/mark'
+import { CalloutFragment } from './callout-fragment'
 
 export const CalloutComponent = (props: CalloutFragment) => {
   let calloutColor: React.ComponentProps<typeof Callout.Root>['color'] = 'gray'
@@ -82,19 +82,3 @@ export const CalloutComponent = (props: CalloutFragment) => {
     </Callout.Root>
   )
 }
-
-export const CalloutFragment = fragmentOn('CalloutComponent', {
-  _id: true,
-  _title: true,
-  content: {
-    json: {
-      content: true,
-      blocks: {
-        on_ArticleLinkComponent: ArticleLinkFragment,
-      },
-    },
-  },
-  type: true,
-})
-
-type CalloutFragment = fragmentOn.infer<typeof CalloutFragment>

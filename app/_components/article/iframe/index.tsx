@@ -1,5 +1,5 @@
-import { fragmentOn } from 'basehub'
 import { IFrameWithFadeIn } from './iframe-with-fade-in'
+import { IFrameFragment } from './fragment'
 
 export const IFrameComponent = (props: IFrameFragment) => {
   return (
@@ -8,10 +8,3 @@ export const IFrameComponent = (props: IFrameFragment) => {
     </picture>
   )
 }
-
-export const IFrameFragment = fragmentOn('IFrameComponent', {
-  _id: true,
-  src: true,
-})
-
-export type IFrameFragment = fragmentOn.infer<typeof IFrameFragment>

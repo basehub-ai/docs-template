@@ -69,7 +69,10 @@ export const Article = ({
         'use server'
 
         const article = data._componentInstances.article.items[0]
-        if (!article) return notFound()
+        if (!article) {
+          console.log('dude')
+          notFound()
+        }
 
         const flattenedToc = flattenRichTextNodes(article?.body?.json.toc ?? [])
         const tocIsEmpty = !flattenedToc.some(

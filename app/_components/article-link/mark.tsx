@@ -1,40 +1,30 @@
 import * as React from 'react'
 import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { Heading, HoverCard, Link, Text } from '@radix-ui/themes'
-import { fragmentOn } from 'basehub'
 import NextLink from 'next/link'
 import { Pump } from '@/.basehub/react-pump'
-import { draftMode } from 'next/headers'
+import { ArticleLinkFragment } from './fragment'
 
-export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
-  _id: true,
-  __typename: true,
-  target: {
-    _idPath: true,
-    _slugPath: true,
-    _title: true,
-    titleSidebarOverride: true,
-    excerpt: true,
-  },
-  anchor: true,
-})
-
-type ArticleLinkFragment = fragmentOn.infer<typeof ArticleLinkFragment>
-
-export const ArticleLinkMark = (
+export const ArticleLinkMark = async (
   props: {
     children: React.ReactNode
   } & ArticleLinkFragment
 ) => {
   return (
-    <Pump
-      queries={[{ pages: { __args: { first: 1 }, items: { _id: true } } }]}
-      next={{ revalidate: 30 }}
-      draft={draftMode().isEnabled}
-    >
+    <Pump queries={[{ pages: { __args: { first: 1 }, items: { _id: true } } }]}>
       {async ([{ pages }]) => {
         'use server'
-        return <ArticleLinkMarkImpl {...props} />
+
+        const isInFirstCategory = pages.items[0]
+          ? props.target._idPath.includes(pages.items[0]._id)
+          : false
+
+        return (
+          <ArticleLinkMarkImpl
+            {...props}
+            isInFirstCategory={isInFirstCategory}
+          />
+        )
       }}
     </Pump>
   )
@@ -44,10 +34,12 @@ const ArticleLinkMarkImpl = ({
   children,
   target,
   anchor,
+  isInFirstCategory,
 }: {
   children: React.ReactNode
+  isInFirstCategory: boolean
 } & ArticleLinkFragment) => {
-  let href = getAritcleSlugFromSlugPath(target._slugPath)
+  let href = getAritcleSlugFromSlugPath(target._slugPath, isInFirstCategory)
   if (anchor) {
     href += `#${anchor.startsWith('#') ? anchor.slice(1) : anchor}`
   }

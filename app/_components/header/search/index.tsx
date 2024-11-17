@@ -14,6 +14,7 @@ import {
   Separator,
   Text,
   TextField,
+  VisuallyHidden,
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { HeaderFragment } from '../pages-nav'
@@ -27,10 +28,12 @@ export const SearchProvider = ({
   _searchKey,
   searchCategories,
   children,
+  firstCategoryId,
 }: {
   _searchKey: string
   searchCategories: HeaderFragment['subNavLinks']['items']
   children: React.ReactNode
+  firstCategoryId: string | undefined
 }) => {
   const [open, setOpen] = React.useState(false)
   const [selectedCategoryId, setSelectedCategoryId] = React.useState('__all__')
@@ -83,6 +86,7 @@ export const SearchProvider = ({
               search.onQueryChange(search.query)
             }
           }}
+          firstCategoryId={firstCategoryId}
         />
       </SearchBox.Root>
     </Dialog.Root>
@@ -93,10 +97,12 @@ const DialogContent = ({
   searchCategories,
   selectedCategoryId,
   onCategoryChange,
+  firstCategoryId,
 }: {
   searchCategories: HeaderFragment['subNavLinks']['items']
   selectedCategoryId: string
   onCategoryChange: (_id: string) => void
+  firstCategoryId: string | undefined
 }) => {
   const search = SearchBox.useContext()
   const inputRef = React.useRef<HTMLInputElement>(null)
@@ -111,6 +117,9 @@ const DialogContent = ({
       maxWidth="min(100vw - var(--space-6), 550px)"
       className={s['search-dialog__content']}
     >
+      <VisuallyHidden>
+        <Dialog.Title>Search</Dialog.Title>
+      </VisuallyHidden>
       <Flex direction="column" height="100%">
         <SearchBox.Input asChild>
           <TextField.Root
@@ -155,7 +164,11 @@ const DialogContent = ({
             </SearchBox.Empty>
             <SearchBox.Placeholder asChild>
               {search.recentSearches?.hits?.length ? (
-                <HitList hits={search.recentSearches?.hits ?? []} isRecent />
+                <HitList
+                  hits={search.recentSearches?.hits ?? []}
+                  firstCategoryId={firstCategoryId}
+                  isRecent
+                />
               ) : (
                 <Flex align="center" px="2" py="1">
                   <Text
@@ -169,7 +182,10 @@ const DialogContent = ({
               )}
             </SearchBox.Placeholder>
 
-            <HitList hits={search.result?.hits ?? []} />
+            <HitList
+              hits={search.result?.hits ?? []}
+              firstCategoryId={firstCategoryId}
+            />
           </Box>
         </ScrollArea>
 
@@ -222,7 +238,15 @@ const DialogContent = ({
   )
 }
 
-const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
+const HitList = ({
+  hits,
+  isRecent,
+  firstCategoryId,
+}: {
+  hits: Hit[]
+  isRecent?: boolean
+  firstCategoryId: string | undefined
+}) => {
   const search = SearchBox.useContext()
   return (
     <SearchBox.HitList>
@@ -232,7 +256,12 @@ const HitList = ({ hits, isRecent }: { hits: Hit[]; isRecent?: boolean }) => {
         </Text>
       )}
       {hits.map((hit) => {
-        let pathname = getAritcleSlugFromSlugPath(hit.document._slugPath ?? '')
+        let pathname = getAritcleSlugFromSlugPath(
+          hit.document._slugPath ?? '',
+          firstCategoryId
+            ? hit.document._idPath.includes(firstCategoryId)
+            : false
+        )
 
         const bodyHighlight = hit._getFieldHighlight('body')
 

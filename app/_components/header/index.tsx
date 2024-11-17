@@ -21,20 +21,20 @@ export const Header = () => {
             logoDark: { url: true },
             theme: { appearance: true },
           },
-        },
-        { header: HeaderFragment },
-        {
+          header: HeaderFragment,
           _componentInstances: { article: { _searchKey: true } },
+          pages: { __args: { first: 1 }, items: { _id: true } },
         },
       ]}
     >
       {async ([
-        { settings },
-        { header },
         {
+          settings,
+          header,
           _componentInstances: {
             article: { _searchKey },
           },
+          pages,
         },
       ]) => {
         'use server'
@@ -46,6 +46,7 @@ export const Header = () => {
           <SearchProvider
             _searchKey={_searchKey}
             searchCategories={header.subNavLinks.items}
+            firstCategoryId={pages.items[0]?._id}
           >
             <header className={s.header}>
               <Container

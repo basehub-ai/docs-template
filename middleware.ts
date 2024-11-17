@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
    * Redirect to first category page.
    */
   const { header, pages } = await basehub({
-    draft: draftMode().isEnabled,
+    draft: (await draftMode()).isEnabled,
   }).query({
     pages: SidebarFragment,
     header: {
@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
     if (firstArticlePath) {
       return NextResponse.redirect(
         new URL(
-          `/${page._slug}/${firstArticlePath.join('/')}/${article?._slug}`.replace(
+          `/${firstArticlePath.join('/')}/${article?._slug}`.replace(
             /\/\//g,
             '/'
           ) +
