@@ -2,10 +2,13 @@ import { ArticleMetaFragmentRecursive } from '@/basehub-helpers/fragments'
 import { basehub } from 'basehub'
 
 const origin =
-  process.env.VERCEL_PROJECT_PRODUCTION_URL || 'http://localhost:3000'
+  process.env.NODE_ENV === 'production'
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000'
 
 export const GET = async () => {
   const data = await basehub().query({
+    settings: { metadata: { sitename: true } },
     pages: {
       items: {
         _title: true,
@@ -36,7 +39,7 @@ ${children}
   }
 
   return new Response(
-    `# <Title>
+    `# ${data.settings.metadata.sitename}
 
 ${data.pages.items
   .map((page) => {
