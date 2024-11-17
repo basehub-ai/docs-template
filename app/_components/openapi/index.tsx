@@ -1,11 +1,11 @@
 'use client'
 import * as React from 'react'
 import { Portal } from '@radix-ui/themes'
-import { ApiReferenceReact } from '@scalar/api-reference-react'
 import s from './openapi.module.scss'
 
 export const OpenApi = ({ url }: { url: string }) => {
   const [container, setContainer] = React.useState<HTMLElement | null>(null)
+  const shouldLoad = !!container
 
   React.useEffect(() => {
     const container = document.getElementById('content-container')
@@ -32,6 +32,33 @@ export const OpenApi = ({ url }: { url: string }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  React.useEffect(() => {
+    if (!shouldLoad) return
+    // Create script element
+    const script = document.createElement('script')
+    script.src = 'https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.25.66'
+    script.async = true
+
+    // Add load and error handlers
+    const handleLoad = () =>
+      console.log('Scalar API Reference script loaded successfully')
+    const handleError = (error: any) =>
+      console.error('Error loading Scalar API Reference script:', error)
+
+    script.addEventListener('load', handleLoad)
+    script.addEventListener('error', handleError)
+
+    // Append to document
+    document.body.appendChild(script)
+
+    // Cleanup function
+    return () => {
+      script.removeEventListener('load', handleLoad)
+      script.removeEventListener('error', handleError)
+      document.body.removeChild(script)
+    }
+  }, [shouldLoad])
+
   if (!container) {
     return (
       <>
@@ -42,14 +69,18 @@ export const OpenApi = ({ url }: { url: string }) => {
   }
   return (
     <Portal container={container} style={{ width: '100%' }}>
-      <style>{`#content-container-inner { display: none; }`}</style>
+      <style>{`
+        #content-container { --header: var(--header-only); }
+        #content-container-inner { display: none; }
+      `}</style>
       <Layout>
-        <ApiReferenceReact
-          configuration={{
+        <script
+          id="api-reference"
+          data-configuration={JSON.stringify({
             spec: { url },
             searchHotKey: 'j',
             hideDarkModeToggle: true,
-          }}
+          })}
         />
       </Layout>
     </Portal>
