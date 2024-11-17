@@ -1,6 +1,7 @@
 import { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  basePath: '/docs',
   images: {
     remotePatterns: [
       {
