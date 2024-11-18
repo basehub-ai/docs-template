@@ -5,7 +5,7 @@ import { Button, Flex } from '@radix-ui/themes'
 import { Half2Icon } from '@radix-ui/react-icons'
 import { useHasRendered } from '@/hooks/use-has-rendered'
 
-import { MoonIcon, SunIcon } from '../../icons'
+import { MoonIcon, SunIcon } from '../icons'
 
 import s from './theme-switcher.module.scss'
 

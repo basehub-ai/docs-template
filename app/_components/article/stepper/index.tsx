@@ -37,7 +37,7 @@ export const StepperComponent = async ({
                   mt="5"
                 >
                   {children}
-                  <span>{checkpoints}</span>
+                  <span data-llms-ignore>{checkpoints}</span>
                 </Heading>
               </StepController>
             )
