@@ -7,11 +7,8 @@ export const GET = async () => {
   const res = await fetch(
     process.env.NODE_ENV === 'production'
       ? // use VERCEL_URL so this works in preview deployments
-        'https://' +
-          process.env.VERCEL_URL +
-          (nextConfig.basePath || '') +
-          '/llms-full'
-      : 'http://localhost:3000/llms-full'
+        `https://${process.env.VERCEL_URL}${nextConfig.basePath || ''}/llms-full`
+      : `http://localhost:3000${nextConfig.basePath || ''}/llms-full`
   )
   const rawHtml = await res.text()
 
@@ -55,9 +52,8 @@ export const GET = async () => {
   /** Transform relative URLs to absolute */
   turndown.addRule('links', {
     filter: 'a',
-    replacement: function (content, node) {
-      if (!(node instanceof HTMLAnchorElement)) return content
-
+    replacement: function (content, _node) {
+      const node = _node as HTMLAnchorElement
       const href = node.getAttribute('href')
       if (!href) return content
 
