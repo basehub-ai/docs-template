@@ -3,6 +3,10 @@ import Turndown from 'turndown'
 import { originPlusBasePath } from '../_origin'
 import nextConfig from '@/next.config'
 
+// cache this cause it's pretty expensive to generate
+export const dynamic = 'force-static'
+export const revalidate = 60 * 60 // 1 hour
+
 export const GET = async () => {
   const res = await fetch(
     process.env.NODE_ENV === 'production'
