@@ -3,7 +3,7 @@ import Turndown from 'turndown'
 import { originPlusBasePath } from '../_origin'
 
 export const GET = async () => {
-  const res = await fetch('http://localhost:3000/llms-full')
+  const res = await fetch(originPlusBasePath + '/llms-full')
   const rawHtml = await res.text()
 
   const $ = cheerio.load(rawHtml)
