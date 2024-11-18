@@ -9,6 +9,7 @@ export const GET = async () => {
       items: {
         _title: true,
         _slug: true,
+        openApiSpec: { url: true },
         articles: { items: ArticleMetaFragmentRecursive },
       },
     },
@@ -39,7 +40,7 @@ ${children}
 
 ${data.pages.items
   .map((page) => {
-    return `## ${page._title}
+    return `## ${page._title}${page.openApiSpec?.url ? `\n\nOpenAPI Spec: ${page.openApiSpec.url}` : ''}
 
 ${page.articles.items
   .map((article) => {
