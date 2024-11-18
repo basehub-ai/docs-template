@@ -239,7 +239,14 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           CalloutComponent,
           CardsGridComponent,
           video: Video,
-          img: Image,
+          img: (props) => (
+            <Image
+              {...props}
+              width={props.width || 0}
+              height={props.height || 0}
+              alt={props.alt || ''}
+            />
+          ),
           CodeSnippetComponent: CodeSnippetSingle,
           CodeGroupComponent: CodeSnippetGroup,
           ArticleLinkComponent_mark: ArticleLinkMark,
@@ -289,6 +296,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           pre: ({ children }) => <>{children}</>,
           ...props.components,
         }}
+        content={props.content}
       >
         {props.children}
       </RichText>

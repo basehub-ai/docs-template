@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Flex, Tabs } from '@radix-ui/themes'
+import { Flex, Tabs, VisuallyHidden } from '@radix-ui/themes'
 import { useCodeBlockContext } from 'basehub/react-code-block/client'
 
 import s from './code-snippet.module.scss'
@@ -28,33 +28,40 @@ export const CodeGroupHeader = () => {
   if (!activeSnippet) return null
 
   return (
-    <Flex asChild align="center" justify="between" px="2" mt="4">
-      <header className={s['code-snippet-header']}>
-        {snippets.length > 1 ? (
-          <Tabs.Root
-            defaultValue={snippets?.[0]?.id}
-            value={activeSnippet.id}
-            onValueChange={(_id) => {
-              const selectedSnippet = snippets.find(
-                (snippet) => snippet.id === _id
-              )
-              if (selectedSnippet) selectSnippet(selectedSnippet)
-            }}
-          >
-            <Tabs.List>
-              {snippets.map((snippet) => (
-                <Tabs.Trigger key={snippet.id} value={snippet.id}>
-                  {snippet.label || 'Untitled'}
-                </Tabs.Trigger>
-              ))}
-            </Tabs.List>
-          </Tabs.Root>
-        ) : (
-          activeSnippet.label || 'Untitled'
-        )}
+    <>
+      <Flex asChild align="center" justify="between" px="2" mt="4">
+        <header className={s['code-snippet-header']} data-llms-ignore>
+          {snippets.length > 1 ? (
+            <Tabs.Root
+              defaultValue={snippets?.[0]?.id}
+              value={activeSnippet.id}
+              onValueChange={(_id) => {
+                const selectedSnippet = snippets.find(
+                  (snippet) => snippet.id === _id
+                )
+                if (selectedSnippet) selectSnippet(selectedSnippet)
+              }}
+            >
+              <Tabs.List>
+                {snippets.map((snippet) => (
+                  <Tabs.Trigger key={snippet.id} value={snippet.id}>
+                    {snippet.label || 'Untitled'}
+                  </Tabs.Trigger>
+                ))}
+              </Tabs.List>
+            </Tabs.Root>
+          ) : (
+            activeSnippet.label || 'Untitled'
+          )}
 
-        <CopyButton />
-      </header>
-    </Flex>
+          <CopyButton />
+        </header>
+      </Flex>
+
+      {/* llms only */}
+      {snippets[0]?.label && (
+        <VisuallyHidden>{snippets[0].label}</VisuallyHidden>
+      )}
+    </>
   )
 }
