@@ -1,9 +1,18 @@
 import * as cheerio from 'cheerio'
 import Turndown from 'turndown'
 import { originPlusBasePath } from '../_origin'
+import nextConfig from '@/next.config'
 
 export const GET = async () => {
-  const res = await fetch(originPlusBasePath + '/llms-full')
+  const res = await fetch(
+    process.env.NODE_ENV === 'production'
+      ? // use VERCEL_URL so this works in preview deployments
+        'https://' +
+          process.env.VERCEL_URL +
+          (nextConfig.basePath || '') +
+          '/llms-full'
+      : 'http://localhost:3000/llms-full'
+  )
   const rawHtml = await res.text()
 
   const $ = cheerio.load(rawHtml)
