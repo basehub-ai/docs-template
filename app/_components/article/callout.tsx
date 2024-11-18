@@ -1,4 +1,4 @@
-import { Callout, Code, Heading, Link } from '@radix-ui/themes'
+import { Callout, Code, Heading, Link, VisuallyHidden } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { RichText } from 'basehub/react-rich-text'
 import {
@@ -45,7 +45,13 @@ export const CalloutComponent = (props: CalloutFragment) => {
       data-type="callout"
       my="4"
     >
-      {icon && <Callout.Icon>{icon}</Callout.Icon>}
+      {icon && (
+        <Callout.Icon>
+          {icon}
+          <VisuallyHidden>{props.type}: </VisuallyHidden>
+        </Callout.Icon>
+      )}
+
       <RichText
         {...props.content?.json}
         components={{
