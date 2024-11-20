@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import Image from 'next/image'
+import { BaseHubImage } from 'basehub/next-image'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
@@ -21,7 +21,7 @@ export const ImageWithZoom = ({
   return (
     <Zoom>
       <picture>
-        <Image
+        <BaseHubImage
           src={src}
           width={width}
           height={height}

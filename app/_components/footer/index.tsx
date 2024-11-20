@@ -1,6 +1,7 @@
 import { Container, Flex, Link, Separator, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { Pump } from '@/.basehub/react-pump'
+import { BaseHubImage } from 'basehub/next-image'
 import Image from 'next/image'
 import { Logo } from '../logo'
 
@@ -60,7 +61,7 @@ export const Footer = () => {
                           className={s['footer__link']}
                           color="gray"
                         >
-                          <Image
+                          <BaseHubImage
                             src={link.icon.url}
                             alt={link.icon.alt ?? ''}
                             width={20}
