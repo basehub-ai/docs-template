@@ -3,7 +3,6 @@ import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
-import { Toolbar } from 'basehub/next-toolbar'
 
 export const dynamicParams = false
 
@@ -26,7 +25,6 @@ export default async function Layout({
         direction={{ initial: 'column', md: 'row' }}
         id="content-container-inner"
       >
-        <Toolbar />
         <Pump queries={[{ pages: SidebarFragment }]}>
           {async ([data]) => {
             'use server'
