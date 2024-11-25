@@ -4,8 +4,6 @@ import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
 import { Container, Flex } from '@radix-ui/themes'
 
-export const dynamicParams = false
-
 export default async function Layout({
   children,
   params: _params,
