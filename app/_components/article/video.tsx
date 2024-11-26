@@ -1,14 +1,30 @@
 export const Video = ({
   src,
   caption,
+  width,
+  height,
   ...rest
 }: {
   src: string
   caption?: string | undefined
+  width?: number
+  height?: number
 }) => (
   <>
-    <picture>
-      <video src={src} autoPlay playsInline muted loop controls {...rest} />
+    <picture
+      style={{ aspectRatio: width && height ? width / height : undefined }}
+    >
+      <video
+        src={src}
+        autoPlay
+        playsInline
+        muted
+        loop
+        controls
+        {...rest}
+        width={width}
+        height={height}
+      />
     </picture>
     {caption && <figcaption>{caption}</figcaption>}
   </>
