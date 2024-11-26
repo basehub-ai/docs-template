@@ -4,6 +4,7 @@ import { StepController } from './step-controller'
 import { Body } from '..'
 import { Box, Heading } from '@radix-ui/themes'
 import { StepperFragment } from './fragment'
+import { ArticleLinkMark } from '../../article-link/mark'
 
 import s from './stepper.module.scss'
 
@@ -42,6 +43,7 @@ export const StepperComponent = async ({
               </StepController>
             )
           },
+          ArticleLinkComponent_mark: ArticleLinkMark,
         }}
       >
         {stepperContent.json.content}
