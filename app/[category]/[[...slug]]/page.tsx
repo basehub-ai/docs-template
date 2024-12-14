@@ -4,7 +4,7 @@ import {
   PageFragment,
   pageBySlug,
 } from '@/basehub-helpers/fragments'
-import { Pump } from '@/.basehub/react-pump'
+import { Pump } from 'basehub/react-pump'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getActiveSidebarItem, getBreadcrumb } from '@/basehub-helpers/sidebar'
