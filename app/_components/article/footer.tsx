@@ -11,38 +11,58 @@ import {
 } from '@radix-ui/themes'
 import { ArticleFragment } from '@/basehub-helpers/fragments'
 import { intlFormatDistance } from 'date-fns'
-import { Feedback } from '../analytics/feedback'
+import { Feedback } from '../feedback'
+import { basehub } from 'basehub'
 
 import s from './article.module.scss'
 
 export type ArticleFooter = {
   lastUpdatedAt: ArticleFragment['_sys']['lastModifiedAt'] | null
   nextArticle: { title: string; href: string } | null
-  _analyticsKey?: string
 }
 
-export const ArticleFooter = ({
+export const ArticleFooter = async ({
   lastUpdatedAt,
   nextArticle,
-  _analyticsKey,
 }: ArticleFooter) => {
   const lastUpdatedFormatted = intlFormatDistance(
     new Date(lastUpdatedAt ?? new Date()),
     new Date()
   )
 
+  const { feedback } = await basehub().query({
+    feedback: {
+      submissions: {
+        ingestKey: true,
+        schema: true,
+      },
+    },
+  })
+
   return (
     <Container asChild mt="9" width="100%" flexGrow="0">
       <footer className={s['article-footer']}>
         <Flex justify="between">
-          <Text size="2" weight="medium" color="gray" mb="2">
+          <Text
+            size="2"
+            weight="medium"
+            color="gray"
+            style={{
+              display: 'flex',
+              textWrap: 'pretty',
+              alignItems: 'center',
+            }}
+          >
             {lastUpdatedAt ? (
               <>Last updated {lastUpdatedFormatted}</>
             ) : (
               <>&nbsp;</>
             )}
           </Text>
-          {_analyticsKey && <Feedback analyticsKey={_analyticsKey} />}
+          <Feedback
+            ingestKey={feedback.submissions.ingestKey}
+            schema={feedback.submissions.schema}
+          />
         </Flex>
 
         {nextArticle && (

@@ -38,10 +38,9 @@ import { flattenRichTextNodes } from '../toc/utils'
 import { ArticleLinkMark } from '../article-link/mark'
 import headingStyles from './heading/heading.module.scss'
 import { IFrameComponent } from './iframe'
+import { CodeBlock } from 'basehub/react-code-block'
 
 import s from './article.module.scss'
-import { PageView } from '../analytics/page-view'
-import { CodeBlock, Language } from 'basehub/react-code-block'
 
 export const Article = ({
   id,
@@ -78,12 +77,11 @@ export const Article = ({
         const tocIsEmpty = !flattenedToc.some(
           (node) =>
             node.type === 'text' &&
-            node.marks?.some((mark) => mark.type === 'link')
+            node.marks?.some((mark: any) => mark.type === 'link')
         )
 
         return (
           <>
-            <PageView _analyticsKey={article._analyticsKey} />
             <ArticleWrapper
               title={article._title}
               excerpt={article.excerpt}
@@ -91,7 +89,6 @@ export const Article = ({
               nextArticle={nextArticle}
               breadcrumb={breadcrumb}
               fullBleed={article.fullBleed}
-              _analyticsKey={article._analyticsKey}
             >
               {article.body?.json.content ? (
                 <Body blocks={article.body.json.blocks}>
@@ -124,7 +121,6 @@ export const ArticleWrapper = ({
   breadcrumb,
   nextArticle,
   fullBleed,
-  _analyticsKey,
 }: {
   title: string
   excerpt?: string | null
@@ -133,7 +129,6 @@ export const ArticleWrapper = ({
   breadcrumb: ArticleBreadcrumb
   nextArticle: ArticleFooter['nextArticle']
   fullBleed?: boolean
-  _analyticsKey?: string
 }) => {
   return (
     <Flex
@@ -143,6 +138,7 @@ export const ArticleWrapper = ({
       direction="column"
       width="100%"
       height="100%"
+      flexShrink="0"
     >
       <article
         className={s.article}
@@ -169,7 +165,6 @@ export const ArticleWrapper = ({
           {children}
         </Box>
         <ArticleFooter
-          _analyticsKey={_analyticsKey}
           lastUpdatedAt={lastModifiedAt}
           nextArticle={nextArticle}
         />
@@ -257,43 +252,31 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
               {children}
             </Text>
           ),
-          code: ({ isInline, ...rest }) => {
-            if (isInline)
-              return (
-                <Code data-type="inline-code" variant="outline">
-                  {rest.children}
-                </Code>
-              )
-
-            return (
-              <Box position="relative" data-code-snippet>
-                <CodeBlock
-                  snippets={[
-                    {
-                      code: rest.code,
-                      lang: rest.language as Language,
-                    },
-                  ]}
-                  theme={theme}
-                  components={{
-                    div: ({ children, ...rest }) => (
-                      <CodeSnippetItem {...rest}>{children}</CodeSnippetItem>
-                    ),
-                  }}
-                  childrenBottom={
-                    <CopyButton
-                      style={{
-                        position: 'absolute',
-                        right: 'var(--space-2)',
-                        top: 'var(--space-2)',
-                      }}
-                    />
-                  }
-                />
-              </Box>
-            )
+          code: (props) => {
+            return <Code data-type="inline-code" variant="outline" {...props} />
           },
-          pre: ({ children }) => <>{children}</>,
+          pre: ({ code, language }) => (
+            <Box position="relative" data-code-snippet>
+              <CodeBlock
+                snippets={[{ code, language }]}
+                theme={theme}
+                components={{
+                  div: ({ children, ...rest }) => (
+                    <CodeSnippetItem {...rest}>{children}</CodeSnippetItem>
+                  ),
+                }}
+                childrenBottom={
+                  <CopyButton
+                    style={{
+                      position: 'absolute',
+                      right: 'var(--space-2)',
+                      top: 'var(--space-2)',
+                    }}
+                  />
+                }
+              />
+            </Box>
+          ),
           ...props.components,
         }}
         content={props.content}
