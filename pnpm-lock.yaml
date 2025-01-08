@@ -18,7 +18,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.2.74)(react@19.0.0)
       '@radix-ui/themes':
-        specifier: 3.1.6
+        specifier: ^3.1.6
         version: 3.1.6(@types/react-dom@18.2.24)(@types/react@18.2.74)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       basehub:
         specifier: ^8.0.1
