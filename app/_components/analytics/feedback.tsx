@@ -3,7 +3,7 @@ import { Flex, IconButton } from '@radix-ui/themes'
 import * as React from 'react'
 import { ThumbsUp } from '../icons/thumbs-up'
 import { ThumbsDown } from '../icons/thumns-down'
-import { sendEvent } from 'basehub/analytics'
+import { sendEvent } from 'basehub/events'
 
 export const Feedback = ({
   analyticsKey: _analyticsKey,
