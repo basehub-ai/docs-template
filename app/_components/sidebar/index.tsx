@@ -6,9 +6,11 @@ import {
   SidebarFragment,
 } from '@/basehub-helpers/fragments'
 import NextLink from 'next/link'
+import { SVG } from 'basehub/react-svg'
 import { getActiveSidebarItem } from '@/basehub-helpers/sidebar'
 import { useParams, usePathname } from 'next/navigation'
 import {
+  Badge,
   Box,
   Button,
   Code,
@@ -244,11 +246,19 @@ const SidebarItem = ({
   }, [data, pathname, isRootLevel])
 
   const titleNode = React.useMemo(() => {
-    const title = data.titleSidebarOverride ?? data._title
+    const title = data.sidebarOverrides.title ?? data._title
 
     if (href) {
       return (
-        <Flex asChild px="3" py="2" ml="-3" align="center" position="relative">
+        <Flex
+          asChild
+          px="3"
+          py="2"
+          ml="-3"
+          align="center"
+          justify="between"
+          position="relative"
+        >
           <Link
             className={s.sidebar__item}
             data-active={isActive}
@@ -257,7 +267,28 @@ const SidebarItem = ({
             color="gray"
             asChild
           >
-            <NextLink href={href}>{title || 'Untitled article'}</NextLink>
+            <NextLink href={href}>
+              <Flex align="center" gap="1" asChild>
+                <span>
+                  {data.sidebarOverrides.icon && (
+                    <SVG
+                      content={data.sidebarOverrides.icon}
+                      components={{
+                        svg: (props) => (
+                          <svg {...props} width={15} height={15} />
+                        ),
+                      }}
+                    />
+                  )}{' '}
+                  {title || 'Untitled article'}
+                </span>
+              </Flex>
+              {data.sidebarOverrides.markAsNew ? (
+                <Badge size="1" style={{ pointerEvents: 'none', height: 16 }}>
+                  New
+                </Badge>
+              ) : null}
+            </NextLink>
           </Link>
         </Flex>
       )
@@ -279,7 +310,7 @@ const SidebarItem = ({
             weight="medium"
             style={{ textTransform: 'uppercase', fontWeight: 600 }}
           >
-            {data.titleSidebarOverride ?? data._title}
+            {data.sidebarOverrides.title ?? data._title}
           </Code>
         </Flex>
       )
@@ -298,7 +329,7 @@ const SidebarItem = ({
   }, [
     data._title,
     data.children.items.length,
-    data.titleSidebarOverride,
+    data.sidebarOverrides,
     href,
     isRootLevel,
     toggleCollapsed,

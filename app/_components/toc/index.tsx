@@ -31,7 +31,7 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
   const headingListLength = flattenRichTextNodes(children).filter((item) => {
     if (!('marks' in item)) return false
 
-    return item?.marks?.some((mark) => mark.type === 'link')
+    return item?.marks?.some((mark: any) => mark.type === 'link')
   }).length
 
   React.useEffect(() => {

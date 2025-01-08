@@ -1,15 +1,11 @@
-import {
-  CodeBlock,
-  createCssVariablesTheme,
-  Language,
-} from 'basehub/react-code-block'
+import { CodeBlock, createCssVariablesTheme } from 'basehub/react-code-block'
 
 import { CopyButton } from './controller'
 import { CodeGroupHeader } from './header'
 import { Box, Flex } from '@radix-ui/themes'
+import { CodeSnippetFragment } from './fragment'
 
 import s from './code-snippet.module.scss'
-import { CodeSnippetFragment } from './fragment'
 
 export const theme = createCssVariablesTheme({
   name: 'css-variables',
@@ -32,7 +28,7 @@ export const CodeSnippetGroup = ({
             code: snippet.code.code,
             label: snippet.fileName || 'Untitled',
             id: snippet._id,
-            lang: snippet.code.language as Language,
+            language: snippet.code.language,
           } as const
         })}
         theme={theme}
@@ -75,7 +71,7 @@ export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
           {
             code: props.code.code,
             id: props._id,
-            lang: props.code.language as Language,
+            language: props.code.language,
           },
         ]}
         theme={theme}

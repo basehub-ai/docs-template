@@ -78,8 +78,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
               <NextLink {...rest}>{children}</NextLink>
             </Link>
           ),
-          code: ({ children, isInline }) => {
-            if (!isInline) return null
+          code: ({ children }) => {
             return <Code>{children}</Code>
           },
           ArticleLinkComponent_mark: ArticleLinkMark,
