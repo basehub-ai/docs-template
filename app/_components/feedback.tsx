@@ -27,6 +27,7 @@ export const Feedback = ({
   const [intent, setIntent] = React.useState<
     EventSchema<typeof ingestKey>['intent'] | null
   >(null)
+  const [submitting, setSubmitting] = React.useState(false)
   const [shouldThank, setShouldThank] = React.useState(false)
   const formRef = React.useRef<HTMLFormElement>(null)
 
@@ -34,10 +35,35 @@ export const Feedback = ({
     if (!shouldThank) return
     const timeout = window.setTimeout(() => {
       formRef.current?.reset()
+      setSubmitting(false)
     }, 300)
 
     return () => window.clearTimeout(timeout)
   }, [shouldThank])
+
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault()
+    const form = formRef.current
+    if (!intent || !form || submitting) return
+    const formData = new FormData(form)
+    formData.set('intent', intent)
+    formData.set('path', pathname)
+
+    const parsed = parseFormData(ingestKey, schema, formData)
+    if (!parsed.success) {
+      console.error(parsed.errors)
+      setShouldThank(true)
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      await sendEvent(ingestKey, parsed.data)
+    } catch (e) {
+      console.error(e)
+    }
+    setShouldThank(true)
+  }
 
   return (
     <Flex gap="2" mr="4" position="relative" style={{ zIndex: 10 }}>
@@ -90,24 +116,7 @@ export const Feedback = ({
         <Popover.Content align="end" size="1" asChild>
           <form
             ref={formRef}
-            onSubmit={async (e) => {
-              e.preventDefault()
-              if (!intent) return
-              const form = e.currentTarget
-              const formData = new FormData(form)
-              formData.set('intent', intent)
-              formData.set('path', pathname)
-
-              const parsed = parseFormData(ingestKey, schema, formData)
-              if (!parsed.success) {
-                console.error(parsed.errors)
-                setShouldThank(true)
-                return
-              }
-
-              await sendEvent(ingestKey, parsed.data)
-              setShouldThank(true)
-            }}
+            onSubmit={handleSubmit}
             style={{ position: 'relative' }}
           >
             <Flex
@@ -125,13 +134,19 @@ export const Feedback = ({
                 size="1"
                 placeholder="Feedback"
                 required
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && e.metaKey) {
+                    e.preventDefault()
+                    handleSubmit()
+                  }
+                }}
               />
               <Flex justify="end" gap="2">
                 <Button type="button" size="1" variant="soft">
                   Cancel
                 </Button>
-                <Button type="submit" size="1">
-                  Submit
+                <Button type="submit" size="1" disabled={submitting}>
+                  {submitting ? 'Submitting...' : 'Submit'}
                 </Button>
               </Flex>
             </Flex>
