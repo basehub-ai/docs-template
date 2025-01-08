@@ -1,5 +1,14 @@
 import { fragmentOn } from 'basehub'
 
+export const SidebarOverridesFragment = fragmentOn(
+  'SidebarOverridesComponent',
+  {
+    title: true,
+    icon: true,
+    markAsNew: true,
+  }
+)
+
 export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
   _id: true,
   __typename: true,
@@ -7,7 +16,7 @@ export const ArticleLinkFragment = fragmentOn('ArticleLinkComponent', {
     _idPath: true,
     _slugPath: true,
     _title: true,
-    titleSidebarOverride: true,
+    sidebarOverrides: { title: true },
     excerpt: true,
   },
   anchor: true,

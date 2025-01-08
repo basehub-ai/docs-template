@@ -1,5 +1,8 @@
 import { fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
-import { ArticleLinkFragment } from '@/app/_components/article-link/fragment'
+import {
+  ArticleLinkFragment,
+  SidebarOverridesFragment,
+} from '@/app/_components/article-link/fragment'
 import { AccordionGroupFragment } from '@/app/_components/article/accordion/fragment'
 import { CalloutFragment } from '@/app/_components/article/callout-fragment'
 import { CardsGridFragment } from '@/app/_components/article/cards-grid-fragment'
@@ -20,7 +23,7 @@ export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
   _slug: true,
   _sys: { lastModifiedAt: true },
   excerpt: true,
-  titleSidebarOverride: true,
+  sidebarOverrides: SidebarOverridesFragment,
   body: { __typename: true },
   ogImage: { url: true },
 })

@@ -116,10 +116,10 @@ export const generateMetadata = async ({
     activeSlugs: params.slug ?? [],
   })
   if (!article) return {}
-  const { _title, titleSidebarOverride, excerpt } = article
+  const { _title, sidebarOverrides, excerpt } = article
 
   const title = {
-    absolute: `${category._title} / ${titleSidebarOverride ?? _title} ${data.settings.metadata.pageTitleTemplate}`,
+    absolute: `${category._title} / ${sidebarOverrides.title ?? _title} ${data.settings.metadata.pageTitleTemplate}`,
   }
   const description = !excerpt
     ? undefined
@@ -240,7 +240,7 @@ export default async function ArticlePage({
         let nextArticle = null
         if (next.article) {
           nextArticle = {
-            title: next.article.titleSidebarOverride ?? next.article._title,
+            title: next.article.sidebarOverrides.title ?? next.article._title,
             href: isInFirstCategory
               ? '/' + next.path.join('/')
               : '/' + params.category + '/' + next.path.join('/'),

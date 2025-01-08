@@ -53,7 +53,7 @@ const ArticleLinkMarkImpl = ({
       </HoverCard.Trigger>
       <HoverCard.Content size="1">
         <Heading size="2" mb="1">
-          {target.titleSidebarOverride || target._title}
+          {target.sidebarOverrides.title || target._title}
         </Heading>
         {target.excerpt && (
           <Text
