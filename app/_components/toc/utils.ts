@@ -1,13 +1,17 @@
-import { Node } from 'basehub/react-rich-text'
+import type { RichTextNode, RichTextTocNode } from 'basehub/api-transaction'
 
-export const flattenRichTextNodes = (nodes: Node[]) => {
-  const flattened: Node[] = []
+export const flattenRichTextNodes = (
+  nodes: (RichTextNode | RichTextTocNode)[]
+) => {
+  const flattened: (RichTextNode | RichTextTocNode)[] = []
 
-  nodes.forEach((node: Node) => {
-    if (node.content) {
+  nodes.forEach((node) => {
+    if ('content' in node) {
       const { content, ...rest } = node
-      flattened.push(rest as Node)
-      flattened.push(...flattenRichTextNodes(content as Node[]))
+      flattened.push(rest as RichTextNode)
+      flattened.push(
+        ...flattenRichTextNodes(content as (RichTextNode | RichTextTocNode)[])
+      )
     } else {
       flattened.push(node)
     }
