@@ -6,6 +6,7 @@ import { Box, Flex } from '@radix-ui/themes'
 import { CodeSnippetFragment } from './fragment'
 
 import s from './code-snippet.module.scss'
+import { HandlerProps } from 'basehub/react-rich-text'
 
 export const theme = createCssVariablesTheme({
   name: 'css-variables',
@@ -84,3 +85,32 @@ export const CodeSnippetSingle = (props: CodeSnippetFragment) => {
     </Box>
   )
 }
+
+export const CodeSnippetRichText = ({
+  code,
+  language,
+}: HandlerProps<'pre'>) => (
+  <Box position="relative" data-code-snippet>
+    <CodeBlock
+      snippets={[{ code, language }]}
+      theme={theme}
+      components={{
+        div: ({ children, ...rest }) => (
+          <CodeSnippetItem {...rest}>{children}</CodeSnippetItem>
+        ),
+        pre: ({ style, ...rest }) => (
+          <pre {...rest} style={{ ...style, margin: 0 }} />
+        ),
+      }}
+      childrenBottom={
+        <CopyButton
+          style={{
+            position: 'absolute',
+            right: 'var(--space-2)',
+            top: 'var(--space-2)',
+          }}
+        />
+      }
+    />
+  </Box>
+)

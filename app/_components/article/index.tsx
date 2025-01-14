@@ -23,13 +23,11 @@ import { notFound } from 'next/navigation'
 import { Heading } from './heading'
 import {
   CodeSnippetGroup,
-  CodeSnippetItem,
+  CodeSnippetRichText,
   CodeSnippetSingle,
-  theme,
 } from './code-snippet'
 import { Video } from './video'
 import { Image } from './image/handler'
-import { CopyButton } from './code-snippet/controller'
 import { Toc } from '../toc'
 import { ArticleBreadcrumb } from './breadcrumb'
 import { ArticleFooter } from './footer'
@@ -38,7 +36,6 @@ import { flattenRichTextNodes } from '../toc/utils'
 import { ArticleLinkMark } from '../article-link/mark'
 import headingStyles from './heading/heading.module.scss'
 import { IFrameComponent } from './iframe'
-import { CodeBlock } from 'basehub/react-code-block'
 
 import s from './article.module.scss'
 
@@ -255,28 +252,7 @@ export const Body = (props: RichTextProps<ArticleBodyFragment['blocks']>) => {
           code: (props) => {
             return <Code data-type="inline-code" variant="outline" {...props} />
           },
-          pre: ({ code, language }) => (
-            <Box position="relative" data-code-snippet>
-              <CodeBlock
-                snippets={[{ code, language }]}
-                theme={theme}
-                components={{
-                  div: ({ children, ...rest }) => (
-                    <CodeSnippetItem {...rest}>{children}</CodeSnippetItem>
-                  ),
-                }}
-                childrenBottom={
-                  <CopyButton
-                    style={{
-                      position: 'absolute',
-                      right: 'var(--space-2)',
-                      top: 'var(--space-2)',
-                    }}
-                  />
-                }
-              />
-            </Box>
-          ),
+          pre: CodeSnippetRichText,
           ...props.components,
         }}
         content={props.content}

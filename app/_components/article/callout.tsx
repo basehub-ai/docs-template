@@ -9,6 +9,7 @@ import {
 } from '@radix-ui/react-icons'
 import { ArticleLinkMark } from '../article-link/mark'
 import { CalloutFragment } from './callout-fragment'
+import { CodeSnippetRichText } from './code-snippet'
 
 export const CalloutComponent = (props: CalloutFragment) => {
   let calloutColor: React.ComponentProps<typeof Callout.Root>['color'] = 'gray'
@@ -81,6 +82,7 @@ export const CalloutComponent = (props: CalloutFragment) => {
           code: ({ children }) => {
             return <Code>{children}</Code>
           },
+          pre: CodeSnippetRichText,
           ArticleLinkComponent_mark: ArticleLinkMark,
         }}
       />
