@@ -18,7 +18,7 @@ import {
 } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { clsx } from 'clsx'
-import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
+import { getArticleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { flushSync } from 'react-dom'
 import { PageMetaFragment } from '@/basehub-helpers/fragments'
 
@@ -251,7 +251,7 @@ const HitList = ({
         </Text>
       )}
       {hits.map((hit) => {
-        let pathname = getAritcleSlugFromSlugPath(
+        let pathname = getArticleSlugFromSlugPath(
           hit.document._slugPath ?? '',
           firstCategoryId
             ? hit.document._idPath.includes(firstCategoryId)
