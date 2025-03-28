@@ -21,8 +21,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6(@types/react-dom@18.2.24)(@types/react@18.2.74)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       basehub:
-        specifier: ^8.0.3
-        version: 8.0.3(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.4.4)
+        specifier: ^8.1.29
+        version: 8.1.29(@babel/runtime@7.24.4)(@types/react@18.2.74)(react@19.0.0)(typescript@5.4.4)
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0
@@ -122,11 +122,8 @@ packages:
     resolution: {integrity: sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==}
     engines: {node: '>=6.9.0'}
 
-  '@basehub/genql@9.0.0-canary.10':
-    resolution: {integrity: sha512-YdYWfKEsUsgEGvvKvt7H/9469cPeXJODrTKCdmt6OPEtY71Mpa9vg1mqALleiHkVinBeFHr+IEhbqIi5eYYL6w==}
-
-  '@basehub/mutation-api-helpers@2.0.7':
-    resolution: {integrity: sha512-i2WRtQnAkQ1Lowkwl6tkMIQ42AfZ2qs71zR/JYV6wxvl52011sXTMdf8V8jn/X/SZf7M4rR4KU9Bj8FA0DJPBA==}
+  '@basehub/genql@9.0.0-canary.13':
+    resolution: {integrity: sha512-F3pXqJSEJYyQ0JTsp37D7YFkNaCSyQhkJqlDZ6Xr9fORoiz5OvkpHP1795RlYb4zIoQvJ3mtP4vyzQ4tsWo9Dg==}
 
   '@corex/deepmerge@4.0.43':
     resolution: {integrity: sha512-N8uEMrMPL0cu/bdboEWpQYb/0i2K5Qn8eCsxzOmxSggJbbQte7ljMRoXm917AbntqTGOzdTu+vP3KOOzoC70HQ==}
@@ -1584,8 +1581,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  basehub@8.0.3:
-    resolution: {integrity: sha512-RbJY4RJAb4Bgnf4p32OOpAXaPvCjtzicdrncdlpniWI9VB8LQCVJjo2JUXWygHVtkdXVsYdzxnBawBywue5oow==}
+  basehub@8.1.29:
+    resolution: {integrity: sha512-uouLJA+v11/p+rKrTXWUHQX+m1YClL9TeUMeY4UzMIc410jt8YYDKz8jql9Vs2jMHsgvusoEIbxneYSFjabk4A==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -2506,6 +2503,7 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -3158,12 +3156,6 @@ packages:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
     engines: {node: '>=12'}
 
-  sonner@1.7.1:
-    resolution: {integrity: sha512-b6LHBfH32SoVasRFECrdY8p8s7hXPDn3OHUFbZZbiB1ctLS9Gdh6rpX2dVrpQA0kiL5jcRzDDldwwLkSKk3+QQ==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -3519,7 +3511,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@basehub/genql@9.0.0-canary.10':
+  '@basehub/genql@9.0.0-canary.13':
     dependencies:
       '@graphql-tools/graphql-file-loader': 7.5.17(graphql@16.8.1)
       '@graphql-tools/load': 7.8.14(graphql@16.8.1)
@@ -3537,8 +3529,6 @@ snapshots:
       yargs: 15.4.1
     transitivePeerDependencies:
       - enquirer
-
-  '@basehub/mutation-api-helpers@2.0.7': {}
 
   '@corex/deepmerge@4.0.43': {}
 
@@ -5042,10 +5032,9 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  basehub@8.0.3(@babel/runtime@7.24.4)(@types/react@18.2.74)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.4.4):
+  basehub@8.1.29(@babel/runtime@7.24.4)(@types/react@18.2.74)(react@19.0.0)(typescript@5.4.4):
     dependencies:
-      '@basehub/genql': 9.0.0-canary.10
-      '@basehub/mutation-api-helpers': 2.0.7
+      '@basehub/genql': 9.0.0-canary.13
       '@radix-ui/react-slot': 1.1.1(@types/react@18.2.74)(react@19.0.0)
       '@shikijs/transformers': 1.17.7
       '@xmldom/xmldom': 0.9.6
@@ -5061,7 +5050,6 @@ snapshots:
       resolve-pkg: 2.0.0
       server-only: 0.0.1
       shiki: 1.17.7
-      sonner: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       typesense: 1.8.2(@babel/runtime@7.24.4)
       zod: 3.22.1
     transitivePeerDependencies:
@@ -5070,7 +5058,6 @@ snapshots:
       - debug
       - enquirer
       - react
-      - react-dom
       - supports-color
       - typescript
 
@@ -7067,11 +7054,6 @@ snapshots:
     dependencies:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 4.0.0
-
-  sonner@1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
-    dependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
 
   source-map-js@1.2.0: {}
 
