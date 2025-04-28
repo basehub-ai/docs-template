@@ -66,7 +66,6 @@ export const Article = ({
 
         const article = data._componentInstances.article.items[0]
         if (!article) {
-          console.log('dude')
           notFound()
         }
 

@@ -9,7 +9,7 @@ import { useCopyToClipboard } from 'basehub/react-code-block/client'
 export const CopyButton = ({
   style,
 }: {
-  style?: JSX.IntrinsicElements['button']['style']
+  style?: React.JSX.IntrinsicElements['button']['style']
 }) => {
   const { onCopy, copied } = useCopyToClipboard({ copiedDurationMs: 2000 })
 

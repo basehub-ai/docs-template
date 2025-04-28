@@ -8,7 +8,7 @@ import NextLink from 'next/link'
 
 import s from './heading.module.scss'
 
-type HeadingProps = JSX.IntrinsicElements['h1'] & {
+type HeadingProps = React.JSX.IntrinsicElements['h1'] & {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   href?: string
 }

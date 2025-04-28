@@ -14,7 +14,7 @@ export const NavLink = React.forwardRef<
     href: string
     isFirstPageLink?: boolean
     segmentToMatch?: string
-  } & JSX.IntrinsicElements['a']
+  } & React.JSX.IntrinsicElements['a']
 >(({ children, href, isFirstPageLink, segmentToMatch, ...rest }, ref) => {
   const [category] = useSelectedLayoutSegments()
   const isActive = !category
