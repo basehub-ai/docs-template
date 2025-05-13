@@ -13,9 +13,10 @@ import s from './toc.module.scss'
 export type TocProps = RichTextProps & {
   currentSectionId?: string
   children: any
+  editUrl: string | undefined
 }
 
-export const Toc = ({ blocks, children = [] }: TocProps) => {
+export const Toc = ({ blocks, children = [], editUrl }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
   const tocRef = React.useRef<HTMLElement>(null)
@@ -103,6 +104,13 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
   return (
     <Box asChild position="sticky" display={{ initial: 'none', lg: 'block' }}>
       <aside ref={tocRef} className={s.toc}>
+        {editUrl && (
+          <Link href={editUrl} target="_blank" rel="noopener noreferrer">
+            <Text asChild size="2" weight="medium" mb="1">
+              <p>Edit in BaseHub</p>
+            </Text>
+          </Link>
+        )}
         {Boolean(children.length) && (
           <>
             <Text asChild size="2" weight="medium" mb="1">

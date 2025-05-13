@@ -215,7 +215,7 @@ export default async function ArticlePage({
                 <ArticleIndex articles={page.articles.items} />
               </ArticleWrapper>
 
-              <Toc>{[]}</Toc>
+              <Toc editUrl={page._dashboardUrl}>{[]}</Toc>
             </>
           )
         }

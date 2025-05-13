@@ -70,6 +70,7 @@ export type ArticleBodyFragment = fragmentOn.infer<typeof ArticleBodyFragment>
 
 export const ArticleFragment = fragmentOn('ArticleComponent', {
   ...ArticleMetaFragment,
+  _dashboardUrl: true,
   children: {
     items: {
       _title: true,
@@ -112,6 +113,7 @@ export type PageMetaFragment = fragmentOn.infer<typeof PageMetaFragment>
 
 export const PageFragment = fragmentOn('PagesItem', {
   ...PageMetaFragment,
+  _dashboardUrl: true,
   articles: { items: ArticleMetaFragmentRecursive },
   _sys: { lastModifiedAt: true },
   ogImage: { url: true },

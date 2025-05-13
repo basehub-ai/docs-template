@@ -100,7 +100,9 @@ export const Article = ({
             </ArticleWrapper>
 
             {!article.fullBleed && (
-              <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
+              <Toc editUrl={article._dashboardUrl}>
+                {tocIsEmpty ? [] : article?.body?.json.toc ?? []}
+              </Toc>
             )}
           </>
         )
