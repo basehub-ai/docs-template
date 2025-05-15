@@ -3,8 +3,8 @@
 import * as React from 'react'
 import NextLink from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
-import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { Link, Box, Button, Text } from '@radix-ui/themes'
+import { ChevronUpIcon, ExternalLinkIcon } from '@radix-ui/react-icons'
+import { Link, Box, Button, Text, Flex } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
@@ -104,13 +104,6 @@ export const Toc = ({ blocks, children = [], editUrl }: TocProps) => {
   return (
     <Box asChild position="sticky" display={{ initial: 'none', lg: 'block' }}>
       <aside ref={tocRef} className={s.toc}>
-        {editUrl && (
-          <Link href={editUrl} target="_blank" rel="noopener noreferrer">
-            <Text asChild size="2" weight="medium" mb="1">
-              <p>Edit in BaseHub</p>
-            </Text>
-          </Link>
-        )}
         {Boolean(children.length) && (
           <>
             <Text asChild size="2" weight="medium" mb="1">
@@ -171,19 +164,44 @@ export const Toc = ({ blocks, children = [], editUrl }: TocProps) => {
           </>
         )}
 
-        <Button
+        <Flex
+          direction="column"
+          gap="3"
           mt={Boolean(children.length) ? '5' : '0'}
-          color="gray"
-          ref={backToTopButton}
-          style={{ opacity: 0, pointerEvents: 'none' }}
-          variant="soft"
-          onClick={() => {
-            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
         >
-          Back to top
-          <ChevronUpIcon width={12} height={12} />
-        </Button>
+          {editUrl && (
+            <div>
+              <Link
+                href={editUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="1"
+                color="gray"
+                style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+              >
+                Edit in BaseHub <ExternalLinkIcon />
+              </Link>
+            </div>
+          )}
+
+          <div>
+            <Button
+              color="gray"
+              ref={backToTopButton}
+              style={{ opacity: 0, pointerEvents: 'none' }}
+              variant="soft"
+              onClick={() => {
+                document.documentElement.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                })
+              }}
+            >
+              Back to top
+              <ChevronUpIcon width={12} height={12} />
+            </Button>
+          </div>
+        </Flex>
       </aside>
     </Box>
   )

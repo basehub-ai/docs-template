@@ -21,8 +21,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6(@types/react-dom@19.1.2(@types/react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       basehub:
-        specifier: ^8.1.35
-        version: 8.1.35(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)
+        specifier: ^8.2.7
+        version: 8.2.7(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1588,8 +1588,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  basehub@8.1.35:
-    resolution: {integrity: sha512-gxZ5xIxadNKOKL7/nKgvmZ6WiWjDClBmSxoljnzcw0wwLdtWtCWsq4L4G5xpJ/whT98TYdrxWqW0VNatQp4DWg==}
+  basehub@8.2.7:
+    resolution: {integrity: sha512-/QDL34bhLIMKHV2EzaxjFkiExkMH0hprFUvHl/akkOQWnh+SX6hB3n5hP7dW3Ygq6vbtoqcCddu7YzInszez4w==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -3666,7 +3666,7 @@ snapshots:
       '@graphql-tools/utils': 9.2.1(graphql@16.8.1)
       globby: 11.1.0
       graphql: 16.8.1
-      tslib: 2.6.2
+      tslib: 2.8.1
       unixify: 1.0.0
 
   '@graphql-tools/import@6.7.18(graphql@16.8.1)':
@@ -3674,7 +3674,7 @@ snapshots:
       '@graphql-tools/utils': 9.2.1(graphql@16.8.1)
       graphql: 16.8.1
       resolve-from: 5.0.0
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   '@graphql-tools/load@7.8.14(graphql@16.8.1)':
     dependencies:
@@ -3682,27 +3682,27 @@ snapshots:
       '@graphql-tools/utils': 9.2.1(graphql@16.8.1)
       graphql: 16.8.1
       p-limit: 3.1.0
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   '@graphql-tools/merge@8.4.2(graphql@16.8.1)':
     dependencies:
       '@graphql-tools/utils': 9.2.1(graphql@16.8.1)
       graphql: 16.8.1
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   '@graphql-tools/schema@9.0.19(graphql@16.8.1)':
     dependencies:
       '@graphql-tools/merge': 8.4.2(graphql@16.8.1)
       '@graphql-tools/utils': 9.2.1(graphql@16.8.1)
       graphql: 16.8.1
-      tslib: 2.6.2
+      tslib: 2.8.1
       value-or-promise: 1.0.12
 
   '@graphql-tools/utils@9.2.1(graphql@16.8.1)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.8.1)
       graphql: 16.8.1
-      tslib: 2.6.2
+      tslib: 2.8.1
 
   '@graphql-typed-document-node/core@3.2.0(graphql@16.8.1)':
     dependencies:
@@ -5047,7 +5047,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  basehub@8.1.35(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4):
+  basehub@8.2.7(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4):
     dependencies:
       '@basehub/genql': 9.0.0-canary.13
       '@radix-ui/react-slot': 1.1.1(@types/react@19.1.2)(react@19.1.0)
