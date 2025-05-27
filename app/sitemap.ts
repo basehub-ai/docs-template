@@ -6,7 +6,7 @@ import {
   ArticleMetaFragmentRecursive,
 } from '@/basehub-helpers/fragments'
 
-export const revalidate = 1800 // 30 minutes - adjust as needed
+export const revalidate = 10 // 30 minutes - adjust as needed
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const data = await basehub().query({
