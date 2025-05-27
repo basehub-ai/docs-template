@@ -24,6 +24,7 @@ export const Video = ({
         {...rest}
         width={width}
         height={height}
+        style={{ objectFit: 'cover' }}
       />
     </picture>
     {caption && <figcaption>{caption}</figcaption>}

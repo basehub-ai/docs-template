@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { getAritcleSlugFromSlugPath } from '@/basehub-helpers/util'
+import { getArticleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { Heading, HoverCard, Link, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
 import { Pump } from '@/.basehub/react-pump'
@@ -39,7 +39,7 @@ const ArticleLinkMarkImpl = ({
   children: React.ReactNode
   isInFirstCategory: boolean
 } & ArticleLinkFragment) => {
-  let href = getAritcleSlugFromSlugPath(target._slugPath, isInFirstCategory)
+  let href = getArticleSlugFromSlugPath(target._slugPath, isInFirstCategory)
   if (anchor) {
     href += `#${anchor.startsWith('#') ? anchor.slice(1) : anchor}`
   }

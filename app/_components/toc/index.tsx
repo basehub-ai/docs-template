@@ -3,8 +3,8 @@
 import * as React from 'react'
 import NextLink from 'next/link'
 import { RichText, RichTextProps } from 'basehub/react-rich-text'
-import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { Link, Box, Button, Text } from '@radix-ui/themes'
+import { ChevronUpIcon, ExternalLinkIcon } from '@radix-ui/react-icons'
+import { Link, Box, Button, Text, Flex } from '@radix-ui/themes'
 
 import { flattenRichTextNodes, getOffsetTop } from './utils'
 
@@ -13,9 +13,10 @@ import s from './toc.module.scss'
 export type TocProps = RichTextProps & {
   currentSectionId?: string
   children: any
+  editUrl: string | undefined
 }
 
-export const Toc = ({ blocks, children = [] }: TocProps) => {
+export const Toc = ({ blocks, children = [], editUrl }: TocProps) => {
   const [currentSectionId, setCurrentSectionId] = React.useState('')
   const disabled = React.useRef(false)
   const tocRef = React.useRef<HTMLElement>(null)
@@ -163,19 +164,44 @@ export const Toc = ({ blocks, children = [] }: TocProps) => {
           </>
         )}
 
-        <Button
+        <Flex
+          direction="column"
+          gap="3"
           mt={Boolean(children.length) ? '5' : '0'}
-          color="gray"
-          ref={backToTopButton}
-          style={{ opacity: 0, pointerEvents: 'none' }}
-          variant="soft"
-          onClick={() => {
-            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
         >
-          Back to top
-          <ChevronUpIcon width={12} height={12} />
-        </Button>
+          {editUrl && (
+            <div>
+              <Link
+                href={editUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="1"
+                color="gray"
+                style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+              >
+                Edit in BaseHub <ExternalLinkIcon />
+              </Link>
+            </div>
+          )}
+
+          <div>
+            <Button
+              color="gray"
+              ref={backToTopButton}
+              style={{ opacity: 0, pointerEvents: 'none' }}
+              variant="soft"
+              onClick={() => {
+                document.documentElement.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                })
+              }}
+            >
+              Back to top
+              <ChevronUpIcon width={12} height={12} />
+            </Button>
+          </div>
+        </Flex>
       </aside>
     </Box>
   )

@@ -169,8 +169,9 @@ export default async function ArticlePage({
         { pages: pageBySlug(params.category) },
         { pages: { __args: { first: 1 }, items: { _id: true } } },
       ]}
+      bind={{ activeSlugs, params }}
     >
-      {async ([data, firstCategoryData]) => {
+      {async ({ activeSlugs, params }, [data, firstCategoryData]) => {
         'use server'
 
         const page = data.pages.items[0]
@@ -214,7 +215,7 @@ export default async function ArticlePage({
                 <ArticleIndex articles={page.articles.items} />
               </ArticleWrapper>
 
-              <Toc>{[]}</Toc>
+              <Toc editUrl={page._dashboardUrl}>{[]}</Toc>
             </>
           )
         }

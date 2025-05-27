@@ -66,7 +66,6 @@ export const Article = ({
 
         const article = data._componentInstances.article.items[0]
         if (!article) {
-          console.log('dude')
           notFound()
         }
 
@@ -101,7 +100,9 @@ export const Article = ({
             </ArticleWrapper>
 
             {!article.fullBleed && (
-              <Toc>{tocIsEmpty ? [] : article?.body?.json.toc ?? []}</Toc>
+              <Toc editUrl={article._dashboardUrl}>
+                {tocIsEmpty ? [] : article?.body?.json.toc ?? []}
+              </Toc>
             )}
           </>
         )

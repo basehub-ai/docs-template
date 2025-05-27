@@ -1,4 +1,4 @@
-export function getAritcleSlugFromSlugPath(
+export function getArticleSlugFromSlugPath(
   slugPath: string,
   isInFirstCategory: boolean
 ) {
@@ -8,9 +8,10 @@ export function getAritcleSlugFromSlugPath(
     '/' +
     slugPath
       .replace('root pages ', '')
+      .trim()
       .split(' ')
-      .filter((_part, index) => {
-        return index % 2 === 0
+      .filter((part) => {
+        return !['pages','articles', 'children'].includes(part)
       })
       .join('/')
 
