@@ -1,3 +1,6 @@
+import * as React from 'react'
+import { SVGProps } from 'react'
+
 export const MoonIcon = ({
   width,
   height,
@@ -49,3 +52,16 @@ export const SunIcon = ({
     </svg>
   )
 }
+
+export const StartIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={15}
+    fill="none"
+    viewBox="0 0 15 15"
+    {...props}
+  >
+    <path fill="currentColor" d="M2.127 5.9H14.5l-1.66 3.238H.5L2.127 5.9Z" />
+  </svg>
+)

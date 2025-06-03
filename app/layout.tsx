@@ -4,6 +4,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { ThemeProvider } from './_components/theme-provider/server'
 import { Toolbar } from 'basehub/next-toolbar'
+import { Assistant } from './_components/assistant'
 
 import './globals.css'
 
@@ -16,6 +17,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           {children}
+          <Assistant />
           <Footer />
         </ThemeProvider>
         <Toolbar />
