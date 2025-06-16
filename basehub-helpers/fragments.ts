@@ -21,6 +21,7 @@ export const ArticleMetaFragment = fragmentOn('ArticleComponent', {
   _id: true,
   _title: true,
   _slug: true,
+  _slugPath: true,
   _sys: { lastModifiedAt: true },
   excerpt: true,
   sidebarOverrides: SidebarOverridesFragment,
