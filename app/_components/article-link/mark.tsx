@@ -2,7 +2,7 @@ import * as React from 'react'
 import { getArticleSlugFromSlugPath } from '@/basehub-helpers/util'
 import { Heading, HoverCard, Link, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import { Pump } from '@/.basehub/react-pump'
+import { Pump } from 'basehub/react-pump'
 import { ArticleLinkFragment } from './fragment'
 
 export const ArticleLinkMark = async (

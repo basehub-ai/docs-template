@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { basehub, fragmentOn, fragmentOnRecursiveCollection } from '@/.basehub'
+import { basehub, fragmentOn, fragmentOnRecursiveCollection } from 'basehub'
 import { ArticleFragment } from '@/basehub-helpers/fragments'
 import { Body } from '@/app/_components/article'
 

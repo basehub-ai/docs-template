@@ -1,6 +1,6 @@
 import { Container, Flex, Link, Separator, Text } from '@radix-ui/themes'
 import NextLink from 'next/link'
-import { Pump } from '@/.basehub/react-pump'
+import { Pump } from 'basehub/react-pump'
 import { BaseHubImage } from 'basehub/next-image'
 import Image from 'next/image'
 import { Logo } from '../logo'

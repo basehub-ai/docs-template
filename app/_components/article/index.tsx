@@ -11,8 +11,8 @@ import {
   Heading as RadixHeading,
   Separator,
 } from '@radix-ui/themes'
-import { RichText, RichTextProps } from '@/.basehub/react-rich-text'
-import { Pump } from '@/.basehub/react-pump'
+import { RichText, RichTextProps } from 'basehub/react-rich-text'
+import { Pump } from 'basehub/react-pump'
 import { Box, Code, Table, Text } from '@radix-ui/themes'
 
 import { CalloutComponent } from './callout'

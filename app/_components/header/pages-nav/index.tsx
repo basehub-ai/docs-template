@@ -1,4 +1,4 @@
-import { Pump } from '@/.basehub/react-pump'
+import { Pump } from 'basehub/react-pump'
 import { Box, Container, Flex } from '@radix-ui/themes'
 import { fragmentOn } from 'basehub'
 import { Nav } from './nav'

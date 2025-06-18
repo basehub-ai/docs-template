@@ -1,4 +1,4 @@
-import { Pump } from '@/.basehub/react-pump'
+import { Pump } from 'basehub/react-pump'
 import { SidebarFragment } from '@/basehub-helpers/fragments'
 import { notFound } from 'next/navigation'
 import { Sidebar } from '../_components/sidebar'
