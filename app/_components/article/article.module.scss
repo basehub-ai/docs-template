@@ -43,6 +43,16 @@
 
       color: var(--gray-11);
       margin-bottom: var(--space-2);
+
+      [data-code-snippet] {
+        &:not(:first-child) {
+          margin-top: var(--space-2);
+        }
+
+        &:not(:last-child) {
+          margin-bottom: var(--space-2);
+        }
+      }
     }
   }
 
@@ -80,6 +90,8 @@
   }
 
   figcaption {
+    padding-left: var(--space-1);
+    padding-right: var(--space-1);
     padding-top: var(--space-5);
     padding-bottom: var(--space-2);
     margin-top: calc(var(--space-8) * -1);
