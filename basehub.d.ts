@@ -233,7 +233,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (AccordionGroupComponent | Accordions | AccordionsItem | ArticleComponent | ArticleComponents | ArticleLinkComponent | Articles | CalloutComponent | Cards | CardsGridComponent | CardsItem | Children | CodeGroupComponent | CodeSnippetComponent | CodeSnippets | Components | Feedback | Footer | Header | HeadingWithIconComponent | IFrameComponent | InlineIconComponent | LightDarkImageComponent | LinkComponent | Links | LinksItem | Metadata | OpenApiSpecComponent | Pages | PagesItem | Settings | SidebarOverridesComponent | StepperComponent | SubNavLinks | SubNavLinksItem | Tabs | TabsComponent | TabsItem | Theme | TopRightLinks | TopRightLinksItem | _AgentDocsAi | accordionGroupComponent_AsList | accordionsItem_AsList | articleComponent_AsList | articleLinkComponent_AsList | calloutComponent_AsList | cardsGridComponent_AsList | cardsItem_AsList | codeGroupComponent_AsList | codeSnippetComponent_AsList | headingWithIconComponent_AsList | iFrameComponent_AsList | inlineIconComponent_AsList | lightDarkImageComponent_AsList | linkComponent_AsList | linksItem_AsList | openApiSpecComponent_AsList | pagesItem_AsList | sidebarOverridesComponent_AsList | stepperComponent_AsList | subNavLinksItem_AsList | tabsComponent_AsList | tabsItem_AsList | topRightLinksItem_AsList) & { __isUnion?: true }
+export type BlockDocument = (AccordionGroupComponent | Accordions | AccordionsItem | ArticleComponent | ArticleComponents | ArticleLinkComponent | Articles | CalloutComponent | Cards | CardsGridComponent | CardsItem | Children | CodeGroupComponent | CodeSnippetComponent | CodeSnippets | Components | Feedback | Footer | Header | HeadingWithIconComponent | IFrameComponent | InlineIconComponent | LightDarkImageComponent | LinkComponent | Links | LinksItem | Metadata | OpenApiSpecComponent | Pages | PagesItem | Settings | SidebarOverridesComponent | StepperComponent | SubNavLinks | SubNavLinksItem | Tabs | TabsComponent | TabsItem | Theme | TopRightLinks | TopRightLinksItem | _AgentDocsAi | _AgentStart | accordionGroupComponent_AsList | accordionsItem_AsList | articleComponent_AsList | articleLinkComponent_AsList | calloutComponent_AsList | cardsGridComponent_AsList | cardsItem_AsList | codeGroupComponent_AsList | codeSnippetComponent_AsList | headingWithIconComponent_AsList | iFrameComponent_AsList | inlineIconComponent_AsList | lightDarkImageComponent_AsList | linkComponent_AsList | linksItem_AsList | openApiSpecComponent_AsList | pagesItem_AsList | sidebarOverridesComponent_AsList | stepperComponent_AsList | subNavLinksItem_AsList | tabsComponent_AsList | tabsItem_AsList | topRightLinksItem_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -805,7 +805,7 @@ export interface PagesItem {
 export type PagesItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'articles__ASC' | 'articles__DESC' | 'ogImage__ASC' | 'ogImage__DESC' | 'openApiSpec__ASC' | 'openApiSpec__DESC'
 
 export interface Query {
-    _agent: (_AgentDocsAi | null)
+    _agent: (_AgentStart | null)
     /** Query across the custom AI agents in the repository. */
     _agents: _agents
     /** Query across all of the instances of a component. Pass in filters and sorts if you want, and get each instance via the `items` key. */
@@ -823,8 +823,7 @@ export interface Query {
 }
 
 export interface RepoSys {
-    dashboardUrl: Scalars['String']
-    forkUrl: Scalars['String']
+    branches: _Branches
     hash: Scalars['String']
     id: Scalars['ID']
     playgroundInfo: (_PlaygroundInfo | null)
@@ -1109,8 +1108,90 @@ export interface _AgentDocsAi {
     mcpUrl: Scalars['String']
     model: Scalars['String']
     searchTheWeb: Scalars['Boolean']
+    slackInstallUrl: Scalars['String']
     systemPrompt: Scalars['String']
     __typename: '_AgentDocsAi'
+}
+
+export interface _AgentStart {
+    _agentKey: Scalars['String']
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    accent: Scalars['String']
+    avatar: Scalars['String']
+    chatUrl: Scalars['String']
+    commit: Scalars['Boolean']
+    description: Scalars['String']
+    edit: Scalars['Boolean']
+    embedUrl: Scalars['String']
+    getUserInfo: Scalars['Boolean']
+    grayscale: Scalars['String']
+    manageBranches: Scalars['Boolean']
+    mcpUrl: Scalars['String']
+    model: Scalars['String']
+    searchTheWeb: Scalars['Boolean']
+    slackInstallUrl: Scalars['String']
+    systemPrompt: Scalars['String']
+    __typename: '_AgentStart'
+}
+
+export interface _BranchInfo {
+    archivedAt: (Scalars['String'] | null)
+    archivedBy: (Scalars['String'] | null)
+    authorId: (Scalars['String'] | null)
+    contributors: (Scalars['String'][] | null)
+    createdAt: Scalars['String']
+    description: (Scalars['String'] | null)
+    git: (_GitInfo | null)
+    headCommit: (_CommitInfo | null)
+    headCommitId: (Scalars['String'] | null)
+    id: Scalars['ID']
+    inlineSuggestionAppliedAt: (Scalars['String'] | null)
+    isDefault: Scalars['Boolean']
+    isInlineSuggestion: (Scalars['Boolean'] | null)
+    name: Scalars['String']
+    playgroundId: (Scalars['String'] | null)
+    rollbackCommitId: (Scalars['String'] | null)
+    rollbackIsoDate: (Scalars['String'] | null)
+    sourceBranchId: (Scalars['String'] | null)
+    updatedAt: (Scalars['String'] | null)
+    workingRootBlockId: (Scalars['String'] | null)
+    __typename: '_BranchInfo'
+}
+
+export interface _Branches {
+    _meta: ListMeta
+    items: _BranchInfo[]
+    __typename: '_Branches'
+}
+
+export interface _CommitInfo {
+    authorId: Scalars['String']
+    branchId: Scalars['String']
+    contributors: (Scalars['String'][] | null)
+    createdAt: Scalars['String']
+    hash: Scalars['String']
+    id: Scalars['String']
+    mergeParentCommitId: (Scalars['String'] | null)
+    message: Scalars['String']
+    parentCommitId: (Scalars['String'] | null)
+    /** Whether this commit is from a playground branch. */
+    playgroundId: (Scalars['String'] | null)
+    repoId: Scalars['String']
+    rootBlockId: Scalars['String']
+    __typename: '_CommitInfo'
+}
+
+export interface _GitInfo {
+    branch: Scalars['String']
+    deploymentUrl: (Scalars['String'] | null)
+    __typename: '_GitInfo'
 }
 
 export interface _PlaygroundInfo {
@@ -1127,6 +1208,7 @@ export type _StructureFormatEnum = 'json' | 'xml'
 
 export interface _agents {
     docsAi: _AgentDocsAi
+    start: _AgentStart
     __typename: '_agents'
 }
 
@@ -1870,6 +1952,7 @@ export interface BlockDocumentGenqlSelection{
     on_TopRightLinks?: TopRightLinksGenqlSelection
     on_TopRightLinksItem?: TopRightLinksItemGenqlSelection
     on__AgentDocsAi?: _AgentDocsAiGenqlSelection
+    on__AgentStart?: _AgentStartGenqlSelection
     on_accordionGroupComponent_AsList?: accordionGroupComponent_AsListGenqlSelection
     on_accordionsItem_AsList?: accordionsItem_AsListGenqlSelection
     on_articleComponent_AsList?: articleComponent_AsListGenqlSelection
@@ -2693,16 +2776,20 @@ export interface MutationGenqlSelection{
     fileName: Scalars['String']} })
     /** Start a job that can be awaited and the result given directly. Under the hood, it runs `transactionAsync` and polls for the result until it is available. You can pass a `timeout` argument, the default being 30_000ms. */
     transaction?: (TransactionStatusGenqlSelection & { __args: {
+    /** The ID of the author of the transaction. If not provided, the API Token will be used. */
+    authorId?: (Scalars['String'] | null), 
     /** Auto make a commit in your Repo with the specified message. */
     autoCommit?: (Scalars['String'] | null), 
     /** Transaction data. */
-    data: Scalars['String'], 
+    data: Transaction | Scalars['String'], 
     /** Skip running workflows and event subscribers. Defaults to false. */
     skipWorkflows?: (Scalars['Boolean'] | null), 
     /** Timeout in milliseconds. */
     timeout?: (Scalars['Int'] | null)} })
     /** Start an asynchronous job to mutate BaseHub data. Returns a transaction ID which you can use to get the result of the job. */
     transactionAsync?: { __args: {
+    /** The ID of the author of the transaction. If not provided, the API Token will be used. */
+    authorId?: (Scalars['String'] | null), 
     /** Auto make a commit in your Repo with the specified message. */
     autoCommit?: (Scalars['String'] | null), 
     /** Transaction data. */
@@ -2798,7 +2885,7 @@ export interface PagesItemFilterInput {AND?: (PagesItemFilterInput | null),OR?: 
 export interface PagesItemFilterInput__openApiSpec {_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),enabled?: (Scalars['Boolean'] | null),url?: (StringFilter | null)}
 
 export interface QueryGenqlSelection{
-    _agent?: (_AgentDocsAiGenqlSelection & { __args: {
+    _agent?: (_AgentStartGenqlSelection & { __args: {
     /** The ID of the agent. */
     id: Scalars['String']} })
     /** Query across the custom AI agents in the repository. */
@@ -2838,8 +2925,7 @@ export interface QueryGenqlSelection{
 }
 
 export interface RepoSysGenqlSelection{
-    dashboardUrl?: boolean | number
-    forkUrl?: boolean | number
+    branches?: (_BranchesGenqlSelection & { __args?: {limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null)} })
     hash?: boolean | number
     id?: boolean | number
     playgroundInfo?: _PlaygroundInfoGenqlSelection
@@ -2959,7 +3045,7 @@ export interface StepperContentRichTextGenqlSelection{
     __typename?: boolean | number
 }
 
-export interface StringFilter {contains?: (Scalars['String'] | null),endsWith?: (Scalars['String'] | null),eq?: (Scalars['String'] | null),isNull?: (Scalars['Boolean'] | null),matches?: (StringMatchesFilter | null),notEq?: (Scalars['String'] | null),startsWith?: (Scalars['String'] | null)}
+export interface StringFilter {contains?: (Scalars['String'] | null),endsWith?: (Scalars['String'] | null),eq?: (Scalars['String'] | null),in?: (Scalars['String'][] | null),isNull?: (Scalars['Boolean'] | null),matches?: (StringMatchesFilter | null),notEq?: (Scalars['String'] | null),notIn?: (Scalars['String'][] | null),startsWith?: (Scalars['String'] | null)}
 
 export interface StringMatchesFilter {caseSensitive?: (Scalars['Boolean'] | null),pattern: Scalars['String']}
 
@@ -3265,7 +3351,95 @@ export interface _AgentDocsAiGenqlSelection{
     mcpUrl?: boolean | number
     model?: boolean | number
     searchTheWeb?: boolean | number
+    slackInstallUrl?: boolean | number
     systemPrompt?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface _AgentStartGenqlSelection{
+    _agentKey?: boolean | number
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    accent?: boolean | number
+    avatar?: boolean | number
+    chatUrl?: boolean | number
+    commit?: boolean | number
+    description?: boolean | number
+    edit?: boolean | number
+    embedUrl?: boolean | number
+    getUserInfo?: boolean | number
+    grayscale?: boolean | number
+    manageBranches?: boolean | number
+    mcpUrl?: boolean | number
+    model?: boolean | number
+    searchTheWeb?: boolean | number
+    slackInstallUrl?: boolean | number
+    systemPrompt?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface _BranchInfoGenqlSelection{
+    archivedAt?: boolean | number
+    archivedBy?: boolean | number
+    authorId?: boolean | number
+    contributors?: boolean | number
+    createdAt?: boolean | number
+    description?: boolean | number
+    git?: _GitInfoGenqlSelection
+    headCommit?: _CommitInfoGenqlSelection
+    headCommitId?: boolean | number
+    id?: boolean | number
+    inlineSuggestionAppliedAt?: boolean | number
+    isDefault?: boolean | number
+    isInlineSuggestion?: boolean | number
+    name?: boolean | number
+    playgroundId?: boolean | number
+    rollbackCommitId?: boolean | number
+    rollbackIsoDate?: boolean | number
+    sourceBranchId?: boolean | number
+    updatedAt?: boolean | number
+    workingRootBlockId?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface _BranchesGenqlSelection{
+    _meta?: ListMetaGenqlSelection
+    items?: _BranchInfoGenqlSelection
+    __typename?: boolean | number
+}
+
+export interface _CommitInfoGenqlSelection{
+    authorId?: boolean | number
+    branchId?: boolean | number
+    contributors?: boolean | number
+    createdAt?: boolean | number
+    hash?: boolean | number
+    id?: boolean | number
+    mergeParentCommitId?: boolean | number
+    message?: boolean | number
+    parentCommitId?: boolean | number
+    /** Whether this commit is from a playground branch. */
+    playgroundId?: boolean | number
+    repoId?: boolean | number
+    rootBlockId?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface _GitInfoGenqlSelection{
+    branch?: boolean | number
+    deploymentUrl?: boolean | number
     __typename?: boolean | number
 }
 
@@ -3279,6 +3453,7 @@ export interface _PlaygroundInfoGenqlSelection{
 
 export interface _agentsGenqlSelection{
     docsAi?: _AgentDocsAiGenqlSelection
+    start?: _AgentStartGenqlSelection
     __typename?: boolean | number
 }
 
@@ -4368,6 +4543,26 @@ export interface FragmentsMap {
   _AgentDocsAi: {
     root: _AgentDocsAi,
     selection: _AgentDocsAiGenqlSelection,
+}
+  _AgentStart: {
+    root: _AgentStart,
+    selection: _AgentStartGenqlSelection,
+}
+  _BranchInfo: {
+    root: _BranchInfo,
+    selection: _BranchInfoGenqlSelection,
+}
+  _Branches: {
+    root: _Branches,
+    selection: _BranchesGenqlSelection,
+}
+  _CommitInfo: {
+    root: _CommitInfo,
+    selection: _CommitInfoGenqlSelection,
+}
+  _GitInfo: {
+    root: _GitInfo,
+    selection: _GitInfoGenqlSelection,
 }
   _PlaygroundInfo: {
     root: _PlaygroundInfo,
