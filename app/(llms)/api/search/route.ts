@@ -18,7 +18,7 @@ export const POST = async (request: Request) => {
     _componentInstances: { article: { _searchKey: true } },
   })
 
-  const results = await search(_searchKey, query, {
+  const result = await search(_searchKey, query, {
     queryBy: ['_title', 'body', 'excerpt'],
     page,
     perPage,
@@ -27,7 +27,7 @@ export const POST = async (request: Request) => {
     // }),
   })
 
-  return new Response(JSON.stringify(results), {
+  return new Response(JSON.stringify(result), {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
