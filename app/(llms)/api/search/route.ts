@@ -8,7 +8,7 @@ const corsHeaders = {
 }
 
 export const POST = async (request: Request) => {
-  const { query, page = 1, perPage = 10 } = await request.json()
+  const { query, page = 1, perPage = 5 } = await request.json()
 
   const {
     _componentInstances: {
