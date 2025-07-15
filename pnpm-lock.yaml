@@ -21,8 +21,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6(@types/react-dom@19.1.2(@types/react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       basehub:
-        specifier: ^9.0.20
-        version: 9.0.20(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)(zod@3.25.76)
+        specifier: ^9.0.22
+        version: 9.0.22(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)(zod@3.25.76)
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1568,8 +1568,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  basehub@9.0.20:
-    resolution: {integrity: sha512-H0l8kmvA1iObgE3gaeUhiJgvEofSHL3dHNgYDfBHWciogd3VFRkXw/ciS367bUMH1775Mfy+Fp+9fSUCBncrGw==}
+  basehub@9.0.22:
+    resolution: {integrity: sha512-CUNSc15Z7l9xtw8N5Va7MQuh/Rvt/yIZ+vNTX1E0q1RrMJMN157GAXFv5J36nPnFh2TZkKlzHVcAQUgR0DzMdQ==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -4953,7 +4953,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  basehub@9.0.20(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)(zod@3.25.76):
+  basehub@9.0.22(@babel/runtime@7.24.4)(@types/react@19.1.2)(react@19.1.0)(typescript@5.4.4)(zod@3.25.76):
     dependencies:
       '@basehub/mutation-api-helpers': 2.1.3(zod@3.25.76)
       '@radix-ui/react-slot': 1.1.1(@types/react@19.1.2)(react@19.1.0)
