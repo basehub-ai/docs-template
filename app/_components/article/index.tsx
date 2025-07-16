@@ -137,6 +137,8 @@ export const ArticleWrapper = ({
       width="100%"
       height="100%"
       flexShrink="0"
+      pt="6"
+      pb="9"
     >
       <article
         className={s.article}

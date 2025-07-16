@@ -1,55 +1,61 @@
 .toc {
-   top: calc(var(--header) + var(--space-6));
-   width: calc(190px * var(--scaling));
-   flex-shrink: 0;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-9);
+  top: var(--header);
+  max-height: calc(100vh - var(--header));
+  overflow-y: auto;
+  width: calc(190px * var(--scaling) + var(--space-6));
+  margin-right: calc(var(--space-6) * -1);
+  padding-right: var(--space-6);
+  flex-shrink: 0;
 
-   ol {
-      border-left: 1px solid var(--gray-4);
-      color: var(--normal);
-      position: relative;
-      padding-left: 0;
+  ol {
+    border-left: 1px solid var(--gray-4);
+    color: var(--normal);
+    position: relative;
+    padding-left: 0;
+
+    li {
+      line-height: 1.2;
+
+      p {
+        display: flex;
+        margin: 0;
+      }
+
+      a {
+        padding-block: var(--space-1);
+        display: inline-block;
+        width: 100%;
+        text-overflow: ellipsis;
+        position: relative;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+
+        &:hover,
+        &[data-active='true'] {
+          color: var(--accent-indicator) !important;
+        }
+      }
+    }
+
+    & ol {
+      border-left: none;
+      padding-bottom: 0;
+      position: unset;
+
+      ol {
+        display: none;
+      }
 
       li {
-         line-height: 1.2;
-
-         p {
-            display: flex;
-            margin: 0;
-         }
-
-         a {
-            padding-block: var(--space-1);
-            display: inline-block;
-            width: 100%;
-            text-overflow: ellipsis;
-            position: relative;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-
-            &:hover,
-            &[data-active="true"] {
-               color: var(--accent-indicator) !important;
-            }
-         }
+        a {
+          padding-bottom: var(--space-1);
+          padding-top: var(--space-1);
+        }
       }
-
-      & ol {
-         border-left: none;
-         padding-bottom: 0;
-         position: unset;
-
-         ol {
-            display: none;
-         }
-
-         li {
-            a {
-               padding-bottom: var(--space-1);
-               padding-top: var(--space-1);
-            }
-         }
-      }
-   }
+    }
+  }
 }

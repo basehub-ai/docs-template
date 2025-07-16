@@ -47,15 +47,7 @@ export default async function Layout({
             )
           }}
         </Pump>
-        <Flex
-          asChild
-          width="100%"
-          align="start"
-          justify="between"
-          gapX="6"
-          pt="6"
-          pb="9"
-        >
+        <Flex asChild width="100%" align="start" justify="between" gapX="6">
           <main>{children}</main>
         </Flex>
       </Flex>
