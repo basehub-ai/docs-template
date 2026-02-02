@@ -6,6 +6,7 @@ import { ThemeProvider } from './_components/theme-provider/server'
 import { Toolbar } from 'basehub/next-toolbar'
 import Script from 'next/script'
 import { basehub } from 'basehub'
+import { Analytics } from '@vercel/analytics/next'
 
 import '../basehub.config'
 import './globals.css'
@@ -32,6 +33,7 @@ export default async function RootLayout({
         <Toolbar />
 
         <Script src={data._agents.docsAi.embedUrl} />
+        <Analytics />
       </body>
     </html>
   )
