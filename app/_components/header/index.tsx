@@ -2,13 +2,14 @@ import { Pump } from 'basehub/react-pump'
 import { HeaderFragment, PagesNav } from './pages-nav'
 import { Box, Container, Flex, Grid } from '@radix-ui/themes'
 import {
-  DialogTriggerDesktop,
+  // DialogTriggerDesktop,
   DialogTriggerMobile,
   SearchProvider,
 } from './search'
 import { Logo } from '../logo'
 import { TopRightNavDesktop, TopRightNavMobile } from './header-nav'
 import { PageMetaFragment } from '@/basehub-helpers/fragments'
+import { InputNeue } from './search/input-neue'
 
 import s from './header.module.scss'
 
@@ -93,7 +94,8 @@ export const Header = () => {
                       width="100%"
                       justify="start"
                     >
-                      <DialogTriggerDesktop />
+                      <InputNeue />
+                      {/* <DialogTriggerDesktop /> */}
                     </Flex>
                   </Box>
 
